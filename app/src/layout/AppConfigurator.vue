@@ -1,6 +1,6 @@
 <script setup>
 import { useLayout } from '@/layout/composables/layout';
-import { $t, updatePreset, updateSurfacePalette } from '@primeuix/themes';
+import { $t as theme, updatePreset, updateSurfacePalette } from '@primeuix/themes';
 import Aura from '@primeuix/themes/aura';
 import Lara from '@primeuix/themes/lara';
 import Nora from '@primeuix/themes/nora';
@@ -190,7 +190,7 @@ function onPresetChange() {
   const presetValue = presets[preset.value];
   const surfacePalette = surfaces.value.find((s) => s.name === layoutConfig.surface)?.palette;
 
-  $t().preset(presetValue).preset(getPresetExt()).surfacePalette(surfacePalette).use({ useDefaultOptions: true });
+  theme().preset(presetValue).preset(getPresetExt()).surfacePalette(surfacePalette).use({ useDefaultOptions: true });
 }
 
 function onMenuModeChange() {

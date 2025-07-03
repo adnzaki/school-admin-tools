@@ -1,4 +1,5 @@
 import { createApp } from 'vue';
+import { createI18n } from 'vue-i18n';
 import App from './App.vue';
 import router from './router';
 
@@ -8,6 +9,10 @@ import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
 
 import '@/assets/styles.scss';
+
+const i18n = createI18n({
+  // something vue-i18n options here ...
+});
 
 const app = createApp(App);
 
@@ -22,5 +27,6 @@ app.use(PrimeVue, {
 });
 app.use(ToastService);
 app.use(ConfirmationService);
+app.use(i18n);
 
 app.mount('#app');
