@@ -1,7 +1,7 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-import AppMenuItem from './AppMenuItem.vue';
+import AppMenuItem from './AppMenuItem.vue'
 
 const model = ref([
   {
@@ -136,7 +136,7 @@ const model = ref([
       }
     ]
   }
-]);
+])
 </script>
 
 <template>

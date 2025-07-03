@@ -1,13 +1,13 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const email = ref('');
-const password = ref('');
-const checked = ref(false);
+const email = ref('')
+const password = ref('')
+const checked = ref(false)
 </script>
 
 <template>
-  <!-- <FloatingConfigurator /> -->
+  <FloatingConfigurator />
   <div class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-[100vw] overflow-hidden">
     <div class="flex flex-col items-center justify-center">
       <div style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)">
@@ -30,8 +30,8 @@ const checked = ref(false);
                 />
               </g>
             </svg>
-            <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">Welcome to PrimeLand!</div>
-            <span class="text-muted-color font-medium">Sign in to continue</span>
+            <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">Selamat Datang di <strong>Sakola!</strong></div>
+            <span class="text-muted-color font-medium">Masuk untuk melanjutkan</span>
           </div>
 
           <div>
