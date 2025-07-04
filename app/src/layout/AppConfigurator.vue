@@ -4,7 +4,7 @@ import { $t as theme, updatePreset, updateSurfacePalette } from '@primeuix/theme
 import Aura from '@primeuix/themes/aura'
 import Lara from '@primeuix/themes/lara'
 import Nora from '@primeuix/themes/nora'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 const { layoutConfig, isDarkTheme } = useLayout()
 
@@ -175,6 +175,8 @@ function updateColors(type, color) {
   }
 
   applyTheme(type, color)
+  localStorage.setItem('primary', layoutConfig.primary)
+  localStorage.setItem('surface', layoutConfig.surface)
 }
 
 function applyTheme(type, color) {
@@ -191,17 +193,49 @@ function onPresetChange() {
   const surfacePalette = surfaces.value.find((s) => s.name === layoutConfig.surface)?.palette
 
   theme().preset(presetValue).preset(getPresetExt()).surfacePalette(surfacePalette).use({ useDefaultOptions: true })
+  localStorage.setItem('preset', layoutConfig.preset)
 }
 
 function onMenuModeChange() {
   layoutConfig.menuMode = menuMode.value
+  localStorage.setItem('menuMode', layoutConfig.menuMode)
 }
+
+watch(isDarkTheme, () => {
+  if (!isDarkTheme.value) {
+    updateColors(
+      'surface',
+      surfaces.value.find((s) => s.name === 'soho')
+    )
+  }
+})
 
 // apply color theme on load
 updateColors(
   'primary',
   primaryColors.value.find((c) => c.name === layoutConfig.primary)
 )
+
+updateColors(
+  'surface',
+  surfaces.value.find((s) => {
+    if (layoutConfig.surface === null || layoutConfig.surface === 'null') {
+      return s.name === isDarkTheme.value ? 'neutral' : 'soho'
+    } else {
+      return s.name === layoutConfig.surface
+    }
+  })
+)
+
+const surfaceTitle = (name) => {
+  if (!isDarkTheme.value && name !== 'soho' && name !== 'viva') {
+    return `${name} can only be used in Dark Mode`
+  } else {
+    return name
+  }
+}
+
+const disableSurfaceOptions = (name) => !isDarkTheme.value && name !== 'soho' && name !== 'viva'
 </script>
 
 <template>
@@ -230,13 +264,17 @@ updateColors(
             v-for="surface of surfaces"
             :key="surface.name"
             type="button"
-            :title="surface.name"
+            :title="surfaceTitle(surface.name)"
             @click="updateColors('surface', surface)"
             :class="[
               'border-none w-5 h-5 rounded-full p-0 cursor-pointer outline-none outline-offset-1',
               { 'outline-primary': layoutConfig.surface ? layoutConfig.surface === surface.name : isDarkTheme ? surface.name === 'zinc' : surface.name === 'slate' }
             ]"
-            :style="{ backgroundColor: `${surface.palette['500']}` }"
+            :disabled="disableSurfaceOptions(surface.name)"
+            :style="{
+              backgroundColor: `${surface.palette['500']}`,
+              cursor: disableSurfaceOptions(surface.name) ? 'not-allowed' : ''
+            }"
           ></button>
         </div>
       </div>

@@ -1,11 +1,11 @@
 import { computed, reactive } from 'vue'
 
 const layoutConfig = reactive({
-  preset: 'Aura',
-  primary: 'noir',
-  surface: 'zinc',
-  darkTheme: false,
-  menuMode: 'static'
+  preset: localStorage.getItem('preset') || 'Aura',
+  primary: localStorage.getItem('primary') || 'emerald',
+  surface: localStorage.getItem('surface') || null,
+  darkTheme: JSON.parse(localStorage.getItem('darkTheme')) || false,
+  menuMode: localStorage.getItem('menuMode') || 'static'
 })
 
 const layoutState = reactive({
@@ -36,6 +36,8 @@ export function useLayout() {
   const executeDarkModeToggle = () => {
     layoutConfig.darkTheme = !layoutConfig.darkTheme
     document.documentElement.classList.toggle('app-dark')
+
+    localStorage.setItem('darkTheme', JSON.stringify(layoutConfig.darkTheme))
   }
 
   const toggleMenu = () => {
