@@ -4,19 +4,19 @@
  * @author  Adnan Zaki | Wolestech DevTeam
  */
 
-import { mode, host, uiPath, baseUrl } from './build.config'
+import { baseUrl, host, mode, uiPath } from './build.config'
 
-function getEndpoint(path) {
+function getEndpoint(path = '') {
   let endpoint = ''
   switch (mode) {
     case 'development':
-      endpoint = `/#/${path}`
+      endpoint = `${path}`
       break
     case 'build':
-      endpoint = `/app/build/#/${path}`
+      endpoint = `build${path === '' ? path : `/${path}`}`
       break
     case 'production':
-      endpoint = `/app/#/${path}`
+      endpoint = `${path}`
       break
     default:
       endpoint = 'incorrect-mode'
@@ -37,10 +37,10 @@ export default {
   // SisaUang authentication page into main
   // application page
   homeUrl: () => {
-    return `${uiPath()}${getEndpoint('dashboard')}`
+    return `${uiPath()}${getEndpoint()}`
   },
   loginUrl: () => {
-    return `${uiPath()}${getEndpoint('login')}`
+    return `${uiPath()}${getEndpoint('auth/login')}`
   },
 
   host,
@@ -48,7 +48,7 @@ export default {
   mode,
 
   // Cookie key name
-  cookieName: 'school_admins_token',
+  cookieName: 'sakola_token',
 
   // Cookie expiration time in miliseconds (120 in minutes)
   cookieExp: 120 * 60 * 1000

@@ -1,3 +1,4 @@
+import { validatePage } from '@/composables/utils'
 import AppLayout from '@/layout/AppLayout.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -11,7 +12,9 @@ const router = createRouter({
         {
           path: '/',
           name: 'dashboard',
-          component: () => import('@/views/Dashboard.vue')
+          meta: { title: 'Dashboard' },
+          component: () => import('@/views/Dashboard.vue'),
+          beforeEnter: () => validatePage()
         },
         {
           path: '/uikit/formlayout',
@@ -120,7 +123,8 @@ const router = createRouter({
     {
       path: '/auth/login',
       name: 'login',
-      component: () => import('@/views/pages/auth/Login.vue')
+      component: () => import('@/views/pages/auth/Login.vue'),
+      beforeEnter: () => validatePage(true)
     },
     {
       path: '/auth/access',

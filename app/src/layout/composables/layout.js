@@ -3,7 +3,7 @@ import { computed, reactive } from 'vue'
 const layoutConfig = reactive({
   preset: localStorage.getItem('preset') || 'Aura',
   primary: localStorage.getItem('primary') || 'emerald',
-  surface: localStorage.getItem('surface') || null,
+  surface: localStorage.getItem('surface') || 'soho',
   darkTheme: JSON.parse(localStorage.getItem('darkTheme')) || false,
   menuMode: localStorage.getItem('menuMode') || 'static'
 })
@@ -30,7 +30,7 @@ export function useLayout() {
       return
     }
 
-    document.startViewTransition(() => executeDarkModeToggle(event))
+    document.startViewTransition(() => executeDarkModeToggle())
   }
 
   const executeDarkModeToggle = () => {
@@ -39,6 +39,8 @@ export function useLayout() {
 
     localStorage.setItem('darkTheme', JSON.stringify(layoutConfig.darkTheme))
   }
+
+  if (layoutConfig.darkTheme) document.documentElement.classList.add('app-dark')
 
   const toggleMenu = () => {
     if (layoutConfig.menuMode === 'overlay') {

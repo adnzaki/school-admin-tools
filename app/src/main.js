@@ -1,6 +1,7 @@
+import { createPinia } from 'pinia'
 import { createApp } from 'vue'
-import { createI18n } from 'vue-i18n'
 import App from './App.vue'
+import i18n from './locales/i18n'
 import router from './router'
 
 import Aura from '@primeuix/themes/aura'
@@ -10,9 +11,7 @@ import ToastService from 'primevue/toastservice'
 
 import '@/assets/styles.scss'
 
-const i18n = createI18n({
-  // something vue-i18n options here ...
-})
+const pinia = createPinia()
 
 const app = createApp(App)
 
@@ -28,5 +27,6 @@ app.use(PrimeVue, {
 app.use(ToastService)
 app.use(ConfirmationService)
 app.use(i18n)
+app.use(pinia)
 
 app.mount('#app')
