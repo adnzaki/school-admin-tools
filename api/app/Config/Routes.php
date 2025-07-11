@@ -22,4 +22,12 @@ $routes->group('auth', function (RouteCollection $routes) {
     $routes->get('validate-page', 'Auth::validatePageRequest');
 });
 
+$routes->group('pegawai', function (RouteCollection $routes) {
+    $routes->post('get-data',        'Pegawai::getData');
+    $routes->post('save',            'Pegawai::save');
+    $routes->delete('delete/(:num)', 'Pegawai::delete/$1');
+    $routes->get('detail/(:num)',    'Pegawai::detail/$1');
+});
+
+
 service('auth')->routes($routes);

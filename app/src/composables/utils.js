@@ -15,6 +15,9 @@ api.interceptors.request.use(
       }
     }
 
+    const selectedLang = localStorage.getItem('language') || 'id'
+    config.headers['X-Language'] = selectedLang
+
     return config
   },
   (error) => {
