@@ -1,4 +1,31 @@
 <?php
 
-// override core en language system validation or define your own en language validation message
-return [];
+return [
+    'required'              => 'The {field} field is required.',
+    'required_fill'         => 'Please fill in the {field} field.',
+    'required_select'       => 'Please select a value for {field}.',
+    'permit_empty'          => 'The {field} field may be left empty.',
+    'is_natural'            => 'The {field} field must contain only numbers.',
+    'is_natural_no_zero'    => 'The {field} field must be greater than zero.',
+    'numeric'               => 'The {field} field must contain only numbers.',
+    'alpha'                 => 'The {field} field must contain only letters.',
+    'alpha_numeric'         => 'The {field} field must contain only letters and numbers.',
+    'min_length'            => 'The {field} field must be at least {param} characters.',
+    'max_length'            => 'The {field} field may not be more than {param} characters.',
+    'exact_length'          => 'The {field} field must be exactly {param} characters.',
+    'in_list'               => 'The selected {field} is invalid.',
+    'valid_url'             => 'The {field} field must contain a valid URL.',
+    'valid_email'           => 'The {field} field must contain a valid email address.',
+    'is_unique'             => 'This username has already been used.',
+    'is_unique_email'       => 'This email address has already been used.',
+    'matches'               => 'The {field} field must match the {param} field.',
+    'greater_than'          => 'The {field} field must be greater than {param}.',
+    'greater_than_equal'    => 'The {field} field must be greater than or equal to {param}.',
+    'less_than'             => 'The {field} field must be less than {param}.',
+    'less_than_equal'       => 'The {field} field must be less than or equal to {param}.',
+    'max_size'              => 'The file is too large.',
+    'alpha_dash'            => 'The {field} field may only contain letters, numbers, dashes and underscores.',
+    'uploaded'              => 'The file for {field} has not been uploaded.',
+    'mime_in'               => 'The {field} must be of type: {param}.',
+    'ext_in'                => 'The file extension for {field} is not allowed. (Allowed: {param})',
+];

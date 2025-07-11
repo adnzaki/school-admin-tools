@@ -43,7 +43,7 @@ abstract class BaseController extends Controller
      */
     // protected $session;
 
-/**
+    /**
      * HTTP Status
      * 
      * @var string
@@ -57,34 +57,6 @@ abstract class BaseController extends Controller
     ];
 
     /**
-     * Validation common messages
-     * 
-     * @var array
-     */
-    protected $messages = [
-        'required'              => 'Kolom {field} wajib diisi',
-        'required_fill'         => 'Silakan isi {field} terlebih dahulu',
-        'required_select'       => 'Silakan pilih  {field} terlebih dahulu',
-        'is_natural'            => 'Kolom {field} hanya boleh diisi angka',
-        'is_natural_no_zero'    => 'Kolom {field} hanya boleh diisi angka dan lebih dari nol',
-        'min_length'            => 'Kolom {field} harus berisi setidaknya {param} karakter',
-        'max_length'            => 'Kolom {field} tidak boleh lebih dari {param} karakter',
-        'exact_length'          => 'Kolom {field} hanya boleh diisi dengan {param} karakter',
-        'in_list'               => 'Pilhan {field} tidak tersedia',
-        'valid_url'             => 'Kolom {field} harus berisi URL yang valid. (Contoh: http://example.com / https://example2.com)',
-        'valid_email'           => 'Kolom {field} harus berisi alamat email yang valid',
-        'is_unique'             => 'Username telah digunakan',
-        'is_unique_email'       => 'Alamat email telah digunakan',
-        'max_size'              => 'Ukuran file terlalu besar.',
-        'alpha_dash'            => 'Kolom {field} hanya boleh diisi huruf, angka, underscore(_) dan strip (-).',
-        'matches'               => 'Kolom {field} harus sama dengan kolom {param}',
-        'greater_than'          => 'Kolom {field} harus lebih besar dari {param}',
-        'greater_than_equal'    => 'Kolom {field} harus lebih besar atau sama dengan {param}',
-        'less_than'             => 'Kolom {field} harus lebih kecil dari {param}',
-        'less_than_equal'       => 'Kolom {field} harus lebih kecil atau sama dengan {param}',
-    ];
-
-    /**
      * @return void
      */
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
@@ -95,6 +67,13 @@ abstract class BaseController extends Controller
         // Preload any models, libraries, etc, here.
 
         // E.g.: $this->session = service('session');
+
+        // Cek bahasa dari header atau query string
+        $lang = $this->request->getHeaderLine('X-Language') ?: $this->request->getGet('lang');
+
+        if ($lang && in_array($lang, ['id', 'en'])) {
+            service('request')->setLocale($lang);
+        }
     }
 
     protected function setStatus($code)
