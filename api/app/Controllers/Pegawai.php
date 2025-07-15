@@ -37,7 +37,7 @@ class Pegawai extends BaseController
             'totalRows' => $total,
             'additionalResponse' => [
                 'status'  => 'OK',
-                'message' => 'Data berhasil diambil'
+                'message' => lang('General.dataFetched')
             ]
         ]);
     }
@@ -45,35 +45,38 @@ class Pegawai extends BaseController
     public function save()
     {
         $rules = [
+            'id' => [
+                'rules' => 'permit_empty',
+                'label' => 'ID'
+            ],
             'nama' => [
                 'rules' => 'required',
-                'label' => lang('FieldLabels.nama')
+                'label' => lang('FieldLabels.pegawai.nama')
             ],
             'nip' => [
-                'rules' => 'permit_empty|numeric|exact_length[18]',
-                'label' => lang('FieldLabels.nip')
+                'rules' => 'permit_empty|numeric|exact_length[18]|is_unique_nip[tb_pegawai.nip,id,{id}]',
+                'label' => lang('FieldLabels.pegawai.nip')
             ],
             'jabatan' => [
                 'rules' => 'permit_empty|max_length[50]',
-                'label' => lang('FieldLabels.jabatan')
+                'label' => lang('FieldLabels.pegawai.jabatan')
             ],
             'jenis_pegawai' => [
                 'rules' => 'required|in_list[PNS,PPPK,Honorer]',
-                'label' => lang('FieldLabels.jenis_pegawai')
+                'label' => lang('FieldLabels.pegawai.jenis_pegawai')
             ],
             'email' => [
                 'rules' => 'permit_empty|valid_email',
-                'label' => lang('FieldLabels.email')
+                'label' => lang('FieldLabels.pegawai.email')
             ],
             'telepon' => [
                 'rules' => 'permit_empty|max_length[20]',
-                'label' => lang('FieldLabels.telepon')
+                'label' => lang('FieldLabels.pegawai.telepon')
             ]
         ];
 
         if (! $this->validate($rules)) {
             $errors = $this->validator->getErrors();
-
             $messages = validation_error($errors, $rules);
 
             return $this->response->setJSON([
@@ -107,12 +110,13 @@ class Pegawai extends BaseController
 
 
 
+
     public function delete($id = null)
     {
         if (! $id || ! $this->pegawai->find($id)) {
             return $this->response->setJSON([
                 'status'  => 'error',
-                'message' => 'Data tidak ditemukan'
+                'message' => lang('General.dataNotFound')
             ]);
         }
 
@@ -120,7 +124,7 @@ class Pegawai extends BaseController
 
         return $this->response->setJSON([
             'status'  => 'success',
-            'message' => 'Data berhasil dihapus'
+            'message' => lang('General.dataDeleted')
         ]);
     }
 
@@ -131,7 +135,7 @@ class Pegawai extends BaseController
         if (! $data) {
             return $this->response->setJSON([
                 'status'  => 'error',
-                'message' => 'Data tidak ditemukan'
+                'message' => lang('General.dataNotFound')
             ]);
         }
 
