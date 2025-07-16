@@ -42,6 +42,56 @@ class Siswa extends BaseController
         ]);
     }
 
+    public function importData()
+    {
+        $default = [
+            'nama'            => '',
+            'tempat_lahir'    => '',
+            'tgl_lahir'       => '',
+            'no_induk'        => '',
+            'nisn'            => '',
+            'jenis_kelamin'   => '',
+            'nama_ayah'       => '',
+            'pekerjaan_ayah'  => '',
+            'nama_ibu'        => '',
+            'pekerjaan_ibu'   => '',
+            'alamat'          => '',
+            'rt'              => '',
+            'rw'              => '',
+            'kelurahan'       => '',
+            'kecamatan'       => '',
+            'kab_kota'        => '',
+            'provinsi'        => '',
+        ];
+
+        $rules = [
+            'nama'            => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.nama')],
+            'tempat_lahir'    => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.tempat_lahir')],
+            'tgl_lahir'       => ['rules' => 'required|valid_date', 'label' => lang('FieldLabels.siswa.tgl_lahir')],
+            'no_induk'        => ['rules' => 'permit_empty|numeric|exact_length[9]|is_unique_no_induk[tb_siswa.no_induk,id,{id}]', 'label' => lang('FieldLabels.siswa.no_induk')],
+            'nisn'            => ['rules' => 'permit_empty|numeric|exact_length[10]|is_unique_nisn[tb_siswa.nisn,id,{id}]', 'label' => lang('FieldLabels.siswa.nisn')],
+            'jenis_kelamin'   => ['rules' => 'required|in_list[L,P]', 'label' => lang('FieldLabels.siswa.jenis_kelamin')],
+            'nama_ayah'       => ['rules' => 'permit_empty', 'label' => lang('FieldLabels.siswa.nama_ayah')],
+            'pekerjaan_ayah'  => ['rules' => 'permit_empty', 'label' => lang('FieldLabels.siswa.pekerjaan_ayah')],
+            'nama_ibu'        => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.nama_ibu')],
+            'pekerjaan_ibu'   => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.pekerjaan_ibu')],
+            'alamat'          => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.alamat')],
+            'rt'              => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.rt')],
+            'rw'              => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.rw')],
+            'kelurahan'       => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.kelurahan')],
+            'kecamatan'       => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.kecamatan')],
+            'kab_kota'        => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.kab_kota')],
+            'provinsi'        => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.provinsi')],
+        ];
+
+        $result = import_spreadsheet($default, $rules, function ($rows) {
+            $this->siswa->insertBatch($rows);
+        });
+
+        return $this->response->setJSON($result);
+    }
+
+
     public function save()
     {
         $rules = [
@@ -49,11 +99,11 @@ class Siswa extends BaseController
             'nama'            => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.nama')],
             'tempat_lahir'    => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.tempat_lahir')],
             'tgl_lahir'       => ['rules' => 'required|valid_date', 'label' => lang('FieldLabels.siswa.tgl_lahir')],
-            'no_induk'        => ['rules' => 'required|numeric|exact_length[9]|is_unique_no_induk[tb_siswa.no_induk,id,{id}]', 'label' => lang('FieldLabels.siswa.no_induk')],
-            'nisn'            => ['rules' => 'required|numeric|exact_length[10]|is_unique_nisn[tb_siswa.nisn,id,{id}]', 'label' => lang('FieldLabels.siswa.nisn')],
+            'no_induk'        => ['rules' => 'permit_empty|numeric|exact_length[9]|is_unique_no_induk[tb_siswa.no_induk,id,{id}]', 'label' => lang('FieldLabels.siswa.no_induk')],
+            'nisn'            => ['rules' => 'permit_empty|numeric|exact_length[10]|is_unique_nisn[tb_siswa.nisn,id,{id}]', 'label' => lang('FieldLabels.siswa.nisn')],
             'jenis_kelamin'   => ['rules' => 'required|in_list[L,P]', 'label' => lang('FieldLabels.siswa.jenis_kelamin')],
-            'nama_ayah'       => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.nama_ayah')],
-            'pekerjaan_ayah'  => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.pekerjaan_ayah')],
+            'nama_ayah'       => ['rules' => 'permit_empty', 'label' => lang('FieldLabels.siswa.nama_ayah')],
+            'pekerjaan_ayah'  => ['rules' => 'permit_empty', 'label' => lang('FieldLabels.siswa.pekerjaan_ayah')],
             'nama_ibu'        => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.nama_ibu')],
             'pekerjaan_ibu'   => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.pekerjaan_ibu')],
             'alamat'          => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.alamat')],

@@ -4,9 +4,13 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\PegawaiModel;
+use CodeIgniter\API\ResponseTrait;
+use ExcelTools\Reader;
 
 class Pegawai extends BaseController
 {
+    use ResponseTrait;
+
     protected $pegawai;
 
     public function __construct()
@@ -41,6 +45,53 @@ class Pegawai extends BaseController
             ]
         ]);
     }
+
+    public function importData()
+    {
+        $default = [
+            'nama'          => '',
+            'nip'           => '',
+            'jabatan'       => '',
+            'jenis_pegawai' => '',
+            'email'         => '',
+            'telepon'       => '',
+        ];
+
+        $rules = [
+            'nama' => [
+                'rules' => 'required',
+                'label' => lang('FieldLabels.pegawai.nama')
+            ],
+            'nip' => [
+                'rules' => 'permit_empty|numeric|exact_length[18]|is_unique_nip[tb_pegawai.nip,id,{id}]',
+                'label' => lang('FieldLabels.pegawai.nip')
+            ],
+            'jabatan' => [
+                'rules' => 'permit_empty|max_length[50]',
+                'label' => lang('FieldLabels.pegawai.jabatan')
+            ],
+            'jenis_pegawai' => [
+                'rules' => 'required|in_list[PNS,PPPK,Honorer]',
+                'label' => lang('FieldLabels.pegawai.jenis_pegawai')
+            ],
+            'email' => [
+                'rules' => 'permit_empty|valid_email',
+                'label' => lang('FieldLabels.pegawai.email')
+            ],
+            'telepon' => [
+                'rules' => 'permit_empty|max_length[20]',
+                'label' => lang('FieldLabels.pegawai.telepon')
+            ]
+        ];
+
+        $result = import_spreadsheet($default, $rules, function ($rows) {
+            $this->pegawai->insertBatch($rows);
+        });
+
+        return $this->response->setJSON($result);
+    }
+
+
 
     public function save()
     {

@@ -1,5 +1,9 @@
 <?php
 
+use ExcelTools\Reader;
+use CodeIgniter\Validation\ValidationInterface;
+use Config\Services;
+
 if (! function_exists('validation_error')) {
     /**
      * Mengganti nama field dengan label pada pesan error validasi
@@ -35,6 +39,86 @@ if (! function_exists('validation_error')) {
         return $messages;
     }
 }
+
+if (!function_exists('import_spreadsheet')) {
+    /**
+     * Universal Import Handler
+     *
+     * @param array $defaultFields Default keys to merge (to ensure field exists)
+     * @param array $rules CI4 validation rules per row
+     * @param Closure $onSuccess Callback function to handle valid rows
+     * @return array JSON-serializable response
+     */
+    function import_spreadsheet(array $defaultFields, array $rules, Closure $onSuccess): array
+    {
+        $request = service('request');
+        $file = $request->getFile('file');
+
+        if (! $file || $file->getError() !== UPLOAD_ERR_OK) {
+            return [
+                'status'  => 'error',
+                'message' => lang('Validation.uploaded', ['field' => 'file']),
+            ];
+        }
+
+        $mimeTypes = [
+            'application/vnd.ms-excel',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        ];
+
+        if (! in_array($file->getMimeType(), $mimeTypes)) {
+            return [
+                'status'  => 'error',
+                'message' => lang('Validation.spreadsheet_only'),
+            ];
+        }
+
+        try {
+            $reader = new Reader();
+            $reader->loadFromFile($file->getTempName());
+            $rows = $reader->getSheetData(true);
+        } catch (\Throwable $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Gagal membaca file Excel: ' . $e->getMessage(),
+            ];
+        }
+
+        /** @var ValidationInterface $validation */
+        $validation = Services::validation();
+        $errors = [];
+        $validRows = [];
+
+        foreach ($rows as $index => $row) {
+            $data = array_merge($defaultFields, $row);
+
+            $validation->setRules($rules);
+
+            if (! $validation->run($data)) {
+                $errors[$index + 2] = validation_error($validation->getErrors(), $rules);
+            } else {
+                $validRows[] = $data;
+            }
+        }
+
+        if (! empty($errors)) {
+            return [
+                'status'  => 'error',
+                'message' => 'Beberapa baris tidak valid',
+                'errors'  => $errors,
+            ];
+        }
+
+        // Lakukan proses penyimpanan via callback
+        $onSuccess($validRows);
+
+        return [
+            'status'  => 'success',
+            'message' => lang('General.dataSaved'),
+        ];
+    }
+}
+
 
 if (! function_exists('valid_access')) {
     function valid_access()

@@ -42,18 +42,18 @@ class CustomRules
         return ! $exists;
     }
 
-    public function is_unique_nip(string $value, string $field, array $data, ?string &$error = null): bool
+    public function is_unique_nip($value, string $field, array $data, ?string &$error = null): bool
     {
-        return $this->isUniqueWithCustomMessage($value, $field, $data, $error, 'is_unique_nip');
+        return $this->isUniqueWithCustomMessage((string)$value, $field, $data, $error, 'is_unique_nip');
     }
 
-    public function is_unique_nisn(string $value, string $field, array $data, ?string &$error = null): bool
+    public function is_unique_nisn($value, string $field, array $data, ?string &$error = null): bool
     {
-        return $this->isUniqueWithCustomMessage($value, $field, $data, $error, 'is_unique_nisn');
+        return $this->isUniqueWithCustomMessage((string)$value, $field, $data, $error, 'is_unique_nisn');
     }
 
-    public function is_unique_no_induk(string $value, string $field, array $data, ?string &$error = null): bool
+    public function is_unique_no_induk($value, string $field, array $data, ?string &$error = null): bool
     {
-        return $this->isUniqueWithCustomMessage($value, $field, $data, $error, 'is_unique_no_induk');
+        return $this->isUniqueWithCustomMessage((string)$value, $field, $data, $error, 'is_unique_no_induk');
     }
 }

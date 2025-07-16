@@ -31,4 +31,5 @@ return [
     'uploaded'              => 'The file for {field} has not been uploaded.',
     'mime_in'               => 'The {field} must be of type: {param}.',
     'ext_in'                => 'The file extension for {field} is not allowed. (Allowed: {param})',
+    'spreadsheet_only'      => 'Only Excel (.xls, .xlsx) files are allowed.',
 ];

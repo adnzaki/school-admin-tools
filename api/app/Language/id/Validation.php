@@ -31,4 +31,5 @@ return [
     'uploaded'              => 'Berkas untuk {field} belum diunggah',
     'mime_in'               => 'Berkas {field} harus bertipe: {param}',
     'ext_in'                => 'Ekstensi file {field} tidak diizinkan. (Hanya {param})',
+    'spreadsheet_only'      => 'Hanya file Excel (.xls, .xlsx) yang diperbolehkan.',
 ];
