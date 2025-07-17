@@ -3,6 +3,22 @@
 use ExcelTools\Reader;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\Services;
+use App\Models\UserInstitusiModel;
+
+if (! function_exists('get_institusi')) {
+    /**
+     * Mendapatkan ID institusi berdasarkan user yang sedang login
+     *
+     * @return int|null
+     */
+    function get_institusi()
+    {
+        $userInstitusiModel = new UserInstitusiModel();
+        $institusiId = $userInstitusiModel->getInstitusiIdByCurrentUser();
+
+        return $institusiId;
+    }
+}
 
 if (! function_exists('validation_error')) {
     /**

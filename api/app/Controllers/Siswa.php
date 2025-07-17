@@ -27,10 +27,10 @@ class Siswa extends BaseController
             $this->siswa->like($searchBy, $search);
         }
 
-        $data  = $this->siswa->orderBy($orderBy, $sort)->findAll($limit, $offset);
+        $data  = $this->siswa->where('institusi_id', get_institusi())->orderBy($orderBy, $sort)->findAll($limit, $offset);
         $total = empty($search)
-            ? $this->siswa->countAllResults()
-            : $this->siswa->like($searchBy, $search)->countAllResults();
+            ? $this->siswa->where('institusi_id', get_institusi())->countAllResults()
+            : $this->siswa->where('institusi_id', get_institusi())->like($searchBy, $search)->countAllResults();
 
         return $this->response->setJSON([
             'container' => $data,
@@ -45,6 +45,7 @@ class Siswa extends BaseController
     public function importData()
     {
         $default = [
+            'institusi_id'    => get_institusi(),
             'nama'            => '',
             'tempat_lahir'    => '',
             'tgl_lahir'       => '',
@@ -129,6 +130,7 @@ class Siswa extends BaseController
         $id = $this->request->getPost('id');
 
         $data = [
+            'institusi_id'    => get_institusi(),
             'nama'            => $this->request->getPost('nama'),
             'tempat_lahir'    => $this->request->getPost('tempat_lahir'),
             'tgl_lahir'       => $this->request->getPost('tgl_lahir'),

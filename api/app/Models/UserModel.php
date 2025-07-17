@@ -1,6 +1,9 @@
-<?php namespace App\Models;
+<?php
+
+namespace App\Models;
 
 use CodeIgniter\Shield\Entities\User;
+use App\Models\UserInstitusiModel;
 
 class UserModel
 {
@@ -10,15 +13,22 @@ class UserModel
         $users = auth()->getProvider();
 
         $user = new User([
-                'username' => $data['username'],
-                'email'    => $data['email'],
-                'password' => $data['password'],
-                'active'   => 1
-            ]);
+            'username' => $data['username'],
+            'email'    => $data['email'],
+            'password' => $data['password'],
+            'active'   => 1
+        ]);
         $users->save($user);
 
         // To get the complete user object with ID, we need to get from the database
         $user = $users->findById($users->getInsertID());
+
+        // insert to user_institusi table
+        $userInstitusiModel = new UserInstitusiModel();
+        $userInstitusiModel->insert([
+            'user_id' => $user->id,
+            'institusi_id' => $data['institusi_id']
+        ]);
 
         // Add to default group
         $users->addToDefaultGroup($user);
@@ -29,7 +39,7 @@ class UserModel
         // Get the User Provider (UserModel by default)
         $users = auth()->getProvider();
 
-        if($id === null) {
+        if ($id === null) {
             $user = $users->findById(auth()->id());
         } else {
             $user = $users->findById($id);
@@ -41,6 +51,11 @@ class UserModel
             'password' => $data['password'],
         ]);
         $users->save($user);
+
+        $userInstitusiModel = new UserInstitusiModel();
+        $userInstitusiModel->update([
+            'institusi_id' => $data['institusi_id']
+        ], ['user_id' => $user->id]);
     }
 
     public function deleteUser(string $email)

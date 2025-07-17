@@ -14,6 +14,7 @@ class SiswaModel extends Model
     protected $useSoftDeletes   = true;
 
     protected $allowedFields    = [
+        'institusi_id',
         'nama',
         'tempat_lahir',
         'tgl_lahir',

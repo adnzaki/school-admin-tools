@@ -5,7 +5,6 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\PegawaiModel;
 use CodeIgniter\API\ResponseTrait;
-use ExcelTools\Reader;
 
 class Pegawai extends BaseController
 {
@@ -31,10 +30,10 @@ class Pegawai extends BaseController
             $this->pegawai->like($searchBy, $search);
         }
 
-        $data  = $this->pegawai->orderBy($orderBy, $sort)->findAll($limit, $offset);
+        $data  = $this->pegawai->where('institusi_id', get_institusi())->orderBy($orderBy, $sort)->findAll($limit, $offset);
         $total = empty($search)
-            ? $this->pegawai->countAllResults()
-            : $this->pegawai->like($searchBy, $search)->countAllResults();
+            ? $this->pegawai->where('institusi_id', get_institusi())->countAllResults()
+            : $this->pegawai->where('institusi_id', get_institusi())->like($searchBy, $search)->countAllResults();
 
         return $this->response->setJSON([
             'container' => $data,
@@ -49,6 +48,7 @@ class Pegawai extends BaseController
     public function importData()
     {
         $default = [
+            'institusi_id'  => get_institusi(),
             'nama'          => '',
             'nip'           => '',
             'jabatan'       => '',
@@ -139,6 +139,7 @@ class Pegawai extends BaseController
         $id = $this->request->getPost('id');
 
         $data = [
+            'institusi_id'  => get_institusi(),
             'nama'          => $this->request->getPost('nama'),
             'nip'           => $this->request->getPost('nip'),
             'jabatan'       => $this->request->getPost('jabatan'),

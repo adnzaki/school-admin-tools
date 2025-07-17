@@ -10,4 +10,6 @@ return [
     'logoutSuccess'     => 'Logged out successfully',
     'passwordChanged'   => 'Password has been changed successfully',
     'welcome'           => 'Welcome, {name}',
+    'inactiveInstitute' => 'Institute is inactive or subscription has expired.',
+    'notRegisterd'      => 'You are not registered in any institute',
 ];

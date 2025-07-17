@@ -15,6 +15,7 @@ class PegawaiModel extends Model
     protected $useSoftDeletes   = true;
 
     protected $allowedFields    = [
+        'institusi_id',
         'nama',
         'nip',
         'jabatan',

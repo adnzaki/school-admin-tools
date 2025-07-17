@@ -4,14 +4,20 @@ namespace App\Controllers;
 
 use App\Models\AuthModel;
 use App\Models\UserModel;
+use App\Models\InstitusiModel;
+use App\Models\UserInstitusiModel;
 
 class Auth extends BaseController
 {
     private $model;
+    private $institusiModel;
+    private $userInstitusiModel;
 
     public function __construct()
     {
         $this->model = new AuthModel();
+        $this->institusiModel = new InstitusiModel();
+        $this->userInstitusiModel = new UserInstitusiModel();
     }
 
     public function updatePassword()
@@ -65,9 +71,9 @@ class Auth extends BaseController
         ];
 
         $messages = [
-            'oldPassword'   => ['required' => $this->messages['required']],
-            'newPassword'   => ['required' => $this->messages['required']],
-            'confirmNewPassword'   => ['required' => $this->messages['required'], 'matches' => $this->messages['matches']]
+            'oldPassword'   => ['required' => lang('Validation.required')],
+            'newPassword'   => ['required' => lang('Validation.required')],
+            'confirmNewPassword'   => ['required' => lang('Validation.required'), 'matches' => lang('Validation.matches')]
         ];
 
         return (object)['rules' => $rules, 'messages' => $messages];
@@ -77,10 +83,20 @@ class Auth extends BaseController
     {
         $credentials = $this->request->getPost(['username', 'password']);
 
-        // $rememberMe = $this->request->getPost('rememberMe') === 1 ? true : false;
+        // cek dulu, apakah institusi dari user yg akan login tersebut aktif?
+        $user = auth()->getProvider()->findByCredentials(['username' => $credentials['username']]);
+        $institusiId = $this->userInstitusiModel->getInstitusiIdByCurrentUser($user->id);
+        $isActive = $this->institusiModel->isInstitusiAktif($institusiId);
+        if (! $isActive) {
+            return $this->response->setJSON([
+                'status'    => 'failed',
+                'reason'    => lang('General.inactiveInstitute')
+            ]);
+        }
 
         $getToken = $this->model->validateLogin($credentials);
         if ($getToken['status'] !== false) {
+
             return $this->response->setJSON([
                 'status'    => 'success',
                 'token'     => $getToken['token'],
@@ -96,7 +112,7 @@ class Auth extends BaseController
 
     public function deleteDefaultCookie()
     {
-        delete_cookie('sisauang_api_session');
+        delete_cookie('sakola_session');
 
         return $this->response->setJSON(['status' => 'success']);
     }
@@ -105,7 +121,7 @@ class Auth extends BaseController
     {
         if (auth()->loggedIn()) {
             auth()->logout();
-            delete_cookie('sisauang_api_session');
+            delete_cookie('sakola_session');
         }
 
         return $this->response->setJSON(['status' => 'success']);

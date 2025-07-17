@@ -1,4 +1,6 @@
-<?php namespace App\Controllers;
+<?php
+
+namespace App\Controllers;
 
 class UserManager extends BaseController
 {
@@ -12,11 +14,11 @@ class UserManager extends BaseController
     }
 
     public function createUser()
-    {       
-        if($this->validateUser()) {
-            $data = $this->request->getPost(['username', 'email', 'password']);
+    {
+        if ($this->validateUser()) {
+            $data = $this->request->getPost(['username', 'email', 'password', 'institusi_id']);
             $this->model->create($data);
-    
+
             return $this->response->setJSON(['status' => 'success']);
         } else {
             return $this->response->setJSON($this->message);
@@ -26,9 +28,9 @@ class UserManager extends BaseController
     public function updateUser($id = null)
     {
         if ($this->validateUser()) {
-            $data = $this->request->getPost(['username', 'email', 'password']);
+            $data = $this->request->getPost(['username', 'email', 'password', 'institusi_id']);
             $this->model->update($data, $id);
-    
+
             return $this->response->setJSON(['status' => 'success']);
         } else {
             return $this->response->setJSON($this->message);
@@ -39,8 +41,8 @@ class UserManager extends BaseController
     {
         if ($this->validateUser()) {
             $email = $this->request->getPost('email');
-            $this->model->deleteUser($email);    
-    
+            $this->model->deleteUser($email);
+
             return $this->response->setJSON(['status' => 'success']);
         } else {
             return $this->response->setJSON($this->message);
