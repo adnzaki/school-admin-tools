@@ -1,12 +1,45 @@
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import AppMenuItem from './AppMenuItem.vue'
+
+const { t } = useI18n()
 
 const model = ref([
   {
     label: 'Home',
     items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/' }]
+  },
+  {
+    label: 'Data',
+    items: [
+      { label: t('menu.employee'), icon: 'pi pi-fw pi-address-book', to: '/pegawai' },
+      { label: t('menu.student'), icon: 'pi pi-fw pi-users', to: '/uikit/formlayout' }
+    ]
+  },
+  {
+    label: t('menu.administration'),
+    items: [
+      { label: t('menu.inLetter'), icon: 'pi pi-fw pi-file-import', to: '/uikit/formlayout' },
+      { label: t('menu.outLetter'), icon: 'pi pi-fw pi-file-export', to: '/uikit/formlayout' }
+    ]
+  },
+  {
+    label: t('menu.studentAdm'),
+    items: [
+      { label: t('menu.printNISN'), icon: 'pi pi-fw pi-id-card', to: '/uikit/formlayout' },
+      { label: t('menu.moveSchool'), icon: 'pi pi-fw pi-directions', to: '/uikit/formlayout' },
+      { label: t('menu.letterOfStudent'), icon: 'pi pi-fw pi-clipboard', to: '/uikit/formlayout' }
+    ]
+  },
+  {
+    label: t('menu.employeeAdm'),
+    items: [
+      { label: t('menu.letterOfEmployee'), icon: 'pi pi-fw pi-file-check', to: '/uikit/formlayout' },
+      { label: t('menu.taskLetter'), icon: 'pi pi-fw pi-hourglass', to: '/uikit/formlayout' },
+      { label: t('menu.travelLetter'), icon: 'pi pi-fw pi-truck', to: '/uikit/formlayout' }
+    ]
   },
   {
     label: 'UI Components',

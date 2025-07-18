@@ -15,11 +15,6 @@ export const useLoginStore = defineStore('login', {
   }),
   actions: {
     setCookieOptions() {
-      conf.cookieExp *= 12 * 360 // keep cookie valid for 360 days
-      const dt = new Date()
-      let now = dt.getTime()
-      let expMs = now + conf.cookieExp
-      let exp = new Date(expMs)
       this.cookieOptions = {
         expires: 360,
         path: '/',
@@ -42,7 +37,7 @@ export const useLoginStore = defineStore('login', {
             transformRequest: [(data) => createFormData(data)]
           })
           .then(({ data }) => {
-            if (data.status === 'failed') {
+            if (data.status === 'failed' || data.status === 'blocked') {
               this.message = t('auth.signIn')
               this.disableButton = false
             } else {
@@ -54,7 +49,7 @@ export const useLoginStore = defineStore('login', {
                 window.location.href = conf.homeUrl()
               }, 500)
             }
-            action(data.status)
+            action(data.status, data.reason)
           })
       }
     }

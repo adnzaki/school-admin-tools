@@ -8,6 +8,7 @@ import Aura from '@primeuix/themes/aura'
 import PrimeVue from 'primevue/config'
 import ConfirmationService from 'primevue/confirmationservice'
 import ToastService from 'primevue/toastservice'
+import { Table as SsTable } from 'ss-paging-vue/components'
 
 import '@/assets/styles.scss'
 
@@ -28,5 +29,6 @@ app.use(ToastService)
 app.use(ConfirmationService)
 app.use(i18n)
 app.use(pinia)
+app.component('SsTable', SsTable)
 
 app.mount('#app')

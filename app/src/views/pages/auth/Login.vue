@@ -13,14 +13,16 @@ const { t } = useI18n()
 
 store.message = t('auth.signIn')
 const validate = () =>
-  store.validate((status) => {
+  store.validate((status, reason) => {
     if (status === 'failed') {
       toast.add({ severity: 'error', summary: t('common.error'), detail: t('auth.loginFailed'), life: 5000 })
     } else if (status === 'empty') {
       toast.add({ severity: 'error', summary: t('common.error'), detail: t('auth.loginDenied'), life: 3000 })
-    } else {
+    } else if (status === 'success') {
       toast.add({ severity: 'success', summary: t('common.success'), detail: t('auth.redirecting'), life: 6000 })
       store.message = t('auth.loginSuccess')
+    } else if (status === 'blocked') {
+      toast.add({ severity: 'error', summary: t('common.error'), detail: reason, life: 5000 })
     }
   })
 </script>

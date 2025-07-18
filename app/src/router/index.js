@@ -17,6 +17,13 @@ const router = createRouter({
           beforeEnter: () => validatePage()
         },
         {
+          path: '/pegawai',
+          name: 'pegawai',
+          component: () => import('@/views/employee/IndexPage.vue')
+        },
+
+        // --------- ROUTES FOR DEMO --------- //
+        {
           path: '/uikit/formlayout',
           name: 'formlayout',
           component: () => import('@/views/uikit/FormLayout.vue')

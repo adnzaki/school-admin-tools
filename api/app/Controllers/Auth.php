@@ -89,7 +89,7 @@ class Auth extends BaseController
         $isActive = $this->institusiModel->isInstitusiAktif($institusiId);
         if (! $isActive) {
             return $this->response->setJSON([
-                'status'    => 'failed',
+                'status'    => 'blocked',
                 'reason'    => lang('General.inactiveInstitute')
             ]);
         }

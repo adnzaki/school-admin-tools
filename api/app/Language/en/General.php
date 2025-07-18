@@ -11,5 +11,5 @@ return [
     'passwordChanged'   => 'Password has been changed successfully',
     'welcome'           => 'Welcome, {name}',
     'inactiveInstitute' => 'Institute is inactive or subscription has expired.',
-    'notRegisterd'      => 'You are not registered in any institute',
+    'notRegistered'     => 'You are not registered in any institute',
 ];

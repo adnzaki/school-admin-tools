@@ -13,6 +13,7 @@ use CodeIgniter\Filters\PageCache;
 use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
 use App\Filters\InstitusiAktifFilter;
+use App\Filters\AllowCors;
 
 class Filters extends BaseFilters
 {
@@ -53,11 +54,12 @@ class Filters extends BaseFilters
      */
     public array $required = [
         'before' => [
+            'cors',
             'forcehttps', // Force Global Secure Requests
             'pagecache',  // Web Page Caching,
-            'cors'
         ],
         'after' => [
+            'cors',
             'pagecache',   // Web Page Caching
             'performance', // Performance Metrics
             'toolbar',     // Debug Toolbar
@@ -72,18 +74,21 @@ class Filters extends BaseFilters
      */
     public array $globals = [
         'before' => [
+            // 'cors',
             'tokens' => [
                 'except' => [
                     'auth/login',
                     'auth/logout',
-                    'user/*'
+                    'user/*',
+                    'pegawai/*'
                 ],
             ],
             'institusi' => [
                 'except' => [
                     'auth/login',
                     'auth/logout',
-                    'user/*'
+                    'user/*',
+                    'pegawai/*'
                 ],
             ],
             // 'honeypot',

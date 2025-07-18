@@ -6,6 +6,7 @@ import conf from '../../admins.config'
 const t = (key) => i18n.global.t(key)
 const api = axios.create({ baseURL: conf.apiPublicPath })
 const msgPrefix = '[Sakola] '
+const localeForPaging = i18n.global.locale.value === 'id' ? 'indonesia' : 'english'
 
 api.interceptors.request.use(
   (config) => {
@@ -85,4 +86,4 @@ const createFormData = (obj) => {
   return formData
 }
 
-export { api, createFormData, t, validatePage }
+export { api, createFormData, localeForPaging, t, validatePage }

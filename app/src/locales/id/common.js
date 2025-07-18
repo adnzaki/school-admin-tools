@@ -6,5 +6,6 @@ export default {
     welcome: 'Selamat Datang di'
   },
   error: 'Terjadi kesalahan',
-  success: 'Berhasil'
+  success: 'Berhasil',
+  networkError: 'Tidak dapat terhubung dengan server'
 }
