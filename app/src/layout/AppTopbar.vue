@@ -1,8 +1,33 @@
 <script setup>
 import { useLayout } from '@/layout/composables/layout'
+import { useLoginStore } from '@/stores/login-store'
+import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import AppConfigurator from './AppConfigurator.vue'
 
+const { t } = useI18n()
+const store = useLoginStore()
+
 const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout()
+
+const menu = ref(null)
+const accountMenu = ref([
+  {
+    label: t('menu.profile'),
+    icon: 'pi pi-user'
+  },
+  {
+    command: () => {
+      store.logout()
+    },
+    label: 'Log Out',
+    icon: 'pi pi-sign-out'
+  }
+])
+
+function showAccountMenu(event) {
+  menu.value.toggle(event)
+}
 </script>
 
 <template>
@@ -68,10 +93,12 @@ const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout()
             <i class="pi pi-inbox"></i>
             <span>Messages</span>
           </button>
-          <button type="button" class="layout-topbar-action">
+          <button type="button" class="layout-topbar-action" @click="showAccountMenu">
             <i class="pi pi-user"></i>
             <span>Profile</span>
           </button>
+          <Menu ref="menu" class="account-menu" :model="accountMenu" :popup="true" />
+          <!-- <Popover ref="op" id="overlay_panel" style="width: 150px"></Popover> -->
         </div>
       </div>
     </div>

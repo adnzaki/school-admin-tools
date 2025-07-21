@@ -11,5 +11,6 @@ export default {
   taskLetter: 'Surat Tugas',
   travelLetter: 'Perjalanan Dinas',
   inLetter: 'Surat Masuk',
-  outLetter: 'Surat Keluar'
+  outLetter: 'Surat Keluar',
+  profile: 'Profil'
 }
