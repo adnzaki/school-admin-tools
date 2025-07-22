@@ -3,7 +3,7 @@
     <div class="md:w-2/6">
       <div class="flex flex-col gap-4">
         <div class="flex flex-wrap">
-          <Button :label="$t('common.buttons.add')" icon="pi pi-plus" class="mr-2 mb-2"></Button>
+          <Button :label="$t('common.buttons.add')" @click="showForm" icon="pi pi-plus" class="mr-2 mb-2"></Button>
           <Button :label="$t('common.buttons.delete')" icon="pi pi-trash" severity="secondary" class="mr-2 mb-2"></Button>
         </div>
       </div>
@@ -25,7 +25,17 @@
   </div>
 </template>
 <script setup>
+import { useEmployeeStore } from '@/stores/employee-store'
 import { usePagingStore } from 'ss-paging-vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
+
+const store = useEmployeeStore()
 const paging = usePagingStore()
+
+const showForm = () => {
+  store.formTitle = t('employee.add')
+  store.showForm = true
+}
 </script>

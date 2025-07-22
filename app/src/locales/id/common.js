@@ -17,5 +17,6 @@ export default {
     searchByName: 'Cari berdasarkan nama',
     selectRow: 'Pilih baris',
     row: 'Baris'
-  }
+  },
+  incorrectForm: 'Silakan isi form dengan benar'
 }

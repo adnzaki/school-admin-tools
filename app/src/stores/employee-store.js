@@ -1,4 +1,4 @@
-import { localeForPaging } from '@/composables/utils'
+import { api, createFormData, localeForPaging } from '@/composables/utils'
 import Cookies from 'js-cookie'
 import { defineStore } from 'pinia'
 import { usePagingStore as paging } from 'ss-paging-vue'
@@ -8,10 +8,53 @@ export const useEmployeeStore = defineStore('employee', {
   state: () => ({
     endpoint: 'pegawai/',
     current: 1,
-    selected: []
+    selected: [],
+    showForm: false,
+    errors: {},
+    formTitle: '',
+    formData: {
+      nama: '',
+      nip: '',
+      jabatan: '',
+      jenis_pegawai: '',
+      email: '',
+      telepon: ''
+    },
+    formEvent: 'add' // add | edit
   }),
   actions: {
-    getData(action) {
+    save(action, error) {
+      api
+        .post(`${this.endpoint}save`, this.formData, {
+          transformRequest: [
+            (data) => {
+              return createFormData(data)
+            }
+          ]
+        })
+        .then(({ data }) => {
+          if (data.status === 'success') {
+            this.showForm = false
+            this.getData(error)
+            this.formData = {
+              nama: '',
+              nip: '',
+              jabatan: '',
+              jenis_pegawai: '',
+              email: '',
+              telepon: ''
+            }
+          } else {
+            this.errors = data.message
+          }
+
+          action(data.status, data.message)
+        })
+        .catch((error) => {
+          action(error)
+        })
+    },
+    getData(errorHandler) {
       const limit = 100
       paging().state.rows = limit
 
@@ -31,7 +74,7 @@ export const useEmployeeStore = defineStore('employee', {
         },
         onError: () => {
           //errorNotif()
-          action()
+          errorHandler()
         },
         debug: true
       })

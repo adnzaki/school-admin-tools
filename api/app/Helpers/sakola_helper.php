@@ -49,6 +49,9 @@ if (! function_exists('validation_error')) {
                 $message = str_replace($field, $label, $message);
             }
 
+            // filter kata yg duplikat berurutan
+            $message = preg_replace('/\b(\w+)\s+\1\b/u', '$1', $message);
+
             $messages[$field] = $message;
         }
 

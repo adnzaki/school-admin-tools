@@ -79,7 +79,7 @@ class Pegawai extends BaseController
                 'label' => lang('FieldLabels.pegawai.email')
             ],
             'telepon' => [
-                'rules' => 'permit_empty|max_length[20]',
+                'rules' => 'permit_empty|numeric|min_length[11]|max_length[15]',
                 'label' => lang('FieldLabels.pegawai.telepon')
             ]
         ];
@@ -121,7 +121,7 @@ class Pegawai extends BaseController
                 'label' => lang('FieldLabels.pegawai.email')
             ],
             'telepon' => [
-                'rules' => 'permit_empty|max_length[20]',
+                'rules' => 'permit_empty|numeric|min_length[11]|max_length[15]',
                 'label' => lang('FieldLabels.pegawai.telepon')
             ]
         ];
