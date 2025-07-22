@@ -7,11 +7,12 @@ import conf from '../../admins.config'
 export const useEmployeeStore = defineStore('employee', {
   state: () => ({
     endpoint: 'pegawai/',
-    current: 1
+    current: 1,
+    selected: []
   }),
   actions: {
     getData(action) {
-      const limit = 25
+      const limit = 100
       paging().state.rows = limit
 
       paging().getData({
