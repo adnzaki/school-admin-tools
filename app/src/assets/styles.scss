@@ -13,11 +13,25 @@
   width: 100% !important;
 }
 
+.sp-select {
+  padding-top: 10px;
+  padding-bottom: 7px;
+}
+
 .sp-select span {
   margin-top: -4px;
 }
 
 .sp-select-options {
-  margin-top: 43px !important;
+  margin-top: 40px !important;
   background-color: #eee;
+}
+
+.sp-select-options li {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.sp-select-options li:hover {
+  background-color: #d5d5d5;
 }

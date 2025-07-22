@@ -1,5 +1,5 @@
 <template>
-  <SelectRow :paging="store" large :label="$t('common.buttons.selectRow')" :dark="layoutConfig.darkTheme" custom-select-class="w-full" :row-label="$t('common.buttons.row')" :selected="selectedRow" />
+  <SelectRow :paging="store" :label="$t('common.buttons.selectRow')" :dark="layoutConfig.darkTheme" custom-select-class="w-full" :row-label="$t('common.buttons.row')" :selected="selectedRow" />
 </template>
 
 <script setup>
