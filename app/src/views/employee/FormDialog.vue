@@ -8,7 +8,7 @@
       </div>
       <div class="flex flex-col gap-2">
         <label for="name1">NIP</label>
-        <InputText type="text" v-model="store.formData.nip" />
+        <InputText type="text" v-model="store.formData.nip" minlength="18" maxlength="18" />
         <p class="text-red-500">{{ store.errors.nip }}</p>
       </div>
       <div class="flex flex-col gap-2">
@@ -28,7 +28,7 @@
       </div>
       <div class="flex flex-col gap-2">
         <label for="name1">{{ $t('employee.phone') }}</label>
-        <InputText type="text" v-model="store.formData.telepon" />
+        <InputText type="text" v-model="store.formData.telepon" minlength="11" maxlength="15" />
         <p class="text-red-500">{{ store.errors.telepon }}</p>
       </div>
     </div>
