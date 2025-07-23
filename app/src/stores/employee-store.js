@@ -44,6 +44,7 @@ export const useEmployeeStore = defineStore('employee', {
               email: '',
               telepon: ''
             }
+            this.errors = {}
           } else {
             this.errors = data.message
           }
@@ -55,7 +56,7 @@ export const useEmployeeStore = defineStore('employee', {
         })
     },
     getData(errorHandler) {
-      const limit = 100
+      const limit = 25
       paging().state.rows = limit
 
       paging().getData({
