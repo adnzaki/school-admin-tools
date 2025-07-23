@@ -10,6 +10,7 @@ export default {
   networkError: 'Tidak dapat terhubung dengan server',
   buttons: {
     add: 'Tambah',
+    edit: 'Ubah',
     save: 'Simpan',
     cancel: 'Batal',
     close: 'Tutup',

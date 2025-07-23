@@ -17,6 +17,25 @@ const tableColumns = ref([
   { key: 'telepon', label: t('employee.phone') }
 ])
 
+const cm = ref()
+
+const contextMenu = ref([
+  {
+    label: t('common.buttons.edit'),
+    icon: 'pi pi-pencil',
+    command: () => store.showForm()
+  },
+  {
+    label: t('common.buttons.delete'),
+    icon: 'pi pi-trash',
+    command: () => store.deleteData()
+  }
+])
+
+const onContextMenuClick = (event) => {
+  cm.value.show(event.originalEvent)
+}
+
 store.getData(() => {
   toast.add({ severity: 'error', summary: t('common.error'), detail: t('common.networkError'), life: 5000 })
 })
@@ -24,8 +43,9 @@ store.getData(() => {
 const data = computed(() => paging.state.data)
 </script>
 <template>
-  <DataTable v-model:selection="store.selected" selectionMode="multiple" dataKey="id" :value="data" scrollable scrollHeight="55vh" class="mt-6">
+  <DataTable contextMenu @rowContextmenu="onContextMenuClick" v-model:selection="store.selected" selectionMode="multiple" metaKeySelection dataKey="id" :value="data" scrollable scrollHeight="55vh" class="mt-6">
     <Column v-for="col of tableColumns" :key="col.key" :field="col.key" :header="col.label" :sortable="col.sortable"></Column>
   </DataTable>
+  <ContextMenu ref="cm" :model="contextMenu" @hide="store.selected = []" />
   <Navigator v-model="store.current" />
 </template>
