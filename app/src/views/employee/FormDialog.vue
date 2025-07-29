@@ -1,5 +1,5 @@
 <template>
-  <Dialog :header="store.formTitle" v-model:visible="store.showForm" :breakpoints="{ '960px': '75vw' }" :style="{ width: '30vw' }" :modal="true">
+  <Dialog :header="store.formTitle" v-model:visible="store.showForm" @show="onDialogShow" @hide="onDialogHide" :breakpoints="{ '960px': '75vw' }" :style="{ width: '30vw' }" :modal="true">
     <div class="flex flex-col gap-4">
       <div class="flex flex-col gap-2">
         <label for="name1">{{ $t('employee.name') }}</label>
@@ -55,6 +55,17 @@ const employeeTypes = ref([
 ])
 
 const employeeType = ref(null)
+
+const onDialogHide = () => {
+  store.resetForm()
+  employeeType.value = null
+}
+
+const onDialogShow = () => {
+  if (store.formEvent === 'edit') {
+    employeeType.value = { name: store.formData.jenis_pegawai, code: store.formData.jenis_pegawai }
+  }
+}
 
 const onTypeSelected = (value) => {
   store.formData.jenis_pegawai = value.code

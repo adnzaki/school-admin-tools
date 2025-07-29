@@ -23,7 +23,9 @@ const contextMenu = ref([
   {
     label: t('common.buttons.edit'),
     icon: 'pi pi-pencil',
-    command: () => store.showForm()
+    command: () => {
+      store.getDetail()
+    }
   },
   {
     label: t('common.buttons.delete'),
@@ -43,7 +45,19 @@ store.getData(() => {
 const data = computed(() => paging.state.data)
 </script>
 <template>
-  <DataTable contextMenu @rowContextmenu="onContextMenuClick" v-model:selection="store.selected" selectionMode="multiple" metaKeySelection dataKey="id" :value="data" scrollable scrollHeight="55vh" class="mt-6">
+  <DataTable
+    contextMenu
+    @rowContextmenu="onContextMenuClick"
+    v-model:contextMenuSelection="store.selected"
+    v-model:selection="store.selected"
+    selectionMode="multiple"
+    metaKeySelection
+    dataKey="id"
+    :value="data"
+    scrollable
+    scrollHeight="55vh"
+    class="mt-6"
+  >
     <Column v-for="col of tableColumns" :key="col.key" :field="col.key" :header="col.label" :sortable="col.sortable"></Column>
   </DataTable>
   <ContextMenu ref="cm" :model="contextMenu" @hide="store.selected = []" />

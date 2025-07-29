@@ -70,6 +70,9 @@ if (!function_exists('import_spreadsheet')) {
      */
     function import_spreadsheet(array $defaultFields, array $rules, Closure $onSuccess): array
     {
+        /**
+         * @var \CodeIgniter\HTTP\IncomingRequest $request
+         */
         $request = service('request');
         $file = $request->getFile('file');
 

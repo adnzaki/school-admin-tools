@@ -1,4 +1,4 @@
-import { api, createFormData, localeForPaging } from '@/composables/utils'
+import { api, createFormData, localeForPaging, t } from '@/composables/utils'
 import Cookies from 'js-cookie'
 import { defineStore } from 'pinia'
 import { usePagingStore as paging } from 'ss-paging-vue'
@@ -25,13 +25,29 @@ export const useEmployeeStore = defineStore('employee', {
     formEvent: 'add' // add | edit
   }),
   actions: {
+    getDetail() {
+      api.get(`${this.endpoint}detail/${this.selected.id}`).then(({ data }) => {
+        const detail = data.data
+        this.formData = {
+          id: detail.id,
+          nama: detail.nama,
+          nip: detail.nip ?? '',
+          jabatan: detail.jabatan,
+          jenis_pegawai: detail.jenis_pegawai,
+          email: detail.email,
+          telepon: detail.telepon
+        }
+        this.formTitle = t('employee.edit')
+        this.formEvent = 'edit'
+        this.showForm = true
+      })
+    },
     import(file, action) {
       try {
         api
           .post(`${this.endpoint}import-data`, file, {
             headers: {
-              'Content-Type': 'multipart/form-data',
-              Authorization: `Bearer ${Cookies.get(conf.cookieName)}`
+              'Content-Type': 'multipart/form-data'
             }
           })
           .then(({ data }) => {
@@ -59,14 +75,7 @@ export const useEmployeeStore = defineStore('employee', {
           if (data.status === 'success') {
             this.showForm = false
             this.getData(error)
-            this.formData = {
-              nama: '',
-              nip: '',
-              jabatan: '',
-              jenis_pegawai: '',
-              email: '',
-              telepon: ''
-            }
+            this.resetForm()
             this.errors = {}
           } else {
             this.errors = data.message
@@ -77,6 +86,18 @@ export const useEmployeeStore = defineStore('employee', {
         .catch((error) => {
           action(error)
         })
+    },
+    resetForm() {
+      if (this.formEvent === 'edit') {
+        this.formData = {
+          nama: '',
+          nip: '',
+          jabatan: '',
+          jenis_pegawai: '',
+          email: '',
+          telepon: ''
+        }
+      }
     },
     getData(errorHandler) {
       const limit = 25
