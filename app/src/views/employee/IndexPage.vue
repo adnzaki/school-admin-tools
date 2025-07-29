@@ -2,6 +2,7 @@
 import ButtonMenu from './ButtonMenu.vue'
 import DataList from './DataList.vue'
 import FormDialog from './FormDialog.vue'
+import ImportDialog from './ImportDialog.vue'
 </script>
 
 <template>
@@ -10,5 +11,6 @@ import FormDialog from './FormDialog.vue'
     <ButtonMenu />
     <DataList />
     <FormDialog />
+    <ImportDialog />
   </div>
 </template>

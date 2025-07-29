@@ -17,7 +17,12 @@ export default {
     delete: 'Hapus',
     searchByName: 'Cari berdasarkan nama',
     selectRow: 'Pilih baris',
-    row: 'Baris'
+    row: 'Baris',
+    import: 'Import Data',
+    download: 'Unduh',
+    upload: 'Unggah'
   },
-  incorrectForm: 'Silakan isi form dengan benar'
+  incorrectForm: 'Silakan isi form dengan benar',
+  importing: 'Mengimpor data...',
+  processing: 'Memroses permintaan...'
 }

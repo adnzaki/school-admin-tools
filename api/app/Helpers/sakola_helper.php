@@ -99,7 +99,7 @@ if (!function_exists('import_spreadsheet')) {
         } catch (\Throwable $e) {
             return [
                 'status'  => 'error',
-                'message' => 'Gagal membaca file Excel: ' . $e->getMessage(),
+                'message' => lang('Validation.unable_to_read_file') . $e->getMessage(),
             ];
         }
 
@@ -123,7 +123,7 @@ if (!function_exists('import_spreadsheet')) {
         if (! empty($errors)) {
             return [
                 'status'  => 'error',
-                'message' => 'Beberapa baris tidak valid',
+                'message' => lang('Validation.invalid_rows'),
                 'errors'  => $errors,
             ];
         }

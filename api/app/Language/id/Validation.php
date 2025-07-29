@@ -32,4 +32,6 @@ return [
     'mime_in'               => 'Berkas {field} harus bertipe: {param}',
     'ext_in'                => 'Ekstensi file {field} tidak diizinkan. (Hanya {param})',
     'spreadsheet_only'      => 'Hanya file Excel (.xls, .xlsx) yang diperbolehkan.',
+    'unable_to_read_file'   => 'Gagal membaca file: {param}.',
+    'invalid_rows'          => 'Ada beberapa baris yang tidak valid dalam file. Silakan periksa file dan coba lagi.',
 ];

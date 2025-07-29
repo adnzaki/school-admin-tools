@@ -5,7 +5,7 @@
         <div class="flex flex-wrap">
           <Button :label="$t('common.buttons.add')" @click="showForm" icon="pi pi-plus" class="mr-2 mb-2"></Button>
           <Button :label="$t('common.buttons.delete')" icon="pi pi-trash" severity="secondary" class="mr-2 mb-2"></Button>
-          <Button label="Import Data" icon="pi pi-file-plus" severity="primary" outlined class="mr-2 mb-2"></Button>
+          <Button :label="$t('common.buttons.import')" icon="pi pi-file-plus" @click="store.showImportDialog = true" severity="primary" outlined class="mr-2 mb-2"></Button>
         </div>
       </div>
     </div>

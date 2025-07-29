@@ -10,6 +10,8 @@ export const useEmployeeStore = defineStore('employee', {
     current: 1,
     selected: [],
     showForm: false,
+    showImportDialog: false,
+    errorImport: '',
     errors: {},
     formTitle: '',
     formData: {
@@ -23,6 +25,27 @@ export const useEmployeeStore = defineStore('employee', {
     formEvent: 'add' // add | edit
   }),
   actions: {
+    import(file, action) {
+      try {
+        api
+          .post(`${this.endpoint}import-data`, file, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              Authorization: `Bearer ${Cookies.get(conf.cookieName)}`
+            }
+          })
+          .then(({ data }) => {
+            if (data.status === 'success') {
+              this.showImportDialog = false
+            }
+
+            action(data.status, data.message)
+            this.getData()
+          })
+      } catch {
+        action('failed', '')
+      }
+    },
     save(action, error) {
       api
         .post(`${this.endpoint}save`, this.formData, {
@@ -75,7 +98,9 @@ export const useEmployeeStore = defineStore('employee', {
         },
         onError: () => {
           //errorNotif()
-          errorHandler()
+          if (errorHandler !== undefined) {
+            errorHandler()
+          }
         },
         debug: true
       })

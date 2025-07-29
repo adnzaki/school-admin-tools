@@ -32,4 +32,6 @@ return [
     'mime_in'               => 'The {field} must be of type: {param}.',
     'ext_in'                => 'The file extension for {field} is not allowed. (Allowed: {param})',
     'spreadsheet_only'      => 'Only Excel (.xls, .xlsx) files are allowed.',
+    'unable_to_read_file'   => 'Unable to read file: ',
+    'invalid_rows'          => 'There are some invalid rows in the file. Please check the file and try again.',
 ];
