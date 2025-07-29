@@ -61,6 +61,7 @@ const onTypeSelected = (value) => {
 }
 
 const onSave = (status, message) => {
+  toast.removeAllGroups()
   if (status === 'error') {
     toast.add({ severity: 'error', summary: t('common.error'), detail: t('common.incorrectForm'), life: 5000 })
   } else {
@@ -69,11 +70,13 @@ const onSave = (status, message) => {
 }
 
 const onSaveError = (reason) => {
+  toast.removeAllGroups()
   toast.add({ severity: 'error', summary: t('common.error'), detail: t('common.networkError'), life: 5000 })
   console.error(reason)
 }
 
 const save = () => {
+  toast.add({ severity: 'info', summary: t('common.processing'), detail: t('common.saving') })
   store.save(onSave, onSaveError)
 }
 </script>
