@@ -52,7 +52,7 @@ export const useEmployeeStore = defineStore('employee', {
       else action()
     },
     getDetail() {
-      api.get(`${this.endpoint}detail/${this.selected.id}`).then(({ data }) => {
+      api.get(`${this.endpoint}detail/${this.selectedSingle.id}`).then(({ data }) => {
         const detail = data.data
         this.formData = {
           id: detail.id,
@@ -114,15 +114,13 @@ export const useEmployeeStore = defineStore('employee', {
         })
     },
     resetForm() {
-      if (this.formEvent === 'edit') {
-        this.formData = {
-          nama: '',
-          nip: '',
-          jabatan: '',
-          jenis_pegawai: '',
-          email: '',
-          telepon: ''
-        }
+      this.formData = {
+        nama: '',
+        nip: '',
+        jabatan: '',
+        jenis_pegawai: '',
+        email: '',
+        telepon: ''
       }
     },
     getData(errorHandler) {

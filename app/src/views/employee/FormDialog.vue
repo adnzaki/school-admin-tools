@@ -57,7 +57,7 @@ const employeeTypes = ref([
 const employeeType = ref(null)
 
 const onDialogHide = () => {
-  store.resetForm()
+  if (store.formEvent === 'edit') store.resetForm()
   employeeType.value = null
 }
 
