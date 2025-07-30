@@ -58,10 +58,10 @@ export const useEmployeeStore = defineStore('employee', {
           id: detail.id,
           nama: detail.nama,
           nip: detail.nip ?? '',
-          jabatan: detail.jabatan,
+          jabatan: detail.jabatan ?? '',
           jenis_pegawai: detail.jenis_pegawai,
-          email: detail.email,
-          telepon: detail.telepon
+          email: detail.email ?? '',
+          telepon: detail.telepon ?? ''
         }
         this.formTitle = t('employee.edit')
         this.formEvent = 'edit'
