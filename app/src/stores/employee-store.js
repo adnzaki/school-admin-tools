@@ -63,7 +63,7 @@ export const useEmployeeStore = defineStore('employee', {
           email: detail.email ?? '',
           telepon: detail.telepon ?? ''
         }
-        this.formTitle = t('employee.edit')
+        this.formTitle = `${t('employee.edit')}: ${detail.nama}`
         this.formEvent = 'edit'
         this.showForm = true
       })

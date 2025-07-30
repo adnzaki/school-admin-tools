@@ -86,7 +86,7 @@ export const useStudentStore = defineStore('student', {
           provinsi: detail.provinsi
         }
 
-        this.formTitle = t('student.edit')
+        this.formTitle = `${t('student.edit')}: ${detail.nama}`
         this.formEvent = 'edit'
         this.showForm = true
       })
