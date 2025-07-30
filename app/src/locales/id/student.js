@@ -17,5 +17,9 @@ export default {
   city: 'Kab/Kota',
   province: 'Provinsi',
   cpd: 'CPD',
-  mutation: 'Mutasi'
+  mutation: 'Mutasi',
+  boy: 'Laki-laki',
+  girl: 'Perempuan',
+  add: 'Tambah Siswa Baru',
+  edit: 'Edit Siswa'
 }

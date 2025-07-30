@@ -40,7 +40,7 @@ const store = useStudentStore()
 const paging = usePagingStore()
 
 const showForm = () => {
-  store.formTitle = t('employee.add')
+  store.formTitle = t('student.add')
   store.formEvent = 'add'
   store.showForm = true
 }

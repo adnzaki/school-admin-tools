@@ -18,11 +18,22 @@ export const useStudentStore = defineStore('student', {
     formTitle: '',
     formData: {
       nama: '',
-      nip: '',
-      jabatan: '',
-      jenis_pegawai: '',
-      email: '',
-      telepon: ''
+      tempat_lahir: '',
+      tgl_lahir: '',
+      no_induk: '',
+      nisn: '',
+      jenis_kelamin: '',
+      nama_ayah: '',
+      pekerjaan_ayah: '',
+      nama_ibu: '',
+      pekerjaan_ibu: '',
+      alamat: '',
+      rt: '',
+      rw: '',
+      kelurahan: '',
+      kecamatan: '',
+      kab_kota: '',
+      provinsi: ''
     },
     formEvent: 'add' // add | edit
   }),
@@ -52,18 +63,30 @@ export const useStudentStore = defineStore('student', {
       else action()
     },
     getDetail() {
-      api.get(`${this.endpoint}detail/${this.selected.id}`).then(({ data }) => {
+      api.get(`${this.endpoint}detail/${this.selectedSingle.id}`).then(({ data }) => {
         const detail = data.data
         this.formData = {
           id: detail.id,
           nama: detail.nama,
-          nip: detail.nip ?? '',
-          jabatan: detail.jabatan,
-          jenis_pegawai: detail.jenis_pegawai,
-          email: detail.email,
-          telepon: detail.telepon
+          tempat_lahir: detail.tempat_lahir,
+          tgl_lahir: new Date(detail.tgl_lahir).toString(),
+          no_induk: detail.no_induk ?? '',
+          nisn: detail.nisn ?? '',
+          jenis_kelamin: detail.jenis_kelamin,
+          nama_ayah: detail.nama_ayah ?? '',
+          pekerjaan_ayah: detail.pekerjaan_ayah ?? '',
+          nama_ibu: detail.nama_ibu,
+          pekerjaan_ibu: detail.pekerjaan_ibu,
+          alamat: detail.alamat,
+          rt: detail.rt,
+          rw: detail.rw,
+          kelurahan: detail.kelurahan,
+          kecamatan: detail.kecamatan,
+          kab_kota: detail.kab_kota,
+          provinsi: detail.provinsi
         }
-        this.formTitle = t('employee.edit')
+
+        this.formTitle = t('student.edit')
         this.formEvent = 'edit'
         this.showForm = true
       })
@@ -89,6 +112,11 @@ export const useStudentStore = defineStore('student', {
       }
     },
     save(action, error) {
+      // format the date into yyyy-mm-dd
+      if (this.formData.tgl_lahir !== '') {
+        this.formData.tgl_lahir = new Date(this.formData.tgl_lahir).toISOString().slice(0, 10)
+      }
+
       api
         .post(`${this.endpoint}save`, this.formData, {
           transformRequest: [
@@ -114,15 +142,24 @@ export const useStudentStore = defineStore('student', {
         })
     },
     resetForm() {
-      if (this.formEvent === 'edit') {
-        this.formData = {
-          nama: '',
-          nip: '',
-          jabatan: '',
-          jenis_pegawai: '',
-          email: '',
-          telepon: ''
-        }
+      this.formData = {
+        nama: '',
+        tempat_lahir: '',
+        tgl_lahir: '',
+        no_induk: '',
+        nisn: '',
+        jenis_kelamin: '',
+        nama_ayah: '',
+        pekerjaan_ayah: '',
+        nama_ibu: '',
+        pekerjaan_ibu: '',
+        alamat: '',
+        rt: '',
+        rw: '',
+        kelurahan: '',
+        kecamatan: '',
+        kab_kota: '',
+        provinsi: ''
       }
     },
     getData(errorHandler) {

@@ -4,7 +4,7 @@ import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import ButtonMenu from './ButtonMenu.vue'
 import DataList from './DataList.vue'
-// import FormDialog from './FormDialog.vue'
+import FormDialog from './FormDialog.vue'
 // import ImportDialog from './ImportDialog.vue'
 
 const { t } = useI18n()
@@ -32,7 +32,7 @@ const confirmDelete = () => {
     <div class="font-semibold text-xl mb-4">{{ $t('menu.student') }}</div>
     <ButtonMenu />
     <DataList />
-    <!-- <FormDialog /> -->
+    <FormDialog />
     <!-- <ImportDialog /> -->
     <!-- <DeleteConfirmation v-model:display="store.showDeleteDialog" @delete="confirmDelete" /> -->
   </div>
