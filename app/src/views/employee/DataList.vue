@@ -30,7 +30,16 @@ const contextMenu = ref([
   {
     label: t('common.buttons.delete'),
     icon: 'pi pi-trash',
-    command: () => store.deleteData()
+    command: () => {
+      // clear first before pushing selected data
+      store.selected = []
+
+      // push selected data
+      store.selected.push(store.selectedSingle)
+      store.showDeleteConfirmation(() => {
+        toast.add({ severity: 'error', summary: t('common.error'), detail: t('common.unableToDelete'), life: 5000 })
+      })
+    }
   }
 ])
 
@@ -48,7 +57,7 @@ const data = computed(() => paging.state.data)
   <DataTable
     contextMenu
     @rowContextmenu="onContextMenuClick"
-    v-model:contextMenuSelection="store.selected"
+    v-model:contextMenuSelection="store.selectedSingle"
     v-model:selection="store.selected"
     selectionMode="multiple"
     metaKeySelection
@@ -60,6 +69,6 @@ const data = computed(() => paging.state.data)
   >
     <Column v-for="col of tableColumns" :key="col.key" :field="col.key" :header="col.label" :sortable="col.sortable"></Column>
   </DataTable>
-  <ContextMenu ref="cm" :model="contextMenu" @hide="store.selected = []" />
+  <ContextMenu ref="cm" :model="contextMenu" @hide="store.selectedSingle = null" />
   <Navigator v-model="store.current" />
 </template>

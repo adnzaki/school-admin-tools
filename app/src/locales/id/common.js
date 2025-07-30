@@ -25,5 +25,9 @@ export default {
   incorrectForm: 'Silakan isi form dengan benar',
   importing: 'Mengimpor data...',
   processing: 'Memroses permintaan...',
-  saving: 'Menyimpan data...'
+  saving: 'Menyimpan data...',
+  deleting: 'Menghapus data...',
+  unableToDelete: 'Silakan pilih data yang ingin dihapus',
+  deleteConfirm: 'Anda yakin ingin menghapus data ini?',
+  deleteTitle: 'Konfirmasi Hapus Data'
 }

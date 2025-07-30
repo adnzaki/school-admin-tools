@@ -163,22 +163,35 @@ class Pegawai extends BaseController
 
 
 
-    public function delete($id = null)
+    public function delete()
     {
-        if (! $id || ! $this->pegawai->find($id)) {
+        $ids = $this->request->getJSON(true)['id'];
+
+        if (empty($ids)) {
             return $this->response->setJSON([
                 'status'  => 'error',
                 'message' => lang('General.dataNotFound')
             ]);
         }
 
-        $this->pegawai->delete($id);
+        // Validasi: pastikan semua ID ada di database
+        $existing = $this->pegawai->whereIn('id', $ids)->findAll();
+
+        if (count($existing) !== count($ids)) {
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => lang('General.dataNotFound')
+            ]);
+        }
+
+        $this->pegawai->whereIn('id', $ids)->delete($ids);
 
         return $this->response->setJSON([
             'status'  => 'success',
             'message' => lang('General.dataDeleted')
         ]);
     }
+
 
     public function detail($id = null)
     {

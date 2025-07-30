@@ -25,7 +25,7 @@ $routes->group('auth', function (RouteCollection $routes) {
 $routes->group('pegawai', function (RouteCollection $routes) {
     $routes->post('get-data',        'Pegawai::getData');
     $routes->post('save',            'Pegawai::save');
-    $routes->delete('delete/(:num)', 'Pegawai::delete/$1');
+    $routes->delete('delete',        'Pegawai::delete');
     $routes->get('detail/(:num)',    'Pegawai::detail/$1');
     $routes->post('import-data',     'Pegawai::importData');
 });

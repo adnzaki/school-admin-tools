@@ -9,8 +9,10 @@ export const useEmployeeStore = defineStore('employee', {
     endpoint: 'pegawai/',
     current: 1,
     selected: [],
+    selectedSingle: null,
     showForm: false,
     showImportDialog: false,
+    showDeleteDialog: false,
     errorImport: '',
     errors: {},
     formTitle: '',
@@ -25,6 +27,30 @@ export const useEmployeeStore = defineStore('employee', {
     formEvent: 'add' // add | edit
   }),
   actions: {
+    delete(action) {
+      api
+        .delete(`${this.endpoint}delete`, {
+          data: {
+            id: this.selected.map((item) => item.id)
+          }
+        })
+        .then(({ data }) => {
+          if (data.status === 'success') {
+            this.selected = []
+            this.getData()
+            this.showDeleteDialog = false
+          }
+
+          action(data.status, data.message)
+        })
+        .catch(() => {
+          action('failed', t('common.networkError'))
+        })
+    },
+    showDeleteConfirmation(action) {
+      if (this.selected.length > 0) this.showDeleteDialog = true
+      else action()
+    },
     getDetail() {
       api.get(`${this.endpoint}detail/${this.selected.id}`).then(({ data }) => {
         const detail = data.data
@@ -122,8 +148,7 @@ export const useEmployeeStore = defineStore('employee', {
           if (errorHandler !== undefined) {
             errorHandler()
           }
-        },
-        debug: true
+        }
       })
     }
   }

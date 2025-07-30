@@ -11,6 +11,7 @@ import PrimeVue from 'primevue/config'
 import ConfirmationService from 'primevue/confirmationservice'
 import ToastService from 'primevue/toastservice'
 import { SearchBox, Table as SsTable } from 'ss-paging-vue/components'
+import DeleteConfirmation from './components/DeleteConfirmation.vue'
 
 import '@/assets/styles.scss'
 
@@ -35,5 +36,6 @@ app.component('SsTable', SsTable)
 app.component('SearchBox', SearchBox)
 app.component('PagingRows', PagingRows)
 app.component('Navigator', Navigator)
+app.component('DeleteConfirmation', DeleteConfirmation)
 
 app.mount('#app')
