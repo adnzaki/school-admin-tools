@@ -34,6 +34,6 @@ const confirmDelete = () => {
     <DataList />
     <FormDialog />
     <ImportDialog />
-    <!-- <DeleteConfirmation v-model:display="store.showDeleteDialog" @delete="confirmDelete" /> -->
+    <DeleteConfirmation v-model:display="store.showDeleteDialog" @delete="confirmDelete" />
   </div>
 </template>

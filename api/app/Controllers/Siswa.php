@@ -162,16 +162,28 @@ class Siswa extends BaseController
         ]);
     }
 
-    public function delete($id = null)
+    public function delete()
     {
-        if (! $id || ! $this->siswa->find($id)) {
+        $ids = $this->request->getJSON(true)['id'];
+
+        if (empty($ids)) {
             return $this->response->setJSON([
                 'status'  => 'error',
                 'message' => lang('General.dataNotFound')
             ]);
         }
 
-        $this->siswa->delete($id);
+        // Validasi: pastikan semua ID siswa tersedia
+        $existing = $this->siswa->whereIn('id', $ids)->findAll();
+
+        if (count($existing) !== count($ids)) {
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => lang('General.dataNotFound')
+            ]);
+        }
+
+        $this->siswa->whereIn('id', $ids)->delete($ids);
 
         return $this->response->setJSON([
             'status'  => 'success',

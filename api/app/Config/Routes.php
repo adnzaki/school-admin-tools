@@ -33,7 +33,7 @@ $routes->group('pegawai', function (RouteCollection $routes) {
 $routes->group('siswa', function (RouteCollection $routes) {
     $routes->post('get-data', 'Siswa::getData');
     $routes->post('save', 'Siswa::save');
-    $routes->delete('delete/(:num)', 'Siswa::delete/$1');
+    $routes->delete('delete', 'Siswa::delete');
     $routes->get('detail/(:num)', 'Siswa::detail/$1');
     $routes->post('import-data', 'Siswa::importData');
 });
