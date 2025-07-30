@@ -1,0 +1,21 @@
+export default {
+  name: 'Nama',
+  placeOfBirth: 'Tempat Lahir',
+  dateOfBirth: 'Tanggal Lahir',
+  studentId: 'No Induk',
+  nisn: 'NISN',
+  gender: 'Jenis Kelamin',
+  fatherName: 'Nama Ayah',
+  fatherOccupation: 'Pekerjaan Ayah',
+  motherName: 'Nama Ibu',
+  motherOccupation: 'Pekerjaan Ibu',
+  address: 'Alamat',
+  rt: 'RT',
+  rw: 'RW',
+  subDistrict: 'Kelurahan',
+  district: 'Kecamatan',
+  city: 'Kab/Kota',
+  province: 'Provinsi',
+  cpd: 'CPD',
+  mutation: 'Mutasi'
+}

@@ -21,6 +21,11 @@ const router = createRouter({
           name: 'pegawai',
           component: () => import('@/views/employee/IndexPage.vue')
         },
+        {
+          path: '/siswa',
+          name: 'siswa',
+          component: () => import('@/views/student/IndexPage.vue')
+        },
 
         // --------- ROUTES FOR DEMO --------- //
         {

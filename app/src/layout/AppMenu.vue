@@ -15,7 +15,7 @@ const model = ref([
     label: 'Data',
     items: [
       { label: t('menu.employee'), icon: 'pi pi-fw pi-address-book', to: '/pegawai' },
-      { label: t('menu.student'), icon: 'pi pi-fw pi-users', to: '/uikit/formlayout' }
+      { label: t('menu.student'), icon: 'pi pi-fw pi-users', to: '/siswa' }
     ]
   },
   {
@@ -38,7 +38,8 @@ const model = ref([
     items: [
       { label: t('menu.letterOfEmployee'), icon: 'pi pi-fw pi-file-check', to: '/uikit/formlayout' },
       { label: t('menu.taskLetter'), icon: 'pi pi-fw pi-hourglass', to: '/uikit/formlayout' },
-      { label: t('menu.travelLetter'), icon: 'pi pi-fw pi-truck', to: '/uikit/formlayout' }
+      { label: t('menu.travelLetter'), icon: 'pi pi-fw pi-truck', to: '/uikit/formlayout' },
+      { label: t('menu.permitRequest'), icon: 'pi pi-fw pi-folder-plus', to: '/uikit/formlayout' }
     ]
   },
   {

@@ -10,6 +10,7 @@ export default {
   letterOfEmployee: 'Surat Ket. Pegawai',
   taskLetter: 'Surat Tugas',
   travelLetter: 'Perjalanan Dinas',
+  permitRequest: 'Surat Izin',
   inLetter: 'Surat Masuk',
   outLetter: 'Surat Keluar',
   profile: 'Profil'
