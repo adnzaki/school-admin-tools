@@ -21,5 +21,7 @@ export default {
   boy: 'Laki-laki',
   girl: 'Perempuan',
   add: 'Tambah Siswa Baru',
-  edit: 'Edit Siswa'
+  edit: 'Edit Siswa',
+  import: 'Import Siswa',
+  importNote: 'Silakan unduh file template untuk import data siswa berikut terlebih dahulu, kemudian unggah pada form yang telah disediakan.'
 }

@@ -5,7 +5,7 @@ import { useI18n } from 'vue-i18n'
 import ButtonMenu from './ButtonMenu.vue'
 import DataList from './DataList.vue'
 import FormDialog from './FormDialog.vue'
-// import ImportDialog from './ImportDialog.vue'
+import ImportDialog from './ImportDialog.vue'
 
 const { t } = useI18n()
 
@@ -33,7 +33,7 @@ const confirmDelete = () => {
     <ButtonMenu />
     <DataList />
     <FormDialog />
-    <!-- <ImportDialog /> -->
+    <ImportDialog />
     <!-- <DeleteConfirmation v-model:display="store.showDeleteDialog" @delete="confirmDelete" /> -->
   </div>
 </template>
