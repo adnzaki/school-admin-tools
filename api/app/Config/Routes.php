@@ -38,5 +38,13 @@ $routes->group('siswa', function (RouteCollection $routes) {
     $routes->post('import-data', 'Siswa::importData');
 });
 
+$routes->group('surat-masuk', function (RouteCollection $routes) {
+    $routes->post('get-data', 'SuratMasuk::getData');
+    $routes->post('save', 'SuratMasuk::save');
+    $routes->delete('delete', 'SuratMasuk::delete');
+    $routes->get('detail/(:num)', 'SuratMasuk::detail/$1');
+    $routes->post('upload', 'SuratMasuk::upload');
+});
+
 
 service('auth')->routes($routes);

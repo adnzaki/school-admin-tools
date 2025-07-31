@@ -16,6 +16,8 @@ return [
     'in_list'               => 'The selected {field} is invalid.',
     'valid_url'             => 'The {field} field must contain a valid URL.',
     'valid_email'           => 'The {field} field must contain a valid email address.',
+    'valid_date'            => 'The {field} field must contain a valid date.',
+    'is_image'              => 'The {field} must be a valid image file.',
     'is_unique'             => 'This username has already been used.',
     'is_unique_email'       => 'This email address has already been used.',
     'is_unique_nip'         => 'This NIP has already been used.',

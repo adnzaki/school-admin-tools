@@ -16,6 +16,8 @@ return [
     'in_list'               => 'Pilihan {field} tidak tersedia',
     'valid_url'             => 'Kolom {field} harus berisi URL yang valid. (Contoh: http://example.com / https://example2.com)',
     'valid_email'           => 'Kolom {field} harus berisi alamat email yang valid',
+    'valid_date'            => 'Kolom {field} harus berisi tanggal yang valid',
+    'is_image'              => 'Kolom {field} harus berisi file gambar yang valid.',
     'is_unique'             => 'Username telah digunakan',
     'is_unique_email'       => 'Alamat email telah digunakan',
     'is_unique_nip'         => 'NIP telah digunakan',

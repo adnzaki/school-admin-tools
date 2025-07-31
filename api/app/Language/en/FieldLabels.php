@@ -1,4 +1,5 @@
 <?php
+// English: app/Language/en/FieldLabels.php
 
 return [
     'pegawai' => [
@@ -30,5 +31,29 @@ return [
         'provinsi'        => 'province',
         'cpd'             => 'prospective student (CPD)',
         'mutasi'          => 'mutation',
+    ],
+
+    'suratMasuk' => [
+        'nomor_surat'  => 'letter number',
+        'asal_surat'   => 'origin of letter',
+        'perihal'      => 'subject',
+        'tgl_surat'    => 'date of letter',
+        'tgl_diterima' => 'date received',
+        'keterangan'   => 'description',
+    ],
+
+    'suratKeluar' => [
+        'nomor_surat'  => 'letter number',
+        'tujuan_surat' => 'destination of letter',
+        'perihal'      => 'subject',
+        'tgl_surat'    => 'date of letter',
+        'keterangan'   => 'description',
+    ],
+
+    'lampiranSurat' => [
+        'jenis_surat' => 'letter type',
+        'surat_id'    => 'letter ID',
+        'nama_file'   => 'file name',
+        'path'        => 'file path',
     ],
 ];

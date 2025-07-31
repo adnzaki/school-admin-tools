@@ -1,4 +1,5 @@
 <?php
+// Indonesia: app/Language/id/FieldLabels.php
 
 return [
     'pegawai' => [
@@ -30,5 +31,29 @@ return [
         'provinsi'        => 'provinsi',
         'cpd'             => 'calon peserta didik (CPD)',
         'mutasi'          => 'mutasi',
+    ],
+
+    'suratMasuk' => [
+        'nomor_surat'  => 'nomor surat',
+        'asal_surat'   => 'asal surat',
+        'perihal'      => 'perihal',
+        'tgl_surat'    => 'tanggal surat',
+        'tgl_diterima' => 'tanggal diterima',
+        'keterangan'   => 'keterangan',
+    ],
+
+    'suratKeluar' => [
+        'nomor_surat'  => 'nomor surat',
+        'tujuan_surat' => 'tujuan surat',
+        'perihal'      => 'perihal',
+        'tgl_surat'    => 'tanggal surat',
+        'keterangan'   => 'keterangan',
+    ],
+
+    'lampiranSurat' => [
+        'jenis_surat' => 'jenis surat',
+        'surat_id'    => 'ID surat',
+        'nama_file'   => 'nama file',
+        'path'        => 'lokasi file',
     ],
 ];
