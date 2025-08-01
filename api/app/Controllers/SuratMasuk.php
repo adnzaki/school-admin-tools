@@ -65,6 +65,7 @@ class SuratMasuk extends BaseController
 
         if (! $this->validate($rules)) {
             $errors = $this->validator->getErrors();
+
             return $this->response->setJSON([
                 'status'  => 'error',
                 'message' => validation_error($errors, $rules)
@@ -94,7 +95,7 @@ class SuratMasuk extends BaseController
         // Jika filename tersedia, simpan sebagai lampiran surat masuk
         if (! empty($p['berkas'])) {
             $this->lampiranModel->save([
-                'jenis_surat' => 'masuk',
+                'jenis_surat' => $this->jenisSurat,
                 'surat_id'    => $suratId,
                 'nama_file'   => $p['berkas'],
                 'path'        => 'api/public/uploads/surat/masuk/' . $p['berkas'],
@@ -108,36 +109,10 @@ class SuratMasuk extends BaseController
         ]);
     }
 
-    public function uploadSuratPdf()
-    {
-        $config = [
-            'file'    => 'surat',
-            'dir'     => 'surat/masuk',
-            'maxSize' => 2048,
-            'prefix'  => 'surat_' . date('Ymd') . '_',
-        ];
-
-        $uploader = new \Uploader;
-        $response = $uploader->uploadPdf($config);
-
-        if ($response['msg'] !== 'OK') {
-            return $this->response->setJSON([
-                'status'  => 'error',
-                'message' => $response['error'],
-            ]);
-        }
-
-        // Ambil info filename dan path saja, tanpa simpan ke DB
-        $uploaded = $response['uploaded'];
-        return $this->response->setJSON([
-            'status'   => 'success',
-            'uploaded' => $uploaded
-        ]);
-    }
-
     public function delete()
     {
         $ids = $this->request->getJSON(true)['id'] ?? [];
+
         if (empty($ids)) {
             return $this->response->setJSON([
                 'status'  => 'error',
@@ -153,7 +128,26 @@ class SuratMasuk extends BaseController
             ]);
         }
 
+        // Inisialisasi uploader
+        $uploader = new \Uploader();
+
+        // Ambil semua lampiran terkait
+        $lampiran = $this->lampiranModel->whereIn('surat_id', $ids)->findAll();
+        foreach ($lampiran as $file) {
+            if (! empty($file['nama_file'])) {
+                $filePath = 'surat/' . $this->jenisSurat . '/' . $file['nama_file'];
+                $uploader->removeFile($filePath);
+            }
+        }
+
+        // Hapus data lampiran di DB
+        foreach ($lampiran as $data) {
+            $this->lampiranModel->where('id', $data['id'])->delete($data['id']);
+        }
+
+        // Hapus data surat masuk/keluar
         $this->suratModel->whereIn('id', $ids)->delete($ids);
+
         return $this->response->setJSON([
             'status'  => 'success',
             'message' => lang('General.dataDeleted')
@@ -171,17 +165,10 @@ class SuratMasuk extends BaseController
             ]);
         }
 
-        // Ambil lampiran dari model LampiranSuratModel
-        $lampiranModel = new \App\Models\LampiranSuratModel();
-        $lampiran = $lampiranModel
-            ->where('jenis_surat', 'masuk')
-            ->where('surat_id', $id)
-            ->findAll();
-
         return $this->response->setJSON([
-            'status' => 'success',
-            'data'   => $data,
-            'lampiran' => $lampiran,
+            'status'    => 'success',
+            'data'      => $data,
+            'lampiran'  => $this->getLampiran($id),
         ]);
     }
 }

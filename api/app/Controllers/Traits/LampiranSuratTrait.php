@@ -22,49 +22,33 @@ trait LampiranSuratTrait
             ->where('surat_id', $suratId)
             ->findAll();
 
-        return $this->response->setJSON([
-            'status'    => 'success',
-            'data'      => $data,
-            'message'   => lang('General.dataFetched')
-        ]);
+        return $data;
     }
 
-    /**
-     * Simpan satu lampiran (insert/update).
-     */
-    public function saveLampiran()
+    public function uploadSuratPdf()
     {
-        $rules = [
-            'surat_id'  => ['rules' => 'required|numeric', 'label' => lang('FieldLabels.lampiranSurat.surat_id')],
-            'nama_file' => ['rules' => 'required',         'label' => lang('FieldLabels.lampiranSurat.nama_file')],
-            'path'      => ['rules' => 'required',         'label' => lang('FieldLabels.lampiranSurat.path')],
+        $config = [
+            'file'    => 'surat',
+            'dir'     => 'surat/' . $this->jenisSurat,
+            'maxSize' => 4096,
+            'prefix'  => 'surat_' . date('Ymd') . '_',
         ];
 
-        if (! $this->validate($rules)) {
-            $errors   = $this->validator->getErrors();
-            $messages = validation_error($errors, $rules);
+        $uploader = new \Uploader;
+        $response = $uploader->uploadPdf($config);
+
+        if ($response['msg'] !== 'OK') {
             return $this->response->setJSON([
                 'status'  => 'error',
-                'message' => $messages
+                'message' => $response['error'],
             ]);
         }
 
-        $data = [
-            'jenis_surat' => $this->jenisSurat,
-            'surat_id'    => $this->request->getPost('surat_id'),
-            'nama_file'   => $this->request->getPost('nama_file'),
-            'path'        => $this->request->getPost('path'),
-        ];
-
-        if ($id = $this->request->getPost('id')) {
-            $data['id'] = $id;
-        }
-
-        $this->lampiranModel->save($data);
-
+        // Ambil info filename dan path saja, tanpa simpan ke DB
+        $uploaded = $response['uploaded'];
         return $this->response->setJSON([
-            'status'  => 'success',
-            'message' => lang('General.dataSaved')
+            'status'   => 'success',
+            'uploaded' => $uploaded
         ]);
     }
 
@@ -90,7 +74,20 @@ trait LampiranSuratTrait
             ]);
         }
 
-        $this->lampiranModel->whereIn('id', $ids)->delete();
+        // Hapus file fisik
+        $uploader = new \Uploader(); // sesuaikan jika namespace berbeda
+        foreach ($existing as $lampiran) {
+            if (! empty($lampiran['nama_file'])) {
+                // $this->jenisSurat tergantung dari controller mana ia dipanggil: SuratMasuk atau SuratKeluar
+                // $this->jenisSurat juga bisa diganti dengan $lampiran['jenis_surat']
+                $filePath = 'surat/' . $this->jenisSurat . '/' . $lampiran['nama_file'];
+
+                $uploader->removeFile($filePath);
+            }
+        }
+
+        // Hapus dari database
+        $this->lampiranModel->whereIn('id', $ids)->delete($ids);
 
         return $this->response->setJSON([
             'status'  => 'success',
