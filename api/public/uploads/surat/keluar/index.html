@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>403 Forbidden – Kucing Lengkap</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #fce4ec;
+        font-family: "Comic Sans MS", cursive, sans-serif;
+        text-align: center;
+      }
+
+      h1 {
+        margin-top: 20px;
+        font-size: 4em;
+        color: #e91e63;
+      }
+
+      p {
+        color: #880e4f;
+        font-size: 1.3em;
+      }
+
+      .cat-svg {
+        width: 300px;
+        height: auto;
+        margin: 20px auto;
+        display: block;
+      }
+
+      /* Animasi ekor */
+      @keyframes tail-wag {
+        0%,
+        100% {
+          transform: rotate(20deg);
+        }
+        50% {
+          transform: rotate(-20deg);
+        }
+      }
+      .tail {
+        transform-origin: 160px 140px;
+        animation: tail-wag 1s ease-in-out infinite;
+      }
+
+      /* Animasi kedip mata */
+      @keyframes blink {
+        0%,
+        95%,
+        100% {
+          transform: scaleY(1);
+        }
+        96%,
+        99% {
+          transform: scaleY(0.1);
+        }
+      }
+      .eye {
+        transform-origin: center center;
+        animation: blink 4s infinite;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>403 Forbidden!</h1>
+    <p>Wah, kucing ini nggak izinkan kamu masuk… 😾</p>
+    <p>-------------------------------------------------</p>
+    <p>“Oops, this cat won’t let you in… 😾”</p>
+
+    <svg
+      viewBox="0 0 200 200"
+      class="cat-svg"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <!-- Tubuh -->
+      <ellipse
+        cx="100"
+        cy="120"
+        rx="60"
+        ry="50"
+        fill="#fff"
+        stroke="#e91e63"
+        stroke-width="4"
+      />
+
+      <!-- Tangan kiri -->
+      <path
+        d="M40,110 Q20,130 40,140"
+        fill="none"
+        stroke="#e91e63"
+        stroke-width="4"
+      />
+      <!-- Tangan kanan -->
+      <path
+        d="M160,110 Q180,130 160,140"
+        fill="none"
+        stroke="#e91e63"
+        stroke-width="4"
+      />
+
+      <!-- Kaki kiri -->
+      <path
+        d="M70,160 Q70,180 90,180"
+        fill="none"
+        stroke="#e91e63"
+        stroke-width="4"
+      />
+      <!-- Kaki kanan -->
+      <path
+        d="M130,160 Q130,180 110,180"
+        fill="none"
+        stroke="#e91e63"
+        stroke-width="4"
+      />
+
+      <!-- Buntut -->
+      <g class="tail">
+        <path
+          d="M160,140 Q180,120 190,150"
+          fill="none"
+          stroke="#e91e63"
+          stroke-width="6"
+        />
+      </g>
+
+      <!-- Kepala -->
+      <circle
+        cx="100"
+        cy="60"
+        r="40"
+        fill="#fff"
+        stroke="#e91e63"
+        stroke-width="4"
+      />
+
+      <!-- Telinga kiri -->
+      <path
+        d="M70,20 L90,50 L60,50 Z"
+        fill="#fff"
+        stroke="#e91e63"
+        stroke-width="4"
+      />
+      <!-- Telinga kanan -->
+      <path
+        d="M130,20 L110,50 L140,50 Z"
+        fill="#fff"
+        stroke="#e91e63"
+        stroke-width="4"
+      />
+
+      <!-- Mata kiri -->
+      <g class="eye">
+        <circle cx="80" cy="55" r="8" fill="#e91e63" />
+      </g>
+      <!-- Mata kanan -->
+      <g class="eye">
+        <circle cx="120" cy="55" r="8" fill="#e91e63" />
+      </g>
+
+      <!-- Mulut buka-tutup -->
+      <path
+        id="mouth"
+        d="M85,75 Q100,90 115,75"
+        fill="none"
+        stroke="#e91e63"
+        stroke-width="4"
+      >
+        <animate
+          attributeName="d"
+          dur="1s"
+          repeatCount="indefinite"
+          values="
+          M85,75 Q100,90 115,75;
+          M85,75 Q100,80 115,75;
+          M85,75 Q100,90 115,75
+        "
+        />
+      </path>
+
+      <!-- Kumis -->
+      <path d="M60,75 L20,75" stroke="#e91e63" stroke-width="2" />
+      <path d="M140,75 L180,75" stroke="#e91e63" stroke-width="2" />
+    </svg>
+
+    <!-- <a
+      href="/"
+      style="
+        display: inline-block;
+        padding: 10px 20px;
+        background: #f06292;
+        color: #fff;
+        border-radius: 20px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background 0.3s;
+      "
+      onmouseover="this.style.background='#d81b60'"
+      onmouseout="this.style.background='#f06292'"
+    >
+      Balik ke Beranda
+    </a> -->
+  </body>
+</html>

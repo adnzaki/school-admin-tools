@@ -44,6 +44,16 @@ $routes->group('surat-masuk', function (RouteCollection $routes) {
     $routes->delete('delete', 'SuratMasuk::delete');
     $routes->get('detail/(:num)', 'SuratMasuk::detail/$1');
     $routes->post('upload', 'SuratMasuk::uploadSuratPdf');
+    $routes->delete('delete-berkas', 'SuratMasuk::deleteLampiran');
+});
+
+$routes->group('surat-keluar', function (RouteCollection $routes) {
+    $routes->post('get-data', 'SuratKeluar::getData');
+    $routes->post('save', 'SuratKeluar::save');
+    $routes->delete('delete', 'SuratKeluar::delete');
+    $routes->get('detail/(:num)', 'SuratKeluar::detail/$1');
+    $routes->post('upload', 'SuratKeluar::uploadSuratPdf');
+    $routes->delete('delete-berkas', 'SuratMasuk::deleteLampiran');
 });
 
 
