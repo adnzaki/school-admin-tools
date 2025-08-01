@@ -10,6 +10,12 @@
 # OS X Thumbnails
 ._*
 
+# ignore uploaded files
+public/uploads/surat/masuk/*
+!public/uploads/surat/masuk/index.html
+public/uploads/surat/keluar/*
+!public/uploads/surat/keluar/index.html
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
