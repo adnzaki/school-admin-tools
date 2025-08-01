@@ -43,7 +43,7 @@ $routes->group('surat-masuk', function (RouteCollection $routes) {
     $routes->post('save', 'SuratMasuk::save');
     $routes->delete('delete', 'SuratMasuk::delete');
     $routes->get('detail/(:num)', 'SuratMasuk::detail/$1');
-    $routes->post('upload', 'SuratMasuk::upload');
+    $routes->post('upload', 'SuratMasuk::uploadSuratPdf');
 });
 
 

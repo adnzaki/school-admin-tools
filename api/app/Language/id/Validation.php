@@ -31,7 +31,7 @@ return [
     'max_size'              => 'Ukuran file terlalu besar',
     'alpha_dash'            => 'Kolom {field} hanya boleh diisi huruf, angka, underscore(_) dan strip (-)',
     'uploaded'              => 'Berkas untuk {field} belum diunggah',
-    'mime_in'               => 'Berkas {field} harus bertipe: {param}',
+    'mime_in'               => 'Berkas {field} harus bertipe: {0}',
     'ext_in'                => 'Ekstensi file {field} tidak diizinkan. (Hanya {param})',
     'spreadsheet_only'      => 'Hanya file Excel (.xls, .xlsx) yang diperbolehkan.',
     'unable_to_read_file'   => 'Gagal membaca file: {param}.',

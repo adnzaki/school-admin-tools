@@ -31,7 +31,7 @@ return [
     'max_size'              => 'The file is too large.',
     'alpha_dash'            => 'The {field} field may only contain letters, numbers, dashes and underscores.',
     'uploaded'              => 'The file for {field} has not been uploaded.',
-    'mime_in'               => 'The {field} must be of type: {param}.',
+    'mime_in'               => 'The {field} must be of type: {0}.',
     'ext_in'                => 'The file extension for {field} is not allowed. (Allowed: {param})',
     'spreadsheet_only'      => 'Only Excel (.xls, .xlsx) files are allowed.',
     'unable_to_read_file'   => 'Unable to read file: ',

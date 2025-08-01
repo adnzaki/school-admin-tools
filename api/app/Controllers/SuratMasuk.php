@@ -87,9 +87,51 @@ class SuratMasuk extends BaseController
         }
 
         $this->suratModel->save($data);
+
+        // Ambil ID surat yg baru disimpan
+        $suratId = isset($data['id']) ? $data['id'] : $this->suratModel->getInsertID();
+
+        // Jika filename tersedia, simpan sebagai lampiran surat masuk
+        if (! empty($p['berkas'])) {
+            $this->lampiranModel->save([
+                'jenis_surat' => 'masuk',
+                'surat_id'    => $suratId,
+                'nama_file'   => $p['berkas'],
+                'path'        => 'api/public/uploads/surat/masuk/' . $p['berkas'],
+            ]);
+        }
+
+
         return $this->response->setJSON([
             'status'  => 'success',
             'message' => lang('General.dataSaved')
+        ]);
+    }
+
+    public function uploadSuratPdf()
+    {
+        $config = [
+            'file'    => 'surat',
+            'dir'     => 'surat/masuk',
+            'maxSize' => 2048,
+            'prefix'  => 'surat_' . date('Ymd') . '_',
+        ];
+
+        $uploader = new \Uploader;
+        $response = $uploader->uploadPdf($config);
+
+        if ($response['msg'] !== 'OK') {
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => $response['error'],
+            ]);
+        }
+
+        // Ambil info filename dan path saja, tanpa simpan ke DB
+        $uploaded = $response['uploaded'];
+        return $this->response->setJSON([
+            'status'   => 'success',
+            'uploaded' => $uploaded
         ]);
     }
 

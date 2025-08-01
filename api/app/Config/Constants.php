@@ -17,6 +17,16 @@ defined('APP_NAMESPACE') || define('APP_NAMESPACE', 'App');
 
 /*
  | --------------------------------------------------------------------------
+ | Public Path
+ | --------------------------------------------------------------------------
+ |
+ | The path to the public folder. The default is in the Root directory.
+ */
+defined('PUBLICPATH') || define('PUBLICPATH', ROOTPATH . 'public/');
+
+
+/*
+ | --------------------------------------------------------------------------
  | Composer Path
  | --------------------------------------------------------------------------
  |
