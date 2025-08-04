@@ -29,18 +29,13 @@ class SuratMasuk extends BaseController
         $sort      = $this->request->getPost('sort');
         $search    = $this->request->getPost('search');
 
-        if (! empty($search)) {
-            $this->suratModel->like($searchBy, $search);
-        }
-
-        $data  = $this->suratModel
+        //$this->like($searchBy, $search);
+        $data  = $this->like($searchBy, $search)
             ->where('institusi_id', get_institusi())
             ->orderBy($orderBy, $sort)
             ->findAll($limit, $offset);
 
-        $total = empty($search)
-            ? $this->suratModel->where('institusi_id', get_institusi())->countAllResults()
-            : $this->suratModel->where('institusi_id', get_institusi())->like($searchBy, $search)->countAllResults();
+        $total = $this->like($searchBy, $search)->where('institusi_id', get_institusi())->countAllResults();
 
         return $this->response->setJSON([
             'container' => $data,
@@ -50,6 +45,22 @@ class SuratMasuk extends BaseController
                 'message' => lang('General.dataFetched')
             ]
         ]);
+    }
+
+    public function like($searchBy, $search)
+    {
+        if (! empty($search)) {
+            if (strpos($searchBy, '-') !== false) {
+                $searchBy = explode('-', $searchBy);
+                $like1 = "($searchBy[0] LIKE '%$search%' ESCAPE '!' OR $searchBy[1]";
+                $like2 = "'%$search%' ESCAPE '!')";
+                return $this->suratModel->like($like1, $like2, 'none', false);
+            } else {
+                return $this->suratModel->like($searchBy, $search);
+            }
+        } else {
+            return $this->suratModel;
+        }
     }
 
     public function save()
