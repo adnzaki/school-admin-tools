@@ -3,7 +3,7 @@
     <p>{{ $t('student.importNote') }}</p>
     <Button :label="$t('common.buttons.download')" @click="download" icon="pi pi-download" severity="primary" outlined class="mr-2 mb-2"></Button>
     <h5>{{ $t('common.buttons.upload') }}</h5>
-    <FileUpload name="import[]" @uploader="onUpload" :multiple="true" accept=".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" :maxFileSize="1000000" customUpload />
+    <FileUpload name="import[]" :file-limit="1" @uploader="onUpload" accept=".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" :maxFileSize="1000000" customUpload />
   </Dialog>
 </template>
 

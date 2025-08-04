@@ -94,8 +94,13 @@ class SuratMasuk extends BaseController
             'keterangan'   => $p['keterangan'],
         ];
 
+        $archive = $this->getLampiran($p['id']);
         if (! empty($p['id'])) {
             $data['id'] = $p['id'];
+            if (! empty($p['berkas']) && $archive !== null) {
+                $uploader = new \Uploader;
+                $uploader->removePreviousFile($archive['nama_file'], $p['berkas'], 'surat/masuk/');
+            }
         }
 
         $this->suratModel->save($data);
@@ -105,12 +110,17 @@ class SuratMasuk extends BaseController
 
         // Jika filename tersedia, simpan sebagai lampiran surat masuk
         if (! empty($p['berkas'])) {
-            $this->lampiranModel->save([
+            $archiveData = [
                 'jenis_surat' => $this->jenisSurat,
                 'surat_id'    => $suratId,
                 'nama_file'   => $p['berkas'],
                 'path'        => 'api/public/uploads/surat/masuk/' . $p['berkas'],
-            ]);
+            ];
+            if ($archive !== null) {
+                $archiveData['id'] = $archive['id'];
+            }
+
+            $this->lampiranModel->save($archiveData);
         }
 
 

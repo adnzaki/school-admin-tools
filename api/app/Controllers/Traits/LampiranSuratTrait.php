@@ -20,7 +20,7 @@ trait LampiranSuratTrait
         $data = $this->lampiranModel
             ->where('jenis_surat', $this->jenisSurat)
             ->where('surat_id', $suratId)
-            ->findAll();
+            ->first();
 
         return $data;
     }
@@ -52,10 +52,21 @@ trait LampiranSuratTrait
         ]);
     }
 
+    public function deleteBerkas()
+    {
+        $filename = $this->request->getPost('filename');
+        $uploader = new \Uploader;
+        $uploader->removeFile('surat/' . $this->jenisSurat . '/' . $filename);
+        return $this->response->setJSON([
+            'status'  => 'success',
+            'message' => lang('General.fileDeleted')
+        ]);
+    }
+
     /**
-     * Hapus lampiran berdasarkan ID batch.
+     * Hapus berkas yang sudah tersimpan di database
      */
-    public function deleteLampiran()
+    public function deleteSavedBerkas()
     {
         $ids = $this->request->getJSON(true)['id'] ?? [];
 

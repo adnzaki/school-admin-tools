@@ -12,4 +12,5 @@ return [
     'welcome'           => 'Selamat datang, {name}',
     'inactiveInstitute' => 'Institusi tidak aktif atau masa aktif telah berakhir.',
     'notRegistered'     => 'Anda belum terdaftar dalam institusi manapun',
+    'fileDeleted'       => 'File berhasil dihapus',
 ];

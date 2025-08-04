@@ -24,6 +24,7 @@ export default {
   },
   incorrectForm: 'Silakan isi form dengan benar',
   importing: 'Mengimpor data...',
+  uploading: 'Mengunggah berkas...',
   processing: 'Memroses permintaan...',
   saving: 'Menyimpan data...',
   deleting: 'Menghapus data...',
