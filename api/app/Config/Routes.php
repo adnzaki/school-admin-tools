@@ -40,6 +40,7 @@ $routes->group('siswa', function (RouteCollection $routes) {
 
 $routes->group('surat-masuk', function (RouteCollection $routes) {
     $routes->post('get-data', 'SuratMasuk::getData');
+    $routes->post('get-data/(:any)/(:any)', 'SuratMasuk::getData/$1/$2');
     $routes->post('save', 'SuratMasuk::save');
     $routes->delete('delete', 'SuratMasuk::delete');
     $routes->get('detail/(:num)', 'SuratMasuk::detail/$1');
@@ -50,6 +51,7 @@ $routes->group('surat-masuk', function (RouteCollection $routes) {
 
 $routes->group('surat-keluar', function (RouteCollection $routes) {
     $routes->post('get-data', 'SuratKeluar::getData');
+    $routes->post('get-data/(:any)/(:any)', 'SuratKeluar::getData/$1/$2');
     $routes->post('save', 'SuratKeluar::save');
     $routes->delete('delete', 'SuratKeluar::delete');
     $routes->get('detail/(:num)', 'SuratKeluar::detail/$1');

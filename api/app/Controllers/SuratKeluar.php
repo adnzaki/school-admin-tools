@@ -18,7 +18,7 @@ class SuratKeluar extends BaseController
         $this->jenisSurat    = 'keluar';
     }
 
-    public function getData()
+    public function getData($dateStart = '', $dateEnd = '')
     {
         $limit     = (int)$this->request->getPost('limit');
         $offset    = (int)$this->request->getPost('offset');
@@ -27,12 +27,19 @@ class SuratKeluar extends BaseController
         $sort      = $this->request->getPost('sort');
         $search    = $this->request->getPost('search');
 
-        $data  = $this->like($searchBy, $search)
-            ->where('institusi_id', get_institusi())
+        // generate LIKE query if $search is not empty
+        // or return SuratKeluarModel if $search is empty
+        $like = $this->like($searchBy, $search);
+
+        if (! empty($dateStart) && ! empty($dateEnd)) {
+            $like->where('tgl_surat >=', $dateStart)->where('tgl_surat <=', $dateEnd);
+        }
+
+        $data  = $like->where('institusi_id', get_institusi())
             ->orderBy($orderBy, $sort)
             ->findAll($limit, $offset);
 
-        $total = $this->like($searchBy, $search)->where('institusi_id', get_institusi())->countAllResults();
+        $total = $like->where('institusi_id', get_institusi())->countAllResults();
 
         return $this->response->setJSON([
             'container' => $data,

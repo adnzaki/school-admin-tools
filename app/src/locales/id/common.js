@@ -20,7 +20,8 @@ export default {
     row: 'Baris',
     import: 'Import Data',
     download: 'Unduh',
-    upload: 'Unggah'
+    upload: 'Unggah',
+    apply: 'Terapkan'
   },
   incorrectForm: 'Silakan isi form dengan benar',
   importing: 'Mengimpor data...',

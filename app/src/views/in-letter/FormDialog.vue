@@ -39,7 +39,7 @@
           >
         </p>
         <label for="name1">{{ $t('letterArchive.upload') }}</label>
-        <FileUpload ref="fileUpload" name="upload[]" :file-limit="1" auto @uploader="onUpload" accept=".pdf,application/pdf" :maxFileSize="4000000" customUpload />
+        <FileUpload ref="fileUpload" name="upload[]" :show-upload-button="false" :show-cancel-button="false" :file-limit="1" auto @uploader="onUpload" accept=".pdf,application/pdf" :maxFileSize="4000000" customUpload />
       </div>
     </div>
     <template #footer>

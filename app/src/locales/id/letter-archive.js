@@ -14,6 +14,7 @@ export default {
   uploadSuccess: 'Berhasil mengunggah berkas surat',
   uploadError: 'Gagal mengunggah berkas surat',
   file: 'Berkas',
-  searchInLetter: 'Cari berdasarkan perihal dan asal surat',
-  searchOutLetter: 'Cari berdasarkan perihal dan tujuan surat'
+  searchInLetter: 'Cari perihal dan asal surat',
+  searchOutLetter: 'Cari perihal dan tujuan surat',
+  filterDate: 'Filter Tanggal'
 }

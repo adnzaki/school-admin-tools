@@ -25,6 +25,10 @@ export const useInLetterStore = defineStore('in-letter', {
       keterangan: '',
       berkas: ''
     },
+    dateFilter: {
+      start: '',
+      end: ''
+    },
     formEvent: 'add', // add | edit
     submitted: false // whether the form has been submitted and submitted to the database or not
   }),
@@ -102,11 +106,11 @@ export const useInLetterStore = defineStore('in-letter', {
     },
     save(action, error) {
       if (this.formData.tgl_surat !== '') {
-        this.formData.tgl_surat = this.formData.tgl_surat.toLocaleDateString()
+        this.formData.tgl_surat = this.formData.tgl_surat.toLocaleDateString('en-CA')
       }
 
       if (this.formData.tgl_diterima !== '') {
-        this.formData.tgl_diterima = this.formData.tgl_diterima.toLocaleDateString()
+        this.formData.tgl_diterima = this.formData.tgl_diterima.toLocaleDateString('en-CA')
       }
 
       api
@@ -149,6 +153,11 @@ export const useInLetterStore = defineStore('in-letter', {
       const limit = 25
       paging().state.rows = limit
 
+      let param = ''
+      if (this.dateFilter.start !== '' && this.dateFilter.end !== '') {
+        param = `/${this.dateFilter.start}/${this.dateFilter.end}`
+      }
+
       paging().getData({
         lang: localeForPaging,
         limit,
@@ -158,7 +167,7 @@ export const useInLetterStore = defineStore('in-letter', {
         sort: 'DESC',
         search: '',
         usePost: true,
-        url: `${conf.apiPublicPath}${this.endpoint}get-data`,
+        url: `${conf.apiPublicPath}${this.endpoint}get-data${param}`,
         autoReset: 500,
         beforeRequest: () => {
           paging().state.token = `Bearer ${Cookies.get(conf.cookieName)}`
