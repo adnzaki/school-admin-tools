@@ -114,7 +114,7 @@ export const useStudentStore = defineStore('student', {
     save(action, error) {
       // format the date into yyyy-mm-dd
       if (this.formData.tgl_lahir !== '') {
-        this.formData.tgl_lahir = new Date(this.formData.tgl_lahir).toISOString().slice(0, 10)
+        this.formData.tgl_lahir = this.formData.tgl_lahir.toLocaleDateString('en-CA')
       }
 
       api
