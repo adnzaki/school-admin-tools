@@ -13,5 +13,6 @@ export default {
   permitRequest: 'Surat Izin',
   inLetter: 'Surat Masuk',
   outLetter: 'Surat Keluar',
-  profile: 'Profil'
+  profile: 'Profil',
+  bankStatement: 'Rekening Koran'
 }
