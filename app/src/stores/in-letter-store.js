@@ -64,7 +64,7 @@ export const useInLetterStore = defineStore('in-letter', {
           tgl_surat: detail.tgl_surat,
           tgl_diterima: detail.tgl_diterima,
           keterangan: detail.keterangan,
-          berkas: data.lampiran.nama_file
+          berkas: data.lampiran === null ? '' : data.lampiran.nama_file
         }
         this.formTitle = t('letterArchive.editInLetter')
         this.formEvent = 'edit'
@@ -96,7 +96,9 @@ export const useInLetterStore = defineStore('in-letter', {
             transformRequest: [(data) => createFormData(data)]
           }
         )
-        .then(({ data }) => {})
+        .then(({ data }) => {
+          this.formData.berkas = ''
+        })
     },
     save(action, error) {
       if (this.formData.tgl_surat !== '') {
