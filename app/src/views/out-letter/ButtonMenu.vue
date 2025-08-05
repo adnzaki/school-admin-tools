@@ -19,7 +19,7 @@
       <div class="md:w-2/3">
         <div class="flex flex-col gap-4">
           <div class="flex flex-wrap">
-            <SearchBox :paging="paging" v-model="paging.state.search" class="w-full" :placeholder="$t('letterArchive.searchInLetter')" />
+            <SearchBox :paging="paging" v-model="paging.state.search" class="w-full" :placeholder="$t('letterArchive.searchOutLetter')" />
           </div>
         </div>
       </div>
@@ -27,7 +27,7 @@
   </div>
 </template>
 <script setup>
-import { useInLetterStore } from '@/stores/in-letter-store'
+import { useOutLetterStore } from '@/stores/out-letter-store'
 import { useToast } from 'primevue/usetoast'
 import { usePagingStore } from 'ss-paging-vue'
 import { useI18n } from 'vue-i18n'
@@ -35,11 +35,11 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const toast = useToast()
 
-const store = useInLetterStore()
+const store = useOutLetterStore()
 const paging = usePagingStore()
 
 const showForm = () => {
-  store.formTitle = t('letterArchive.addNewInLetter')
+  store.formTitle = t('letterArchive.addNewOutLetter')
   store.formEvent = 'add'
   store.showForm = true
 }

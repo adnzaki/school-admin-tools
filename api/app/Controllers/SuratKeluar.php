@@ -3,19 +3,18 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Controllers\Traits\LampiranSuratTrait;
+use App\Controllers\Traits\SuratTrait;
 use App\Models\SuratKeluarModel;
+use App\Models\LampiranSuratModel;
 
 class SuratKeluar extends BaseController
 {
-    use LampiranSuratTrait;
-
-    protected $suratModel;
+    use SuratTrait;
 
     public function __construct()
     {
         $this->suratModel    = new SuratKeluarModel();
-        $this->lampiranModel = new \App\Models\LampiranSuratModel();
+        $this->lampiranModel = new LampiranSuratModel();
         $this->jenisSurat    = 'keluar';
     }
 
@@ -28,18 +27,12 @@ class SuratKeluar extends BaseController
         $sort      = $this->request->getPost('sort');
         $search    = $this->request->getPost('search');
 
-        if (! empty($search)) {
-            $this->suratModel->like($searchBy, $search);
-        }
-
-        $data  = $this->suratModel
+        $data  = $this->like($searchBy, $search)
             ->where('institusi_id', get_institusi())
             ->orderBy($orderBy, $sort)
             ->findAll($limit, $offset);
 
-        $total = empty($search)
-            ? $this->suratModel->where('institusi_id', get_institusi())->countAllResults()
-            : $this->suratModel->where('institusi_id', get_institusi())->like($searchBy, $search)->countAllResults();
+        $total = $this->like($searchBy, $search)->where('institusi_id', get_institusi())->countAllResults();
 
         return $this->response->setJSON([
             'container' => $data,
@@ -49,6 +42,22 @@ class SuratKeluar extends BaseController
                 'message' => lang('General.dataFetched')
             ]
         ]);
+    }
+
+    public function like($searchBy, $search)
+    {
+        if (! empty($search)) {
+            if (strpos($searchBy, '-') !== false) {
+                $searchBy = explode('-', $searchBy);
+                $like1 = "($searchBy[0] LIKE '%$search%' ESCAPE '!' OR $searchBy[1]";
+                $like2 = "'%$search%' ESCAPE '!')";
+                return $this->suratModel->like($like1, $like2, 'none', false);
+            } else {
+                return $this->suratModel->like($searchBy, $search);
+            }
+        } else {
+            return $this->suratModel;
+        }
     }
 
     public function save()
@@ -80,8 +89,15 @@ class SuratKeluar extends BaseController
             'keterangan'   => $p['keterangan'],
         ];
 
+        $archive = null;
+
         if (! empty($p['id'])) {
+            $archive = $this->getLampiran($p['id']);
             $data['id'] = $p['id'];
+            if (! empty($p['berkas']) && $archive !== null) {
+                $uploader = new \Uploader;
+                $uploader->removePreviousFile($archive['nama_file'], $p['berkas'], 'surat/keluar/');
+            }
         }
 
         $this->suratModel->save($data);
@@ -91,61 +107,23 @@ class SuratKeluar extends BaseController
 
         // Jika filename tersedia, simpan sebagai lampiran surat keluar
         if (! empty($p['berkas'])) {
-            $this->lampiranModel->save([
+            $archiveData = [
                 'jenis_surat' => $this->jenisSurat,
                 'surat_id'    => $suratId,
                 'nama_file'   => $p['berkas'],
                 'path'        => 'api/public/uploads/surat/keluar/' . $p['berkas'],
-            ]);
+            ];
+
+            if ($archive !== null) {
+                $archiveData['id'] = $archive['id'];
+            }
+
+            $this->lampiranModel->save($archiveData);
         }
 
         return $this->response->setJSON([
             'status'  => 'success',
             'message' => lang('General.dataSaved')
-        ]);
-    }
-
-    public function delete()
-    {
-        $ids = $this->request->getJSON(true)['id'] ?? [];
-        if (empty($ids)) {
-            return $this->response->setJSON([
-                'status'  => 'error',
-                'message' => lang('General.dataNotFound')
-            ]);
-        }
-
-        $existing = $this->suratModel->whereIn('id', $ids)->findAll();
-        if (count($existing) !== count($ids)) {
-            return $this->response->setJSON([
-                'status'  => 'error',
-                'message' => lang('General.dataNotFound')
-            ]);
-        }
-
-        // Inisialisasi uploader
-        $uploader = new \Uploader();
-
-        // Ambil semua lampiran terkait
-        $lampiran = $this->lampiranModel->whereIn('surat_id', $ids)->findAll();
-        foreach ($lampiran as $file) {
-            if (! empty($file['nama_file'])) {
-                $filePath = 'surat/' . $this->jenisSurat . '/' . $file['nama_file'];
-                $uploader->removeFile($filePath);
-            }
-        }
-
-        // Hapus data lampiran di DB
-        foreach ($lampiran as $data) {
-            $this->lampiranModel->where('id', $data['id'])->delete($data['id']);
-        }
-
-        // Hapus data surat keluar
-        $this->suratModel->whereIn('id', $ids)->delete($ids);
-
-        return $this->response->setJSON([
-            'status'  => 'success',
-            'message' => lang('General.dataDeleted')
         ]);
     }
 
@@ -165,7 +143,4 @@ class SuratKeluar extends BaseController
             'lampiran'  => $this->getLampiran($id),
         ]);
     }
-
-    // Lampiran (Trait LampiranSuratTrait dipakai)
-    // getLampiran($id), saveLampiran(), deleteLampiran()
 }

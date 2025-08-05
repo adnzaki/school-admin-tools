@@ -54,7 +54,8 @@ $routes->group('surat-keluar', function (RouteCollection $routes) {
     $routes->delete('delete', 'SuratKeluar::delete');
     $routes->get('detail/(:num)', 'SuratKeluar::detail/$1');
     $routes->post('upload', 'SuratKeluar::uploadSuratPdf');
-    $routes->delete('delete-saved-berkas', 'SuratMasuk::deleteSavedBerkas');
+    $routes->delete('delete-saved-berkas', 'SuratKeluar::deleteSavedBerkas');
+    $routes->post('delete-berkas', 'SuratKeluar::deleteBerkas');
 });
 
 

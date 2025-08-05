@@ -4,9 +4,9 @@ import { defineStore } from 'pinia'
 import { usePagingStore as paging } from 'ss-paging-vue'
 import conf from '../../admins.config'
 
-export const useInLetterStore = defineStore('in-letter', {
+export const useOutLetterStore = defineStore('out-letter', {
   state: () => ({
-    endpoint: 'surat-masuk/',
+    endpoint: 'surat-keluar/',
     current: 1,
     selected: [],
     selectedSingle: null,
@@ -18,10 +18,9 @@ export const useInLetterStore = defineStore('in-letter', {
     formTitle: '',
     formData: {
       nomor_surat: '',
-      asal_surat: '',
+      tujuan_surat: '',
       perihal: '',
       tgl_surat: '',
-      tgl_diterima: '',
       keterangan: '',
       berkas: ''
     },
@@ -59,10 +58,9 @@ export const useInLetterStore = defineStore('in-letter', {
         this.formData = {
           id: detail.id,
           nomor_surat: detail.nomor_surat,
-          asal_surat: detail.asal_surat,
+          tujuan_surat: detail.tujuan_surat,
           perihal: detail.perihal,
           tgl_surat: new Date(detail.tgl_surat).toString(),
-          tgl_diterima: new Date(detail.tgl_diterima).toString(),
           keterangan: detail.keterangan,
           berkas: data.lampiran === null ? '' : data.lampiran.nama_file
         }
@@ -101,12 +99,9 @@ export const useInLetterStore = defineStore('in-letter', {
         })
     },
     save(action, error) {
+      console.log(this.formData.tgl_surat)
       if (this.formData.tgl_surat !== '') {
-        this.formData.tgl_surat = this.formData.tgl_surat.toLocaleDateString()
-      }
-
-      if (this.formData.tgl_diterima !== '') {
-        this.formData.tgl_diterima = this.formData.tgl_diterima.toLocaleDateString()
+        this.formData.tgl_surat = this.formData.tgl_surat.toLocaleDateString('en-CA')
       }
 
       api
@@ -118,6 +113,7 @@ export const useInLetterStore = defineStore('in-letter', {
           ]
         })
         .then(({ data }) => {
+          console.log(this.formData.tgl_surat)
           if (data.status === 'success') {
             this.showForm = false
             this.getData(error)
@@ -137,10 +133,9 @@ export const useInLetterStore = defineStore('in-letter', {
     resetForm() {
       this.formData = {
         nomor_surat: '',
-        asal_surat: '',
+        tujuan_surat: '',
         perihal: '',
         tgl_surat: '',
-        tgl_diterima: '',
         keterangan: '',
         berkas: ''
       }
@@ -154,7 +149,7 @@ export const useInLetterStore = defineStore('in-letter', {
         limit,
         offset: this.current - 1,
         orderBy: 'tgl_surat',
-        searchBy: ['perihal', 'asal_surat'],
+        searchBy: ['perihal', 'tujuan_surat'],
         sort: 'DESC',
         search: '',
         usePost: true,

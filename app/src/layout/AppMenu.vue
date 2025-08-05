@@ -22,7 +22,7 @@ const model = ref([
     label: t('menu.administration'),
     items: [
       { label: t('menu.inLetter'), icon: 'pi pi-fw pi-file-import', to: '/surat-masuk' },
-      { label: t('menu.outLetter'), icon: 'pi pi-fw pi-file-export', to: '/uikit/formlayout' }
+      { label: t('menu.outLetter'), icon: 'pi pi-fw pi-file-export', to: '/surat-keluar' }
     ]
   },
   {

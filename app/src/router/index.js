@@ -31,6 +31,11 @@ const router = createRouter({
           name: 'SuratMasuk',
           component: () => import('@/views/in-letter/IndexPage.vue')
         },
+        {
+          path: '/surat-keluar',
+          name: 'SuratKeluar',
+          component: () => import('@/views/out-letter/IndexPage.vue')
+        },
 
         // --------- ROUTES FOR DEMO --------- //
         {
