@@ -56,4 +56,20 @@ return [
         'nama_file'   => 'file name',
         'path'        => 'file path',
     ],
+    'institusi' => [
+        'kepala_sekolah'           => 'Principal',
+        'nip_kepala_sekolah'       => 'Principal NIP',
+        'wakil_kepala_sekolah'     => 'Vice Principal',
+        'nip_wakil_kepala_sekolah' => 'Vice Principal NIP',
+        'bendahara_bos'            => 'BOS Treasurer',
+        'nip_bendahara_bos'        => 'BOS Treasurer NIP',
+        'bendahara_barang'         => 'Inventory Treasurer',
+        'nip_bendahara_barang'     => 'Inventory Treasurer NIP',
+        'alamat'                   => 'Address',
+        'kelurahan'                => 'Subdistrict',
+        'kecamatan'                => 'District',
+        'kab_kota'                 => 'City/Regency',
+        'provinsi'                 => 'Province',
+        'file_kop'                 => 'Letterhead File',
+    ]
 ];

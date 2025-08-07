@@ -56,4 +56,20 @@ return [
         'nama_file'   => 'nama file',
         'path'        => 'lokasi file',
     ],
+    'institusi' => [
+        'kepala_sekolah'           => 'Kepala Sekolah',
+        'nip_kepala_sekolah'       => 'NIP Kepala Sekolah',
+        'wakil_kepala_sekolah'     => 'Wakil Kepala Sekolah',
+        'nip_wakil_kepala_sekolah' => 'NIP Wakil Kepala',
+        'bendahara_bos'            => 'Bendahara BOS',
+        'nip_bendahara_bos'        => 'NIP Bendahara BOS',
+        'bendahara_barang'         => 'Bendahara Barang',
+        'nip_bendahara_barang'     => 'NIP Bendahara Barang',
+        'alamat'                   => 'Alamat',
+        'kelurahan'                => 'Kelurahan',
+        'kecamatan'                => 'Kecamatan',
+        'kab_kota'                 => 'Kabupaten/Kota',
+        'provinsi'                 => 'Provinsi',
+        'file_kop'                 => 'File Kop',
+    ]
 ];

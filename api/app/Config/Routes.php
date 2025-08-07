@@ -60,5 +60,11 @@ $routes->group('surat-keluar', function (RouteCollection $routes) {
     $routes->post('delete-berkas', 'SuratKeluar::deleteBerkas');
 });
 
+$routes->group('institusi', function (RouteCollection $routes) {
+    $routes->get('detail/(:num)', 'DataInstitusi::getDetail/$1');
+    $routes->post('save', 'DataInstitusi::save');
+    $routes->post('upload-kop', 'DataInstitusi::uploadKop');
+});
+
 
 service('auth')->routes($routes);

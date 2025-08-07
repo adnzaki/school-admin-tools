@@ -15,6 +15,8 @@ public/uploads/surat/masuk/*
 !public/uploads/surat/masuk/index.html
 public/uploads/surat/keluar/*
 !public/uploads/surat/keluar/index.html
+public/uploads/kop/*
+!public/uploads/kop/index.html
 
 # Windows image file caches
 Thumbs.db
