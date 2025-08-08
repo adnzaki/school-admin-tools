@@ -20,7 +20,7 @@ php spark migrate --all
 User Manager is available to be used in Postman with this endpoint:
 ```
 POST    user/create
-GET     user/update/{id}
+POST    user/update/{id}
 POST    user/delete
 ```
 Add institution in `tb_institusi` and its users in `tb_user_institusi`<br/>
