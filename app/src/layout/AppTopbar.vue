@@ -1,5 +1,6 @@
 <script setup>
 import { useLayout } from '@/layout/composables/layout'
+import router from '@/router'
 import { useLoginStore } from '@/stores/login-store'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -15,6 +16,13 @@ const accountMenu = ref([
   {
     label: t('menu.profile'),
     icon: 'pi pi-user'
+  },
+  {
+    label: t('menu.schoolData'),
+    icon: 'pi pi-building',
+    command: () => {
+      router.push('/sekolah')
+    }
   },
   {
     command: () => {

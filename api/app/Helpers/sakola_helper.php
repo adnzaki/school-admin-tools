@@ -5,6 +5,23 @@ use CodeIgniter\Validation\ValidationInterface;
 use Config\Services;
 use App\Models\UserInstitusiModel;
 
+/**
+ * Format NIP menjadi XXXXXXXX XXXXXX X XXX
+ * 
+ * @param string|int $number NIP yang akan di format
+ * @return string
+ */
+if (! function_exists('formatNIP')) {
+    function formatNIP($number)
+    {
+        if ($number === null || $number === '') {
+            return '';
+        }
+
+        return substr($number, 0, 8) . ' ' . substr($number, 8, 6) . ' ' . substr($number, 14, 1) . ' '  . substr($number, 15, 3);
+    }
+}
+
 if (! function_exists('get_institusi')) {
     /**
      * Mendapatkan ID institusi berdasarkan user yang sedang login

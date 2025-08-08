@@ -28,6 +28,10 @@ class DataInstitusi extends BaseController
         }
 
         $data['kop_path'] = base_url() . 'uploads/kop/' . $data['file_kop'];
+        $data['nip_kepala_sekolah'] = formatNIP($data['nip_kepala_sekolah']);
+        $data['nip_wakil_kepala_sekolah'] = formatNIP($data['nip_wakil_kepala_sekolah']);
+        $data['nip_bendahara_bos'] = formatNIP($data['nip_bendahara_bos']);
+        $data['nip_bendahara_barang'] = formatNIP($data['nip_bendahara_barang']);
 
         return $this->response->setJSON([
             'status'  => 'success',
@@ -52,6 +56,17 @@ class DataInstitusi extends BaseController
         $response = $uploader->uploadImage($config);
 
         return $this->response->setJSON($response);
+    }
+
+    public function deleteKop()
+    {
+        $filename = $this->request->getPost('filename');
+        $uploader = new \Uploader;
+        $uploader->removeFile('kop/' . $filename);
+        return $this->response->setJSON([
+            'status'  => 'success',
+            'message' => lang('General.fileDeleted')
+        ]);
     }
 
     public function save()

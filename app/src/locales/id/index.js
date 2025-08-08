@@ -3,6 +3,7 @@ import common from './common'
 import employee from './employee'
 import letterArchive from './letter-archive'
 import menu from './menu'
+import school from './school'
 import student from './student'
 
 export default {
@@ -11,5 +12,6 @@ export default {
   auth,
   employee,
   student,
-  letterArchive
+  letterArchive,
+  school
 }

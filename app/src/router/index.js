@@ -17,6 +17,11 @@ const router = createRouter({
           beforeEnter: () => validatePage()
         },
         {
+          path: '/sekolah',
+          name: 'sekolah',
+          component: () => import('@/views/school/IndexPage.vue')
+        },
+        {
           path: '/pegawai',
           name: 'pegawai',
           component: () => import('@/views/employee/IndexPage.vue')

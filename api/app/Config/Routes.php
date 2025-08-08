@@ -61,9 +61,10 @@ $routes->group('surat-keluar', function (RouteCollection $routes) {
 });
 
 $routes->group('institusi', function (RouteCollection $routes) {
-    $routes->get('detail/(:num)', 'DataInstitusi::getDetail/$1');
+    $routes->get('detail', 'DataInstitusi::getDetail');
     $routes->post('save', 'DataInstitusi::save');
     $routes->post('upload-kop', 'DataInstitusi::uploadKop');
+    $routes->delete('delete-kop', 'DataInstitusi::deleteKop');
 });
 
 

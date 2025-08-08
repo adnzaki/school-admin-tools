@@ -14,5 +14,6 @@ export default {
   inLetter: 'Surat Masuk',
   outLetter: 'Surat Keluar',
   profile: 'Profil',
-  bankStatement: 'Rekening Koran'
+  bankStatement: 'Rekening Koran',
+  schoolData: 'Profil Sekolah'
 }
