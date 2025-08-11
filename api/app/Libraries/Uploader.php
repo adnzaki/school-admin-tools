@@ -143,6 +143,7 @@ class Uploader
         return [
             'url'      => base_url($this->basePath . trim($config['dir'], '/') . '/' . $newName),
             'filename' => $newName,
+            'filepath' => $fullPath,
         ];
     }
 
@@ -160,6 +161,7 @@ class Uploader
         return [
             'url'      => base_url($this->basePath . trim($config['dir'], '/') . '/' . $newName),
             'filename' => $newName,
+            'filepath' => $fullPath,
         ];
     }
 
