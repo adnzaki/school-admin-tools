@@ -59,7 +59,8 @@ class Autoload extends AutoloadConfig
      * @var array<string, string>
      */
     public $classmap = [
-        'Uploader' => APPPATH . 'Libraries/Uploader.php',
+        'Uploader'      => APPPATH . 'Libraries/Uploader.php',
+        'CloudflareS3'  => APPPATH . 'Libraries/CloudflareS3.php',
     ];
 
     /**

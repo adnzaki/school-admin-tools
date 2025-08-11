@@ -23,7 +23,8 @@ export const useInLetterStore = defineStore('in-letter', {
       tgl_surat: '',
       tgl_diterima: '',
       keterangan: '',
-      berkas: ''
+      berkas: '',
+      berkas_url: ''
     },
     dateFilter: {
       start: '',
@@ -65,11 +66,13 @@ export const useInLetterStore = defineStore('in-letter', {
           nomor_surat: detail.nomor_surat,
           asal_surat: detail.asal_surat,
           perihal: detail.perihal,
-          tgl_surat: new Date(detail.tgl_surat).toString(),
-          tgl_diterima: new Date(detail.tgl_diterima).toString(),
+          tgl_surat: new Date(detail.tgl_surat),
+          tgl_diterima: new Date(detail.tgl_diterima),
           keterangan: detail.keterangan,
-          berkas: data.lampiran === null ? '' : data.lampiran.nama_file
+          berkas: data.lampiran === null ? '' : data.lampiran.nama_file,
+          berkas_url: data.lampiran === null ? '' : data.lampiran.file_url
         }
+
         this.formTitle = t('letterArchive.editInLetter')
         this.formEvent = 'edit'
         this.showForm = true
@@ -86,6 +89,7 @@ export const useInLetterStore = defineStore('in-letter', {
           .then(({ data }) => {
             action(data.status)
             this.formData.berkas = data.uploaded[0].filename
+            this.formData.berkas_url = data.url
           })
       } catch {
         action('failed')
@@ -146,7 +150,8 @@ export const useInLetterStore = defineStore('in-letter', {
         tgl_surat: '',
         tgl_diterima: '',
         keterangan: '',
-        berkas: ''
+        berkas: '',
+        berkas_url: ''
       }
     },
     getData(errorHandler) {

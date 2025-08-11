@@ -34,7 +34,7 @@
       <div class="flex flex-col gap-2">
         <p v-if="store.formData.berkas !== ''">
           {{ $t('letterArchive.file') }}: <br />
-          <a :href="filepath" target="_blank" class="text-blue-500"
+          <a :href="store.formData.berkas_url" target="_blank" class="text-blue-500"
             ><strong>{{ store.formData.berkas }}</strong></a
           >
         </p>
@@ -50,23 +50,20 @@
 <script setup>
 import { useInLetterStore } from '@/stores/in-letter-store'
 import { useToast } from 'primevue/usetoast'
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import conf from '../../../admins.config'
 
 const store = useInLetterStore()
 const toast = useToast()
 const { t } = useI18n()
 const fileUpload = ref()
 
-const filepath = computed(() => `${conf.apiPublicPath}uploads/surat/masuk/${store.formData.berkas}`)
-
 const onDialogHide = () => {
-  if (store.formEvent === 'edit') store.resetForm()
-
   if (store.formData.berkas !== '' && !store.submitted) {
     store.removeUploadedFile()
   }
+
+  if (store.formEvent === 'edit') store.resetForm()
 
   if (store.submitted) store.submitted = false
 }

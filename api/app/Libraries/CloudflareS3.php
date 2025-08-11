@@ -1,7 +1,5 @@
 <?php
 
-namespace App\Libraries;
-
 use Aws\S3\S3Client;
 use Aws\S3\Exception\S3Exception;
 use Aws\Credentials\Credentials;
@@ -36,17 +34,14 @@ class CloudflareS3
         return $this;
     }
 
-    public function putObject($filepath)
+    public function putObject($filepath, $contentType)
     {
         $result = $this->client->putObject([
             'Bucket'        => $this->bucket,
             'Key'           => basename($filepath),
             'SourceFile'    => $filepath,
+            'Content-Type'  => $contentType,
         ]);
-
-        if (file_exists($filepath)) {
-            unlink($filepath);
-        }
 
         return $result['ObjectURL'];
     }
@@ -71,14 +66,14 @@ class CloudflareS3
         return $this->client->getObjectUrl($this->bucket, $filename);
     }
 
-    public function getPresignedObjectUrl($filename)
+    public function getPresignedObjectUrl($filename, $expires = '+20 minutes')
     {
         $cmd = $this->client->getCommand('GetObject', [
             'Bucket' => $this->bucket,
             'Key'    => $filename
         ]);
 
-        $request = $this->client->createPresignedRequest($cmd, '+5 minutes');
+        $request = $this->client->createPresignedRequest($cmd, $expires);
 
         return (string) $request->getUri();
     }
@@ -86,7 +81,6 @@ class CloudflareS3
     public function getObject($filename)
     {
         try {
-            // Get the object.
             $result = $this->client->getObject([
                 'Bucket' => $this->bucket,
                 'Key'    => $filename
@@ -94,7 +88,7 @@ class CloudflareS3
 
             // Display the object in the browser.
             header("Content-Type: {$result['ContentType']}");
-            echo $result['Body'];
+            return $result['Body'];
         } catch (S3Exception $e) {
             echo $e->getMessage() . PHP_EOL;
         }

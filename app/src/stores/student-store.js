@@ -69,7 +69,7 @@ export const useStudentStore = defineStore('student', {
           id: detail.id,
           nama: detail.nama,
           tempat_lahir: detail.tempat_lahir,
-          tgl_lahir: new Date(detail.tgl_lahir).toString(),
+          tgl_lahir: new Date(detail.tgl_lahir),
           no_induk: detail.no_induk ?? '',
           nisn: detail.nisn ?? '',
           jenis_kelamin: detail.jenis_kelamin,

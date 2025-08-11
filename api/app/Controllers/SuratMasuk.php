@@ -16,6 +16,7 @@ class SuratMasuk extends BaseController
         $this->suratModel    = new SuratMasukModel();
         $this->lampiranModel = new LampiranSuratModel();
         $this->jenisSurat    = 'masuk';
+        $this->cf            = new \CloudflareS3('surat-' . $this->jenisSurat);
     }
 
     /** Server‐side pagination, search & sort */
@@ -105,8 +106,7 @@ class SuratMasuk extends BaseController
             $archive = $this->getLampiran($p['id']);
             $data['id'] = $p['id'];
             if (! empty($p['berkas']) && $archive !== null) {
-                $uploader = new \Uploader;
-                $uploader->removePreviousFile($archive['nama_file'], $p['berkas'], 'surat/masuk/');
+                $this->cf->removePreviousObject($archive['nama_file'], $p['berkas']);
             }
         }
 
@@ -149,10 +149,15 @@ class SuratMasuk extends BaseController
             ]);
         }
 
+        $file = $this->getLampiran($id);
+        if ($file !== null) {
+            $file['file_url'] = $this->cf->getPresignedObjectUrl($file['nama_file']);
+        }
+
         return $this->response->setJSON([
             'status'    => 'success',
             'data'      => $data,
-            'lampiran'  => $this->getLampiran($id),
+            'lampiran'  => $file,
         ]);
     }
 }

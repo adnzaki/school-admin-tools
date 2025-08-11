@@ -17,6 +17,9 @@ trait SuratTrait
     /** @var SuratMasukModel|SuratKeluarModel */
     protected $suratModel;
 
+    /** @var \CloudflareS3 */
+    protected $cf;
+
     /**
      * Ambil semua lampiran berdasarkan ID surat dan jenis surat.
      */
@@ -51,9 +54,13 @@ trait SuratTrait
 
         // Ambil info filename dan path saja, tanpa simpan ke DB
         $uploaded = $response['uploaded'];
+        $this->cf->putObject($uploaded[0]['filepath'], 'application/pdf');
+        $uploader->removeFile('surat/' . $this->jenisSurat . '/' . $uploaded[0]['filename']);
+
         return $this->response->setJSON([
             'status'   => 'success',
-            'uploaded' => $uploaded
+            'uploaded' => $uploaded,
+            'url'      => $this->cf->getPresignedObjectUrl($uploaded[0]['filename']),
         ]);
     }
 
@@ -76,15 +83,11 @@ trait SuratTrait
             ]);
         }
 
-        // Inisialisasi uploader
-        $uploader = new \Uploader();
-
         // Ambil semua lampiran terkait
         $lampiran = $this->lampiranModel->whereIn('surat_id', $ids)->findAll();
         foreach ($lampiran as $file) {
             if (! empty($file['nama_file'])) {
-                $filePath = 'surat/' . $this->jenisSurat . '/' . $file['nama_file'];
-                $uploader->removeFile($filePath);
+                $this->cf->deleteObject($file['nama_file']);
             }
         }
 
@@ -105,8 +108,7 @@ trait SuratTrait
     public function deleteBerkas()
     {
         $filename = $this->request->getPost('filename');
-        $uploader = new \Uploader;
-        $uploader->removeFile('surat/' . $this->jenisSurat . '/' . $filename);
+        $this->cf->deleteObject($filename);
         return $this->response->setJSON([
             'status'  => 'success',
             'message' => lang('General.fileDeleted')
@@ -136,14 +138,9 @@ trait SuratTrait
         }
 
         // Hapus file fisik
-        $uploader = new \Uploader(); // sesuaikan jika namespace berbeda
         foreach ($existing as $lampiran) {
             if (! empty($lampiran['nama_file'])) {
-                // $this->jenisSurat tergantung dari controller mana ia dipanggil: SuratMasuk atau SuratKeluar
-                // $this->jenisSurat juga bisa diganti dengan $lampiran['jenis_surat']
-                $filePath = 'surat/' . $this->jenisSurat . '/' . $lampiran['nama_file'];
-
-                $uploader->removeFile($filePath);
+                $this->cf->deleteObject($lampiran['nama_file']);
             }
         }
 
