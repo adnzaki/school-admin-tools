@@ -12,7 +12,20 @@ const menu = ref(null)
 store.getDetail()
 const detail = computed(() => store.formData)
 
-const items = ref([{ label: t('common.buttons.edit'), icon: 'pi pi-fw pi-pencil' }])
+const sanitizeFields = (fields, formData) => {
+  fields.forEach((field) => {
+    if (formData[field]) {
+      formData[field] = formData[field].replace(/\s+/g, '')
+    }
+  })
+}
+
+const showForm = () => {
+  sanitizeFields(['nip_kepala_sekolah', 'nip_wakil_kepala_sekolah', 'nip_bendahara_bos', 'nip_bendahara_barang'], store.formData)
+  store.showForm = true
+}
+
+const items = ref([{ label: t('common.buttons.edit'), icon: 'pi pi-fw pi-pencil', command: () => showForm() }])
 </script>
 
 <template>

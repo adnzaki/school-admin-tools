@@ -53,7 +53,6 @@ export const useSchoolStore = defineStore('school', {
 
         this.schoolName = detail.nama_sekolah
         this.formTitle = t('school.edit')
-        this.showForm = true
       })
     },
     upload(file, action) {
@@ -67,7 +66,6 @@ export const useSchoolStore = defineStore('school', {
           .then(({ data }) => {
             action(data.status)
             this.formData.file_kop = data.uploaded[0].filename
-            this.formData.file_kop_path = data.uploaded[0].url
           })
       } catch {
         action('failed')
@@ -83,18 +81,10 @@ export const useSchoolStore = defineStore('school', {
           }
         )
         .then(({ data }) => {
-          this.formData.file_kop = ''
+          this.getDetail()
         })
     },
-    save(action, error) {
-      if (this.formData.tgl_surat !== '') {
-        this.formData.tgl_surat = this.formData.tgl_surat.toLocaleDateString('en-CA')
-      }
-
-      if (this.formData.tgl_diterima !== '') {
-        this.formData.tgl_diterima = this.formData.tgl_diterima.toLocaleDateString('en-CA')
-      }
-
+    save(action, onError) {
       api
         .post(`${this.endpoint}save`, this.formData, {
           transformRequest: [
@@ -106,8 +96,6 @@ export const useSchoolStore = defineStore('school', {
         .then(({ data }) => {
           if (data.status === 'success') {
             this.showForm = false
-            this.getData(error)
-            this.resetForm()
             this.errors = {}
             this.submitted = true
           } else {
@@ -117,7 +105,7 @@ export const useSchoolStore = defineStore('school', {
           action(data.status, data.message)
         })
         .catch((error) => {
-          action(error)
+          onError(error)
         })
     }
   }

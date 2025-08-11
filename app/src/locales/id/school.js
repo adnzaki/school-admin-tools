@@ -3,7 +3,7 @@ export default {
   kepala_sekolah: 'Kepala Sekolah',
   nip_kepala_sekolah: 'NIP Kepala Sekolah',
   wakil_kepala_sekolah: 'Wakil Kepala Sekolah',
-  nip_wakil_kepala_sekolah: 'NIP Wakil Kepala',
+  nip_wakil_kepala_sekolah: 'NIP Wakil Kepala Sekolah',
   bendahara_bos: 'Bendahara BOS',
   nip_bendahara_bos: 'NIP Bendahara BOS',
   bendahara_barang: 'Bendahara Barang',
@@ -14,5 +14,7 @@ export default {
   kab_kota: 'Kabupaten/Kota',
   provinsi: 'Provinsi',
   file_kop: 'Gambar Kop Sekolah',
-  employeeId: 'Nomor Induk Pegawai'
+  employeeId: 'Nomor Induk Pegawai',
+  uploadSuccess: 'Berhasil mengunggah kop sekolah',
+  uploadError: 'Gagal mengunggah kop sekolah'
 }

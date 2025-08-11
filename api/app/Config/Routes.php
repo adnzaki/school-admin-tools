@@ -64,7 +64,7 @@ $routes->group('institusi', function (RouteCollection $routes) {
     $routes->get('detail', 'DataInstitusi::getDetail');
     $routes->post('save', 'DataInstitusi::save');
     $routes->post('upload-kop', 'DataInstitusi::uploadKop');
-    $routes->delete('delete-kop', 'DataInstitusi::deleteKop');
+    $routes->post('delete-kop', 'DataInstitusi::deleteKop');
 });
 
 
