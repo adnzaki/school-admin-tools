@@ -32,7 +32,8 @@ export const useInLetterStore = defineStore('in-letter', {
     },
     formEvent: 'add', // add | edit
     submitted: false, // whether the form has been submitted and submitted to the database or not
-    disableButton: false
+    disableButton: false,
+    hasNewUpload: false
   }),
   actions: {
     delete(action) {
@@ -91,6 +92,9 @@ export const useInLetterStore = defineStore('in-letter', {
             action(data.status)
             this.formData.berkas = data.uploaded[0].filename
             this.formData.berkas_url = data.url
+
+            // set new upload flag
+            this.hasNewUpload = true
           })
       } catch {
         action('failed')
@@ -106,7 +110,7 @@ export const useInLetterStore = defineStore('in-letter', {
           }
         )
         .then(({ data }) => {
-          this.formData.berkas = ''
+          // OK
         })
     },
     save(action, error) {

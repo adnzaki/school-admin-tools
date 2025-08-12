@@ -27,7 +27,8 @@ export const useSchoolStore = defineStore('school', {
     showInput: false,
     schoolName: '',
     submitted: false, // whether the form has been submitted and submitted to the database or not
-    disableButton: false
+    disableButton: false,
+    hasNewUpload: false
   }),
   actions: {
     getDetail() {
@@ -67,6 +68,7 @@ export const useSchoolStore = defineStore('school', {
           .then(({ data }) => {
             action(data.status)
             this.formData.file_kop = data.uploaded[0].filename
+            this.hasNewUpload = true
           })
       } catch {
         action('failed')

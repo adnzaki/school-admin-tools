@@ -54,13 +54,14 @@ const { t } = useI18n()
 const fileUpload = ref()
 
 const onDialogHide = () => {
-  if (store.formData.berkas !== '' && !store.submitted) {
+  if (store.hasNewUpload && !store.submitted) {
     store.removeUploadedFile()
   }
 
   if (store.formEvent === 'edit') store.resetForm()
 
   if (store.submitted) store.submitted = false
+  if (store.hasNewUpload) store.hasNewUpload = false
 }
 
 const onDialogShow = () => {}

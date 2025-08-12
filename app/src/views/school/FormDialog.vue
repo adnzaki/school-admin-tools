@@ -107,11 +107,12 @@ const fileUpload = ref()
 const filepath = computed(() => `${conf.apiPublicPath}uploads/kop/${store.formData.file_kop}`)
 
 const onDialogHide = () => {
-  if (store.formData.file_kop !== '' && !store.submitted) {
+  if (store.hasNewUpload && !store.submitted) {
     store.removeUploadedFile()
   }
 
   if (store.submitted) store.submitted = false
+  if (store.hasNewUpload) store.hasNewUpload = false
   store.getDetail()
   store.errors = {}
 }
