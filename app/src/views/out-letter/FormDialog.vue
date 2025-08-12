@@ -38,7 +38,7 @@
       </div>
     </div>
     <template #footer>
-      <Button :label="$t('common.buttons.save')" @click="save" />
+      <Button :label="$t('common.buttons.save')" :disabled="store.disableButton" @click="save" />
     </template>
   </Dialog>
 </template>
@@ -81,6 +81,7 @@ const onSaveError = (reason) => {
 }
 
 const onUpload = (event) => {
+  store.disableButton = true
   const file = event.files[0]
   const formData = new FormData()
   formData.append('surat', file)
@@ -97,10 +98,13 @@ const onUpload = (event) => {
     } else if (status === 'failed') {
       toast.add({ severity: 'error', summary: t('common.error'), detail: t('common.networkError'), life: 5000 })
     }
+
+    store.disableButton = false
   })
 }
 
 const save = () => {
+  store.disableButton = true
   toast.add({ severity: 'info', summary: t('common.processing'), detail: t('common.saving') })
   store.save(onSave, onSaveError)
 }

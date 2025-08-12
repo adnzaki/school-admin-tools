@@ -31,7 +31,8 @@ export const useInLetterStore = defineStore('in-letter', {
       end: ''
     },
     formEvent: 'add', // add | edit
-    submitted: false // whether the form has been submitted and submitted to the database or not
+    submitted: false, // whether the form has been submitted and submitted to the database or not
+    disableButton: false
   }),
   actions: {
     delete(action) {
@@ -135,6 +136,8 @@ export const useInLetterStore = defineStore('in-letter', {
           } else {
             this.errors = data.message
           }
+
+          this.disableButton = false
 
           action(data.status, data.message)
         })

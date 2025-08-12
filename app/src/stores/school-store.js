@@ -26,7 +26,8 @@ export const useSchoolStore = defineStore('school', {
     },
     showInput: false,
     schoolName: '',
-    submitted: false // whether the form has been submitted and submitted to the database or not
+    submitted: false, // whether the form has been submitted and submitted to the database or not
+    disableButton: false
   }),
   actions: {
     getDetail() {
@@ -101,6 +102,8 @@ export const useSchoolStore = defineStore('school', {
           } else {
             this.errors = data.message
           }
+
+          this.disableButton = false
 
           action(data.status, data.message)
         })

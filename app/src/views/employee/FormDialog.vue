@@ -33,7 +33,7 @@
       </div>
     </div>
     <template #footer>
-      <Button :label="$t('common.buttons.save')" @click="save" />
+      <Button :label="$t('common.buttons.save')" :disabled="store.disableButton" @click="save" />
     </template>
   </Dialog>
 </template>
@@ -87,6 +87,7 @@ const onSaveError = (reason) => {
 }
 
 const save = () => {
+  store.disableButton = true
   toast.add({ severity: 'info', summary: t('common.processing'), detail: t('common.saving') })
   store.save(onSave, onSaveError)
 }

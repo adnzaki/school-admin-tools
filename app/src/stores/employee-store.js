@@ -24,7 +24,8 @@ export const useEmployeeStore = defineStore('employee', {
       email: '',
       telepon: ''
     },
-    formEvent: 'add' // add | edit
+    formEvent: 'add', // add | edit
+    disableButton: false
   }),
   actions: {
     delete(action) {
@@ -106,6 +107,8 @@ export const useEmployeeStore = defineStore('employee', {
           } else {
             this.errors = data.message
           }
+
+          this.disableButton = false
 
           action(data.status, data.message)
         })

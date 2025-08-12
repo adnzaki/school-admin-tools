@@ -35,7 +35,8 @@ export const useStudentStore = defineStore('student', {
       kab_kota: '',
       provinsi: ''
     },
-    formEvent: 'add' // add | edit
+    formEvent: 'add', // add | edit
+    disableButton: false
   }),
   actions: {
     delete(action) {
@@ -134,6 +135,8 @@ export const useStudentStore = defineStore('student', {
           } else {
             this.errors = data.message
           }
+
+          this.disableButton = false
 
           action(data.status, data.message)
         })
