@@ -66,7 +66,7 @@ class CloudflareS3
         return $this->client->getObjectUrl($this->bucket, $filename);
     }
 
-    public function getPresignedObjectUrl($filename, $expires = '+20 minutes')
+    public function getPresignedObjectUrl($filename, $expires = '+5 minutes')
     {
         $cmd = $this->client->getCommand('GetObject', [
             'Bucket' => $this->bucket,
