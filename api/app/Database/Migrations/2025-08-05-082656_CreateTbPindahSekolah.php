@@ -20,6 +20,14 @@ class CreateTbPindahSekolah extends Migration
                 'constraint' => 11,
                 'unsigned'   => true,
             ],
+            'no_surat' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 100,
+            ],
+            'kelas' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 50,
+            ],
             'sd_tujuan' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 255,
