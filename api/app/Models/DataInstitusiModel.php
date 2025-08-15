@@ -55,7 +55,7 @@ class DataInstitusiModel extends Model
         $builder->join('tb_institusi', 'tb_institusi.id = tb_data_institusi.institusi_id');
 
         if ($id !== null) {
-            $builder->where('tb_data_institusi.id', $id);
+            $builder->where('tb_data_institusi.institusi_id', $id);
             return $builder->get()->getRowArray();
         }
 
