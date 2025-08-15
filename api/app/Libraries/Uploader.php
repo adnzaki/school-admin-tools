@@ -50,6 +50,7 @@ class Uploader
      *   - crop         : 'resize', 'fit' atau 'stretch'
      *   - prefix       : prefix nama file
      *   - fit-position : posisi untuk fit() (default 'center')
+     *   - quality      : kualitas (default 90)
      * @return array
      */
     public function uploadImage(array $config): array
@@ -138,7 +139,7 @@ class Uploader
         } elseif (($config['crop'] ?? '') === 'fit') {
             $img->fit($config['width'], $config['height'], $fitPosition);
         }
-        $img->save($fullPath);
+        $img->save($fullPath, $config['quality'] ?? 90);
 
         return [
             'url'      => base_url($this->basePath . trim($config['dir'], '/') . '/' . $newName),
