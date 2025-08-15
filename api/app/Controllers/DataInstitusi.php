@@ -50,7 +50,8 @@ class DataInstitusi extends BaseController
             'prefix'  => 'kop_',
             'crop'    => 'resize',
             'width'   => 2400,
-            'height'  => 460
+            'height'  => 460,
+            'quality' => 100
         ];
 
         $uploader = new \Uploader;
