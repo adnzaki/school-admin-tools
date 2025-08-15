@@ -27,6 +27,7 @@ class DataInstitusi extends BaseController
             ]);
         }
 
+        $data['wakil_kepala_sekolah'] = $data['wakil_kepala_sekolah'] === null || $data['wakil_kepala_sekolah'] === 'null' ? '' : $data['wakil_kepala_sekolah'];
         $data['kop_path'] = base_url() . 'uploads/kop/' . $data['file_kop'];
         $data['nip_kepala_sekolah'] = formatNIP($data['nip_kepala_sekolah']);
         $data['nip_wakil_kepala_sekolah'] = formatNIP($data['nip_wakil_kepala_sekolah']);
@@ -47,7 +48,7 @@ class DataInstitusi extends BaseController
             'dir'     => 'kop',
             'maxSize' => 2048,
             'prefix'  => 'kop_',
-            'crop'    => 'fit',
+            'crop'    => 'resize',
             'width'   => 2400,
             'height'  => 460
         ];
