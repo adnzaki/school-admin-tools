@@ -61,6 +61,8 @@ class Autoload extends AutoloadConfig
     public $classmap = [
         'Uploader'      => APPPATH . 'Libraries/Uploader.php',
         'CloudflareS3'  => APPPATH . 'Libraries/CloudflareS3.php',
+        'PDFCreator'    => APPPATH . 'Libraries/PDFCreator.php',
+        'OstiumDate'    => APPPATH . 'Libraries/OstiumDate/OstiumDate.php',
     ];
 
     /**
