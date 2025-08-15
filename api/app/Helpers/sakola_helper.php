@@ -5,6 +5,19 @@ use CodeIgniter\Validation\ValidationInterface;
 use Config\Services;
 use App\Models\UserInstitusiModel;
 
+if (! function_exists('osdate')) {
+
+    /**
+     * Shortcut to OstiumDate object
+     * 
+     * @return \OstiumDate
+     */
+    function osdate()
+    {
+        return new \OstiumDate;
+    }
+}
+
 /**
  * Format NIP menjadi XXXXXXXX XXXXXX X XXX
  * 
