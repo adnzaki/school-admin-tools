@@ -1,6 +1,6 @@
 <?php
 $model = new \App\Models\DataInstitusiModel();
-$institusi = $model->getWithInstitusi(1); // should be replaced with get_institusi()
+$institusi = $model->getWithInstitusi(get_institusi());
 $headmaster = $institusi['kepala_sekolah'];
 $headmasterNip = $institusi['nip_kepala_sekolah'];
 
