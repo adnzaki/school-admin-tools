@@ -1,8 +1,7 @@
 <?php
 $model = new \App\Models\DataInstitusiModel();
-// $institusiId = get_institusi();
-$institusiId = 1;
-$dataInstitusi = $model->getWithInstitusi(1);
+$institusiId = get_institusi();
+$dataInstitusi = $model->getWithInstitusi($institusiId);
 $kopSekolah = base_url() . 'uploads/kop/' . $dataInstitusi['file_kop'];
 
 ?>
