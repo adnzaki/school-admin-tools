@@ -15,7 +15,8 @@ class SuratKeluarModel extends Model
         'tujuan_surat',
         'perihal',
         'tgl_surat',
-        'keterangan'
+        'keterangan',
+        'relasi_tabel'
     ];
     protected $useTimestamps    = true;
 }

@@ -80,7 +80,6 @@ class Filters extends BaseFilters
                     'auth/login',
                     'auth/logout',
                     'user/*',
-                    'pegawai/*'
                 ],
             ],
             'institusi' => [
@@ -88,7 +87,6 @@ class Filters extends BaseFilters
                     'auth/login',
                     'auth/logout',
                     'user/*',
-                    'pegawai/*'
                 ],
             ],
             // 'honeypot',

@@ -10,7 +10,7 @@ class ModifyKelasToEnum extends Migration
     {
         $this->db->query("
             ALTER TABLE `tb_pindah_sekolah`
-            MODIFY COLUMN `kelas` ENUM('I','II','III','IV','V','VI','VII','VIII','IX') NOT NULL
+            MODIFY COLUMN `kelas` ENUM('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12') NOT NULL
         ");
     }
 

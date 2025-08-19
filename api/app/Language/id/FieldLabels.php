@@ -71,5 +71,17 @@ return [
         'kab_kota'                 => 'Kabupaten/Kota',
         'provinsi'                 => 'Provinsi',
         'file_kop'                 => 'File Kop',
+    ],
+    'mutasi' => [
+        'no_surat'          => 'Nomor Surat',
+        'kelas'             => 'Kelas',
+        'sd_tujuan'         => 'Sekolah Tujuan',
+        'kelurahan'         => 'Kelurahan',
+        'kecamatan'         => 'Kecamatan',
+        'kab_kota'          => 'Kabupaten/Kota',
+        'provinsi'          => 'Provinsi',
+        'alasan'            => 'Alasan Pindah',
+        'tgl_pindah'        => 'Tanggal Pindah',
+        'no_surat_rayon'    => 'Nomor Surat Rayon',
     ]
 ];

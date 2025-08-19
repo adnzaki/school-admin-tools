@@ -71,5 +71,18 @@ return [
         'kab_kota'                 => 'City/Regency',
         'provinsi'                 => 'Province',
         'file_kop'                 => 'Letterhead File',
+    ],
+    'mutasi' => [
+        'kelas'             => 'Class',
+        'no_surat'          => 'Letter Number',
+        'sd_tujuan'         => 'Destination School',
+        'kelurahan'         => 'Subdistrict',
+        'kecamatan'         => 'District',
+        'kab_kota'          => 'City/Regency',
+        'provinsi'          => 'Province',
+        'alasan'            => 'Reason for Transfer',
+        'tgl_pindah'        => 'Mutation Date',
+        'pindah_rayon'      => 'Transfer to Region',
+        'no_surat_rayon'    => 'Region Letter Number',
     ]
 ];

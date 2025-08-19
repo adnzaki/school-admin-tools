@@ -67,5 +67,19 @@ $routes->group('institusi', function (RouteCollection $routes) {
     $routes->post('delete-kop', 'DataInstitusi::deleteKop');
 });
 
+$routes->group('pindah-sekolah', function (RouteCollection $routes) {
+    $routes->post('get-data', 'PindahSekolah::getData');
+    $routes->post('get-data/(:any)', 'PindahSekolah::getData/$1');
+    $routes->post('get-data/(:any)/(:any)/(:any)', 'PindahSekolah::getData/$1/$2/$3');
+    $routes->post('save', 'PindahSekolah::save');
+    $routes->post('delete', 'PindahSekolah::delete');
+    $routes->get('detail/(:num)', 'PindahSekolah::detail/$1');
+
+    // route for letters
+    $routes->add('cetak-surat-pindah', 'PindahSekolah::createSuratPindahSekolah');
+    $routes->add('cetak-pindah-rayon', 'PindahSekolah::createSuratPindahRayon');
+    $routes->add('cetak-lembar-mutasi-rapor', 'PindahSekolah::createLembarMutasiRapor');
+});
+
 
 service('auth')->routes($routes);
