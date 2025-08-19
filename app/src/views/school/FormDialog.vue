@@ -79,9 +79,12 @@
         <p class="text-red-500">{{ store.errors.provinsi }}</p>
       </div>
 
-      <div class="flex flex-col gap-2" v-if="store.formData.file_kop !== ''">
+      <div class="flex flex-col gap-2">
         <label>{{ $t('school.file_kop') }}</label>
         <FileUpload ref="fileUpload" name="upload[]" :file-limit="1" :show-upload-button="false" :show-cancel-button="false" auto @uploader="onUpload" accept=".jpg,.png,.jpeg" :maxFileSize="2048 * 1024" customUpload />
+        <label
+          ><i>{{ $t('school.recommendation') }}</i></label
+        >
         <div class="bg-white p-[10px] rounded-[10px]">
           <Image :src="filepath" alt="Kop" style="width: 100%" />
         </div>

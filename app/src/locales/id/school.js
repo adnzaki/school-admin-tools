@@ -16,5 +16,6 @@ export default {
   file_kop: 'Gambar Kop Sekolah',
   employeeId: 'Nomor Induk Pegawai',
   uploadSuccess: 'Berhasil mengunggah kop sekolah',
-  uploadError: 'Gagal mengunggah kop sekolah'
+  uploadError: 'Gagal mengunggah kop sekolah',
+  recommendation: 'Untuk hasil terbaik, gunakan gambar dengan resolusi tinggi di kisaran 2400 x 460 pixel'
 }
