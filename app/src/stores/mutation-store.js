@@ -133,6 +133,7 @@ export const useMutationStore = defineStore('mutation', {
             this.resetForm()
             this.errors = {}
             this.submitted = true
+            this.studentOptions = []
           } else {
             if (this.formData.tgl_pindah) {
               this.formData.tgl_pindah = new Date(this.formData.tgl_pindah)
