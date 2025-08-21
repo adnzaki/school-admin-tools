@@ -28,7 +28,7 @@ const model = ref([
   {
     label: t('menu.studentAdm'),
     items: [
-      { label: t('menu.moveSchool'), icon: 'pi pi-fw pi-directions', to: '/uikit/formlayout' },
+      { label: t('menu.moveSchool'), icon: 'pi pi-fw pi-directions', to: '/pindah-sekolah' },
       { label: t('menu.printNISN'), icon: 'pi pi-fw pi-id-card', to: '/uikit/formlayout' },
       { label: t('menu.letterOfStudent'), icon: 'pi pi-fw pi-clipboard', to: '/uikit/formlayout' }
     ]

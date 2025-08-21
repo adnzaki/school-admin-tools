@@ -48,15 +48,39 @@ class PindahSekolah extends BaseController
         $this->dataInstitusiModel = new DataInstitusiModel();
 
         // get institusi_id based on PDF creation mode
+        helper('sakola');
         $this->institusiId = env('pdf_mode') === 'production' ? get_institusi() : env('institusi_id');
     }
 
-    public function getData(?string $kelas = null, ?string $tglStart = null, ?string $tglEnd = null)
+    public function getData(?string $rawParams = null)
     {
+        $params = explode('_', $rawParams ?? '');
+
+        $kelas    = null;
+        $tglStart = null;
+        $tglEnd   = null;
+
+        if (count($params) === 1 && preg_match('/^\d{4}-\d{2}-\d{2}$/', $params[0])) {
+            // hanya tglStart
+            $tglStart = $params[0];
+        } elseif (count($params) === 2 && preg_match('/^\d{4}-\d{2}-\d{2}$/', $params[0]) && preg_match('/^\d{4}-\d{2}-\d{2}$/', $params[1])) {
+            // tglStart dan tglEnd
+            $tglStart = $params[0];
+            $tglEnd   = $params[1];
+        } elseif (count($params) === 3) {
+            // kelas + tglStart + tglEnd
+            $kelas    = $params[0];
+            $tglStart = $params[1];
+            $tglEnd   = $params[2];
+        } elseif (count($params) === 1) {
+            // hanya kelas
+            $kelas = $params[0];
+        }
+
         $limit   = (int)$this->request->getPost('limit');
         $offset  = (int)$this->request->getPost('offset');
-        $orderBy = $this->request->getPost('orderBy');
         // $searchBy currently not implemented
+        $orderBy = $this->request->getPost('orderBy');
         $sort    = $this->request->getPost('sort');
         $search  = $this->request->getPost('search');
 
@@ -65,15 +89,23 @@ class PindahSekolah extends BaseController
             ->applyFilters($search, $kelas, $tglStart, $tglEnd)
             ->orderBy($orderBy, $sort);
 
-        $container  = $builder->findAll($limit, $offset);
-        $totalRows  = $builder->countAllResults(false);
+        $totalRows = $builder->countAllResults(false);
+        $container = $builder->findAll($limit, $offset);
+
+        foreach ($container as $key => $value) {
+            $container[$key]['kelas'] = $this->kelas[$value['kelas']];
+            $container[$key]['tgl_pindah'] = osdate()->create($value['tgl_pindah'], 'd-M-y');
+        }
+
+        $institusi = $this->dataInstitusiModel->getWithInstitusi($this->institusiId);
 
         return $this->response->setJSON([
             'container' => $container,
             'totalRows' => $totalRows,
+            'schoolLevel'   => $institusi['tingkat'],
             'additionalResponse' => [
-                'status'  => 'OK',
-                'message' => lang('General.dataFetched'),
+                'status'        => 'OK',
+                'message'       => lang('General.dataFetched'),
             ]
         ]);
     }

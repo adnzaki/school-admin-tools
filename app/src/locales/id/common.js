@@ -21,8 +21,10 @@ export default {
     import: 'Import Data',
     download: 'Unduh',
     upload: 'Unggah',
-    apply: 'Terapkan'
+    apply: 'Terapkan',
+    filterDate: 'Filter Tanggal'
   },
+  grade: 'Kelas',
   incorrectForm: 'Silakan isi form dengan benar',
   importing: 'Mengimpor data...',
   uploading: 'Mengunggah berkas...',
@@ -31,5 +33,19 @@ export default {
   deleting: 'Menghapus data...',
   unableToDelete: 'Silakan pilih data yang ingin dihapus',
   deleteConfirm: 'Anda yakin ingin menghapus data ini?',
-  deleteTitle: 'Konfirmasi Hapus Data'
+  deleteTitle: 'Konfirmasi Hapus Data',
+  spelledNumbers: {
+    one: 'Satu',
+    two: 'Dua',
+    three: 'Tiga',
+    four: 'Empat',
+    five: 'Lima',
+    six: 'Enam',
+    seven: 'Tujuh',
+    eight: 'Delapan',
+    nine: 'Sembilan',
+    ten: 'Sepuluh',
+    eleven: 'Sebelas',
+    twelve: 'Dua Belas'
+  }
 }

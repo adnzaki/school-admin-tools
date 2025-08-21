@@ -138,12 +138,8 @@ class PindahSekolahModel extends Model
         }
 
         if ($tglStart && $tglEnd) {
-            $this->where('tb_pindah_sekolah.tgl_pindah >=', $tglStart)
-                ->where('tb_pindah_sekolah.tgl_pindah <=', $tglEnd);
-        } elseif ($tglStart) {
-            $this->where('tb_pindah_sekolah.tgl_pindah >=', $tglStart);
-        } elseif ($tglEnd) {
-            $this->where('tb_pindah_sekolah.tgl_pindah <=', $tglEnd);
+            $this->where('tgl_pindah >=', $tglStart)
+                ->where('tgl_pindah <=', $tglEnd);
         }
 
         return $this;

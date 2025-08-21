@@ -70,7 +70,6 @@ $routes->group('institusi', function (RouteCollection $routes) {
 $routes->group('pindah-sekolah', function (RouteCollection $routes) {
     $routes->post('get-data', 'PindahSekolah::getData');
     $routes->post('get-data/(:any)', 'PindahSekolah::getData/$1');
-    $routes->post('get-data/(:any)/(:any)/(:any)', 'PindahSekolah::getData/$1/$2/$3');
     $routes->post('save', 'PindahSekolah::save');
     $routes->post('delete', 'PindahSekolah::delete');
     $routes->get('detail/(:num)', 'PindahSekolah::detail/$1');

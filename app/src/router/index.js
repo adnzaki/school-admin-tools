@@ -41,6 +41,11 @@ const router = createRouter({
           name: 'SuratKeluar',
           component: () => import('@/views/out-letter/IndexPage.vue')
         },
+        {
+          path: '/pindah-sekolah',
+          name: 'PindahSekolah',
+          component: () => import('@/views/mutation/IndexPage.vue')
+        },
 
         // --------- ROUTES FOR DEMO --------- //
         {
