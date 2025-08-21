@@ -110,6 +110,25 @@ class PindahSekolah extends BaseController
         ]);
     }
 
+    public function findStudent()
+    {
+        $search = $this->request->getPost('search');
+
+        $data = [];
+        if (strlen($search) > 2) {
+            $builder = $this->siswaModel->findActiveStudent()->like('nama', $search);
+            $rows = $builder->countAllResults(false);
+            $data = $builder->findAll();
+        }
+
+        return $this->response->setJSON([
+            'status'        => 'OK',
+            'message'       => lang('General.dataFetched'),
+            'totalRows'     => $rows,
+            'result'        => $data
+        ]);
+    }
+
     public function createSuratPindahSekolah()
     {
         $pdf = new \PDFCreator([
@@ -261,7 +280,7 @@ class PindahSekolah extends BaseController
         $nomorSuratRayon = $this->request->getPost('no_surat_rayon');
         $rules = [
             'id'                => ['rules' => 'permit_empty', 'label' => 'ID'],
-            'siswa_id'          => ['rules' => 'required|numeric', 'label' => lang('FieldLabels.siswa.id')],
+            'siswa_id'          => ['rules' => 'required|numeric', 'label' => lang('FieldLabels.mutasi.siswa_id')],
             'no_surat'          => ['rules' => 'required', 'label' => lang('FieldLabels.mutasi.no_surat')],
             'kelas'             => ['rules' => 'required|in_list[1,2,3,4,5,6,7,8,9,10,11,12]', 'label' => lang('FieldLabels.mutasi.kelas')],
             'sd_tujuan'         => ['rules' => 'required', 'label' => lang('FieldLabels.mutasi.sd_tujuan')],

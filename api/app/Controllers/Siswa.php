@@ -27,12 +27,10 @@ class Siswa extends BaseController
             $this->siswa->like($searchBy, $search);
         }
 
-        $filter = ['institusi_id' => get_institusi(), 'cpd' => 0, 'mutasi' => 0];
-
-        $data  = $this->siswa->where($filter)->orderBy($orderBy, $sort)->findAll($limit, $offset);
+        $data  = $this->siswa->findActiveStudent()->orderBy($orderBy, $sort)->findAll($limit, $offset);
         $total = empty($search)
-            ? $this->siswa->where($filter)->countAllResults()
-            : $this->siswa->where($filter)->like($searchBy, $search)->countAllResults();
+            ? $this->siswa->findActiveStudent()->countAllResults()
+            : $this->siswa->findActiveStudent()->like($searchBy, $search)->countAllResults();
 
         return $this->response->setJSON([
             'container' => $data,

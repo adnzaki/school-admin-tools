@@ -73,7 +73,8 @@ return [
         'file_kop'                 => 'File Kop',
     ],
     'mutasi' => [
-        'no_surat'          => 'Nomor Surat',
+        'siswa_id'          => 'Siswa',
+        'no_surat'          => 'Nomor Surat Pindah Sekolah',
         'kelas'             => 'Kelas',
         'sd_tujuan'         => 'Sekolah Tujuan',
         'kelurahan'         => 'Kelurahan',
@@ -82,6 +83,6 @@ return [
         'provinsi'          => 'Provinsi',
         'alasan'            => 'Alasan Pindah',
         'tgl_pindah'        => 'Tanggal Pindah',
-        'no_surat_rayon'    => 'Nomor Surat Rayon',
+        'no_surat_rayon'    => 'Nomor Surat Pindah Rayon',
     ]
 ];

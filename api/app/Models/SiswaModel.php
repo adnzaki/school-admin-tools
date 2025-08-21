@@ -44,4 +44,9 @@ class SiswaModel extends Model
     protected $validationRules      = [];
     protected $validationMessages   = [];
     protected $skipValidation       = false;
+
+    public function findActiveStudent()
+    {
+        return $this->where(['institusi_id' => get_institusi(), 'cpd' => 0, 'mutasi' => 0]);
+    }
 }

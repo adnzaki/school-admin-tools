@@ -73,8 +73,9 @@ return [
         'file_kop'                 => 'Letterhead File',
     ],
     'mutasi' => [
+        'siswa_id'          => 'Student',
         'kelas'             => 'Class',
-        'no_surat'          => 'Letter Number',
+        'no_surat'          => 'Mutation Letter Number',
         'sd_tujuan'         => 'Destination School',
         'kelurahan'         => 'Subdistrict',
         'kecamatan'         => 'District',

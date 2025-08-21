@@ -32,6 +32,7 @@ export const useMutationStore = defineStore('mutation', {
       start: '',
       end: ''
     },
+    studentOptions: [],
     schoolLevel: '',
     classLevels: {
       SD: [
@@ -59,6 +60,11 @@ export const useMutationStore = defineStore('mutation', {
     disableButton: false
   }),
   actions: {
+    findStudent(search) {
+      api.post(`${this.endpoint}find-student`, { search }, { transformRequest: [(data) => createFormData(data)] }).then(({ data }) => {
+        this.studentOptions = data.result
+      })
+    },
     delete(action) {
       api
         .post(
@@ -107,46 +113,9 @@ export const useMutationStore = defineStore('mutation', {
         this.showForm = true
       })
     },
-    upload(file, action) {
-      try {
-        api
-          .post(`${this.endpoint}upload`, file, {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          })
-          .then(({ data }) => {
-            action(data.status)
-            this.formData.berkas = data.uploaded[0].filename
-            this.formData.berkas_url = data.url
-
-            // set new upload flag
-            this.hasNewUpload = true
-          })
-      } catch {
-        action('failed')
-      }
-    },
-    removeUploadedFile() {
-      api
-        .post(
-          `${this.endpoint}delete-berkas`,
-          { filename: this.formData.berkas },
-          {
-            transformRequest: [(data) => createFormData(data)]
-          }
-        )
-        .then(({ data }) => {
-          // OK
-        })
-    },
     save(action, error) {
-      if (this.formData.tgl_surat !== '') {
-        this.formData.tgl_surat = this.formData.tgl_surat.toLocaleDateString('en-CA')
-      }
-
-      if (this.formData.tgl_diterima !== '') {
-        this.formData.tgl_diterima = this.formData.tgl_diterima.toLocaleDateString('en-CA')
+      if (this.formData.tgl_pindah) {
+        this.formData.tgl_pindah = this.formData.tgl_pindah.toLocaleDateString('en-CA')
       }
 
       api
@@ -165,6 +134,10 @@ export const useMutationStore = defineStore('mutation', {
             this.errors = {}
             this.submitted = true
           } else {
+            if (this.formData.tgl_pindah) {
+              this.formData.tgl_pindah = new Date(this.formData.tgl_pindah)
+            }
+
             this.errors = data.message
           }
 
@@ -178,14 +151,18 @@ export const useMutationStore = defineStore('mutation', {
     },
     resetForm() {
       this.formData = {
-        nomor_surat: '',
-        asal_surat: '',
-        perihal: '',
-        tgl_surat: '',
-        tgl_diterima: '',
-        keterangan: '',
-        berkas: '',
-        berkas_url: ''
+        siswa_id: '', // ID siswa yang dimutasi
+        no_surat: '', // Nomor surat pindah sekolah
+        kelas: '', // Kelas terakhir siswa
+        sd_tujuan: '', // Nama sekolah tujuan
+        kelurahan: '', // Kelurahan tujuan
+        kecamatan: '', // Kecamatan tujuan
+        kab_kota: '', // Kabupaten/Kota tujuan
+        provinsi: '', // Provinsi tujuan
+        alasan: '', // Alasan pindah
+        tgl_pindah: '', // Tanggal pindah
+        pindah_rayon: 0, // 0 = tidak pindah rayon, 1 = pindah rayon
+        no_surat_rayon: '' // Nomor surat pindah rayon (wajib jika pindah_rayon = 1)
       }
     },
     getData(errorHandler) {

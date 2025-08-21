@@ -1,45 +1,88 @@
 <template>
   <Dialog :header="store.formTitle" v-model:visible="store.showForm" @show="onDialogShow" @hide="onDialogHide" :breakpoints="{ '960px': '75vw' }" :style="{ width: '30vw' }" :modal="true">
     <div class="flex flex-col gap-4">
+      <!-- Siswa (Autocomplete Select) -->
       <div class="flex flex-col gap-2">
-        <label for="name1">{{ $t('letterArchive.number') }}</label>
-        <InputText type="text" v-model="store.formData.nomor_surat" />
-        <p class="text-red-500">{{ store.errors.nomor_surat }}</p>
+        <label>{{ $t('mutation.selectStudent') }}</label>
+        <Select v-model="store.formData.siswa_id" @filter="onStudentFilter" :options="store.studentOptions" optionLabel="nama" optionValue="id" filter :placeholder="$t('mutation.findStudent')" class="w-full" />
+        <p class="text-red-500">{{ store.errors.siswa_id }}</p>
       </div>
+
+      <!-- Nomor Surat -->
       <div class="flex flex-col gap-2">
-        <label for="name1">{{ $t('letterArchive.origin') }}</label>
-        <InputText type="text" v-model="store.formData.asal_surat" />
-        <p class="text-red-500">{{ store.errors.asal_surat }}</p>
+        <label>{{ $t('mutation.letterNumber') }}</label>
+        <InputText type="text" v-model="store.formData.no_surat" />
+        <p class="text-red-500">{{ store.errors.no_surat }}</p>
       </div>
+
+      <!-- (Select Kelas) -->
       <div class="flex flex-col gap-2">
-        <label for="name1">{{ $t('letterArchive.subject') }}</label>
-        <InputText type="text" v-model="store.formData.perihal" />
-        <p class="text-red-500">{{ store.errors.perihal }}</p>
+        <label>{{ $t('mutation.grade') }}</label>
+        <Select v-model="selectedGrade" @change="onGradeChange" :options="store.classLevels[store.schoolLevel]" optionLabel="name" :placeholder="$t('mutation.selectGrade')" class="w-full" />
+        <p class="text-red-500">{{ store.errors.kelas }}</p>
       </div>
+
+      <!-- sekolah Tujuan -->
       <div class="flex flex-col gap-2">
-        <label for="tgl_lahir">{{ t('letterArchive.date') }}</label>
-        <DatePicker name="date" fluid date-format="dd/mm/yy" v-model="store.formData.tgl_surat" />
-        <p class="text-red-500">{{ store.errors.tgl_surat }}</p>
+        <label>{{ $t('mutation.destination') }}</label>
+        <InputText type="text" v-model="store.formData.sd_tujuan" />
+        <p class="text-red-500">{{ store.errors.sd_tujuan }}</p>
       </div>
+
+      <!-- Kelurahan -->
       <div class="flex flex-col gap-2">
-        <label for="tgl_lahir">{{ t('letterArchive.dateReceived') }}</label>
-        <DatePicker name="date-received" fluid date-format="dd/mm/yy" v-model="store.formData.tgl_diterima" />
-        <p class="text-red-500">{{ store.errors.tgl_diterima }}</p>
+        <label>{{ $t('student.subDistrict') }}</label>
+        <InputText type="text" v-model="store.formData.kelurahan" />
+        <p class="text-red-500">{{ store.errors.kelurahan }}</p>
       </div>
+
+      <!-- Kecamatan -->
       <div class="flex flex-col gap-2">
-        <label for="name1">{{ $t('letterArchive.info') }}</label>
-        <InputText type="text" v-model="store.formData.keterangan" />
-        <p class="text-red-500">{{ store.errors.keterangan }}</p>
+        <label>{{ $t('student.district') }}</label>
+        <InputText type="text" v-model="store.formData.kecamatan" />
+        <p class="text-red-500">{{ store.errors.kecamatan }}</p>
       </div>
+
+      <!-- Kabupaten/Kota -->
       <div class="flex flex-col gap-2">
-        <p v-if="store.formData.berkas !== ''">
-          {{ $t('letterArchive.file') }}: <br />
-          <a :href="store.formData.berkas_url" target="_blank" class="text-blue-500"
-            ><strong>{{ store.formData.berkas }}</strong></a
-          >
-        </p>
-        <label for="name1">{{ $t('letterArchive.upload') }}</label>
-        <FileUpload ref="fileUpload" name="upload[]" :show-upload-button="false" :show-cancel-button="false" :file-limit="1" auto @uploader="onUpload" accept=".pdf,application/pdf" :maxFileSize="4000000" customUpload />
+        <label>{{ $t('student.city') }}</label>
+        <InputText type="text" v-model="store.formData.kab_kota" />
+        <p class="text-red-500">{{ store.errors.kab_kota }}</p>
+      </div>
+
+      <!-- Provinsi -->
+      <div class="flex flex-col gap-2">
+        <label>{{ $t('student.province') }}</label>
+        <InputText type="text" v-model="store.formData.provinsi" />
+        <p class="text-red-500">{{ store.errors.provinsi }}</p>
+      </div>
+
+      <!-- Alasan -->
+      <div class="flex flex-col gap-2">
+        <label>{{ $t('mutation.reason') }}</label>
+        <InputText type="text" v-model="store.formData.alasan" />
+        <p class="text-red-500">{{ store.errors.alasan }}</p>
+      </div>
+
+      <!-- Tanggal Pindah -->
+      <div class="flex flex-col gap-2">
+        <label>{{ $t('mutation.moveDate') }}</label>
+        <DatePicker name="tgl_pindah" fluid date-format="dd/mm/yy" v-model="store.formData.tgl_pindah" />
+        <p class="text-red-500">{{ store.errors.tgl_pindah }}</p>
+      </div>
+
+      <!-- Pindah Rayon -->
+      <div class="flex flex-col gap-2">
+        <label>{{ $t('mutation.rayon') }}</label>
+        <ToggleSwitch v-model="checked" @update:model-value="onPindahRayonChange" />
+        <p class="text-red-500">{{ store.errors.pindah_rayon }}</p>
+      </div>
+
+      <!-- Nomor Surat Rayon -->
+      <div class="flex flex-col gap-2" v-if="store.formData.pindah_rayon === 1">
+        <label>{{ $t('mutation.rayonNumber') }}</label>
+        <InputText type="text" v-model="store.formData.no_surat_rayon" />
+        <p class="text-red-500">{{ store.errors.no_surat_rayon }}</p>
       </div>
     </div>
     <template #footer>
@@ -48,28 +91,42 @@
   </Dialog>
 </template>
 <script setup>
-import { useInLetterStore } from '@/stores/in-letter-store'
+import { useMutationStore } from '@/stores/mutation-store'
 import { useToast } from 'primevue/usetoast'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-const store = useInLetterStore()
+const store = useMutationStore()
 const toast = useToast()
 const { t } = useI18n()
-const fileUpload = ref()
+const checked = ref(false)
+const selectedGrade = ref()
+
+const onGradeChange = (event) => {
+  store.formData.kelas = event.value.code
+}
+
+const onStudentFilter = (event) => {
+  if (event.value.length > 2) {
+    store.findStudent(event.value)
+  }
+}
+
+const onPindahRayonChange = (v) => {
+  store.formData.pindah_rayon = v ? 1 : 0
+}
 
 const onDialogHide = () => {
-  if (store.hasNewUpload && !store.submitted) {
-    store.removeUploadedFile()
-  }
-
   if (store.formEvent === 'edit') store.resetForm()
 
   if (store.submitted) store.submitted = false
-  if (store.hasNewUpload) store.hasNewUpload = false
 }
 
-const onDialogShow = () => {}
+const onDialogShow = () => {
+  if (store.formEvent === 'edit') {
+    checked.value = store.formData.pindah_rayon === 1
+  }
+}
 
 const onSave = (status, message) => {
   toast.removeAllGroups()
@@ -84,29 +141,6 @@ const onSaveError = (reason) => {
   toast.removeAllGroups()
   toast.add({ severity: 'error', summary: t('common.error'), detail: t('common.networkError'), life: 5000 })
   console.error(reason)
-}
-
-const onUpload = (event) => {
-  store.disableButton = true
-  const file = event.files[0]
-  const formData = new FormData()
-  formData.append('surat', file)
-  toast.add({ severity: 'info', summary: t('common.processing'), detail: t('common.uploading') })
-
-  store.upload(formData, (status) => {
-    toast.removeAllGroups()
-    if (status === 'error') {
-      toast.add({ severity: 'error', summary: t('common.error'), detail: t('letterArchive.uploadError'), life: 5000 })
-    } else if (status === 'success') {
-      toast.add({ severity: 'success', summary: t('common.success'), detail: t('letterArchive.uploadSuccess'), life: 4000 })
-      fileUpload.value.clear()
-      fileUpload.value.uploadedFileCount = 0
-    } else if (status === 'failed') {
-      toast.add({ severity: 'error', summary: t('common.error'), detail: t('common.networkError'), life: 5000 })
-    }
-
-    store.disableButton = false
-  })
 }
 
 const save = () => {
