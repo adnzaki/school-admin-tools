@@ -94,21 +94,26 @@ export const useMutationStore = defineStore('mutation', {
       else action()
     },
     getDetail() {
-      api.get(`${this.endpoint}detail/${this.selectedSingle.id}`).then(({ data }) => {
-        const detail = data.data
+      api.get(`${this.endpoint}detail/${this.selected.id}`).then(({ data }) => {
+        const detail = data.detail
         this.formData = {
           id: detail.id,
-          nomor_surat: detail.nomor_surat,
-          asal_surat: detail.asal_surat,
-          perihal: detail.perihal,
-          tgl_surat: new Date(detail.tgl_surat),
-          tgl_diterima: new Date(detail.tgl_diterima),
-          keterangan: detail.keterangan,
-          berkas: data.lampiran === null ? '' : data.lampiran.nama_file,
-          berkas_url: data.lampiran === null ? '' : data.lampiran.file_url
+          siswa_id: detail.siswa_id,
+          siswa_nama: detail.siswa_nama,
+          no_surat: detail.no_surat,
+          kelas: detail.kelas,
+          sd_tujuan: detail.sd_tujuan,
+          kelurahan: detail.kelurahan,
+          kecamatan: detail.kecamatan,
+          kab_kota: detail.kab_kota,
+          provinsi: detail.provinsi,
+          alasan: detail.alasan,
+          tgl_pindah: new Date(detail.tgl_pindah),
+          pindah_rayon: detail.pindah_rayon,
+          no_surat_rayon: detail.no_surat_rayon
         }
 
-        this.formTitle = t('letterArchive.editInLetter')
+        this.formTitle = t('mutation.edit')
         this.formEvent = 'edit'
         this.showForm = true
       })

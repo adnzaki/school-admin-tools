@@ -4,6 +4,7 @@ import { useToast } from 'primevue'
 import { usePagingStore } from 'ss-paging-vue'
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import conf from '../../../admins.config'
 const { t } = useI18n()
 
 const store = useMutationStore()
@@ -19,6 +20,7 @@ const tableColumns = ref([
 ])
 
 const cm = ref()
+const userId = ref(JSON.parse(localStorage.getItem('sakola_user')).id)
 
 const contextMenu = ref([
   {
@@ -40,6 +42,27 @@ const contextMenu = ref([
       store.showDeleteConfirmation(() => {
         toast.add({ severity: 'error', summary: t('common.error'), detail: t('common.unableToDelete'), life: 5000 })
       })
+    }
+  },
+  {
+    label: t('mutation.printMutationLetter'),
+    icon: 'pi pi-file-pdf',
+    command: () => {
+      window.open(`${conf.apiPublicPath}pindah-sekolah/cetak-surat-pindah?id=${store.selected.id}&user=${userId.value}`, '_blank')
+    }
+  },
+  {
+    label: t('mutation.printRayonLetter'),
+    icon: 'pi pi-file-pdf',
+    command: () => {
+      window.open(`${conf.apiPublicPath}pindah-sekolah/cetak-pindah-rayon?id=${store.selected.id}&user=${userId.value}`, '_blank')
+    }
+  },
+  {
+    label: t('mutation.printReportSheet'),
+    icon: 'pi pi-file-pdf',
+    command: () => {
+      window.open(`${conf.apiPublicPath}pindah-sekolah/cetak-lembar-mutasi-rapor?id=${store.selected.id}&user=${userId.value}`, '_blank')
     }
   }
 ])

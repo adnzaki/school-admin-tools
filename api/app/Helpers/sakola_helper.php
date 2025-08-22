@@ -5,6 +5,53 @@ use CodeIgniter\Validation\ValidationInterface;
 use Config\Services;
 use App\Models\UserInstitusiModel;
 
+if (! function_exists('encrypt')) {
+    /**
+     * Encrypt IDs with openssl encryption and base64 encoding
+     * 
+     * @param string $id The ID to encrypt
+     * @param string $key The encryption key
+     * 
+     * @return string
+     */
+    function encrypt($id, $key)
+    {
+        $cipher = "AES-256-CBC";
+        $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($cipher));
+        $encrypted = openssl_encrypt($id, $cipher, $key, 0, $iv);
+        $data = base64_encode($iv . $encrypted);
+
+        // Ubah ke format URL-safe
+        return rtrim(strtr($data, '+/', '-_'), '=');
+    }
+}
+
+if (! function_exists('decrypt')) {
+    /**
+     * Decript IDs that is encrypted with openssl encryption and base64 encoding
+     * 
+     * @param string $id The ID to decrypt
+     * @param string $key The encryption key
+     * 
+     * @return string|false The encrypted ID or false if it is invalid
+     */
+    function decrypt($encryptedData, $key)
+    {
+        $cipher = "AES-256-CBC";
+
+        // Kembalikan ke base64 normal
+        $data = strtr($encryptedData, '-_', '+/');
+        $data = base64_decode($data);
+
+        $ivLength = openssl_cipher_iv_length($cipher);
+        $iv = substr($data, 0, $ivLength);
+        $encrypted = substr($data, $ivLength);
+
+        return openssl_decrypt($encrypted, $cipher, $key, 0, $iv);
+    }
+}
+
+
 if (! function_exists('osdate')) {
 
     /**
@@ -39,12 +86,13 @@ if (! function_exists('get_institusi')) {
     /**
      * Mendapatkan ID institusi berdasarkan user yang sedang login
      *
+     * @param int|null $userId
      * @return int|null
      */
-    function get_institusi()
+    function get_institusi($userId = null)
     {
         $userInstitusiModel = new UserInstitusiModel();
-        $institusiId = $userInstitusiModel->getInstitusiIdByCurrentUser();
+        $institusiId = $userInstitusiModel->getInstitusiIdByCurrentUser($userId);
 
         return $institusiId;
     }

@@ -63,7 +63,7 @@
 <body>
     <div class="container">
         <h1>Ups 😕</h1>
-        <p>Permohonan pindah rayon atas nama <span class="highlight"><?= $namaSiswa ?></span> tidak ditemukan.</p>
+        <?= $message ?>
         <!-- <button class="btn" onclick="window.history.back()">Kembali</button> -->
     </div>
 </body>

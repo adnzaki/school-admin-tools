@@ -72,13 +72,13 @@ $routes->group('pindah-sekolah', function (RouteCollection $routes) {
     $routes->post('get-data/(:any)', 'PindahSekolah::getData/$1');
     $routes->post('save', 'PindahSekolah::save');
     $routes->post('delete', 'PindahSekolah::delete');
-    $routes->get('detail/(:num)', 'PindahSekolah::detail/$1');
+    $routes->get('detail/(:any)', 'PindahSekolah::getDetail/$1');
     $routes->post('find-student', 'PindahSekolah::findStudent');
 
     // route for letters
-    $routes->add('cetak-surat-pindah', 'PindahSekolah::createSuratPindahSekolah');
-    $routes->add('cetak-pindah-rayon', 'PindahSekolah::createSuratPindahRayon');
-    $routes->add('cetak-lembar-mutasi-rapor', 'PindahSekolah::createLembarMutasiRapor');
+    $routes->get('cetak-surat-pindah', 'PindahSekolah::createSuratPindahSekolah');
+    $routes->get('cetak-pindah-rayon', 'PindahSekolah::createSuratPindahRayon');
+    $routes->get('cetak-lembar-mutasi-rapor', 'PindahSekolah::createLembarMutasiRapor');
 });
 
 

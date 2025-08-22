@@ -4,7 +4,7 @@
       <!-- Siswa (Autocomplete Select) -->
       <div class="flex flex-col gap-2">
         <label>{{ $t('mutation.selectStudent') }}</label>
-        <Select v-model="store.formData.siswa_id" @filter="onStudentFilter" :options="store.studentOptions" optionLabel="nama" optionValue="id" filter :placeholder="$t('mutation.findStudent')" class="w-full" />
+        <Select v-model="selectedStudent" @filter="onStudentFilter" @update:model-value="onStudentChange" :options="store.studentOptions" optionLabel="nama" optionValue="id" filter :placeholder="$t('mutation.findStudent')" class="w-full" />
         <p class="text-red-500">{{ store.errors.siswa_id }}</p>
       </div>
 
@@ -101,9 +101,14 @@ const toast = useToast()
 const { t } = useI18n()
 const checked = ref(false)
 const selectedGrade = ref()
+const selectedStudent = ref()
 
 const onGradeChange = (event) => {
   store.formData.kelas = event.value.code
+}
+
+const onStudentChange = (value) => {
+  store.formData.siswa_id = value
 }
 
 const onStudentFilter = (event) => {
@@ -117,7 +122,12 @@ const onPindahRayonChange = (v) => {
 }
 
 const onDialogHide = () => {
-  if (store.formEvent === 'edit') store.resetForm()
+  if (store.formEvent === 'edit') {
+    store.resetForm()
+    store.studentOptions = []
+
+    if (store.formData.siswa_nama) store.formData.siswa_nama = ''
+  }
 
   if (store.submitted) store.submitted = false
 }
@@ -125,6 +135,12 @@ const onDialogHide = () => {
 const onDialogShow = () => {
   if (store.formEvent === 'edit') {
     checked.value = store.formData.pindah_rayon === 1
+    store.studentOptions = []
+    store.studentOptions.push({ nama: store.formData.siswa_nama, id: store.formData.siswa_id })
+    selectedStudent.value = store.formData.siswa_id
+
+    const grade = store.classLevels[store.schoolLevel].find((g) => g.code === parseInt(store.formData.kelas))
+    selectedGrade.value = { name: grade.name, code: grade.code }
   }
 }
 

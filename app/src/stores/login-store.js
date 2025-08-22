@@ -57,6 +57,8 @@ export const useLoginStore = defineStore('login', {
               this.setCookieOptions()
               Cookies.set(conf.cookieName, data.token, this.cookieOptions)
 
+              localStorage.setItem('sakola_user', JSON.stringify(data.user))
+
               // redirect to dashboard
               setTimeout(() => {
                 window.location.href = conf.homeUrl()

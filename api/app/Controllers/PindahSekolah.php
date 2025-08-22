@@ -40,6 +40,10 @@ class PindahSekolah extends BaseController
         'P' => 'Perempuan'
     ];
 
+    private $mutationId;
+
+    private $notfoundReason = '[ <i>Alasan: ID pengguna atau ID mutasi tidak valid.</i> ]';
+
     public function __construct()
     {
         $this->model = new PindahSekolahModel();
@@ -49,7 +53,13 @@ class PindahSekolah extends BaseController
 
         // get institusi_id based on PDF creation mode
         helper('sakola');
-        $this->institusiId = env('pdf_mode') === 'production' ? get_institusi() : env('institusi_id');
+
+        /** @var \CodeIgniter\HTTP\IncomingRequest */
+        $request = service('request');
+
+        $userId = decrypt($request->getGet('user'), env('encryption_key'));
+        $this->institusiId = env('pdf_mode') === 'production' ? get_institusi($userId) : env('institusi_id');
+        $this->mutationId = decrypt($request->getGet('id'), env('encryption_key'));
     }
 
     public function getData(?string $rawParams = null)
@@ -95,18 +105,31 @@ class PindahSekolah extends BaseController
         foreach ($container as $key => $value) {
             $container[$key]['kelas'] = $this->kelas[$value['kelas']];
             $container[$key]['tgl_pindah'] = osdate()->create($value['tgl_pindah'], 'd-M-y');
+            $container[$key]['id'] = encrypt($value['id'], env('encryption_key'));
         }
 
-        $institusi = $this->dataInstitusiModel->getWithInstitusi($this->institusiId);
+        $institusi = $this->dataInstitusiModel->getWithInstitusi(get_institusi());
 
         return $this->response->setJSON([
-            'container' => $container,
-            'totalRows' => $totalRows,
+            'container'     => $container,
+            'totalRows'     => $totalRows,
             'schoolLevel'   => $institusi['tingkat'],
             'additionalResponse' => [
                 'status'        => 'OK',
                 'message'       => lang('General.dataFetched'),
             ]
+        ]);
+    }
+
+    public function getDetail(string $id)
+    {
+        $id = decrypt($id, env('encryption_key'));
+        $detail = $this->model->findByIdWithSiswa($id);
+
+        return $this->response->setJSON([
+            'status'        => 'OK',
+            'message'       => lang('General.dataFetched'),
+            'detail'        => $detail
         ]);
     }
 
@@ -131,16 +154,19 @@ class PindahSekolah extends BaseController
 
     public function createSuratPindahSekolah()
     {
+        if ($this->institusiId === null || !$this->mutationId) {
+            $message = 'Surat pindah sekolah tidak ditemukan. <br /> ' . $this->notfoundReason;
+            return view('mutasi/surat_notfound', ['message' => $message]);
+        }
+
         $pdf = new \PDFCreator([
             'paperSize' => 'F4',
         ]);
 
         $institusi = $this->dataInstitusiModel->getWithInstitusi($this->institusiId);
-
         $title = 'Surat Keterangan Pindah Sekolah';
-        $mutationId = $this->request->getGetPost('id');
-        $letterDetail = $this->model->find($mutationId);
-        $mutationData = $this->model->findByIdWithSiswa($mutationId);
+        $letterDetail = $this->model->find($this->mutationId);
+        $mutationData = $this->model->findByIdWithSiswa($this->mutationId);
         $parentName = $mutationData['siswa_nama_ayah'] === null || $mutationData['siswa_nama_ayah'] === '' ? $mutationData['siswa_nama_ibu'] : $mutationData['siswa_nama_ayah'];
         $parentJob = $mutationData['siswa_pekerjaan_ayah'] === null || $mutationData['siswa_pekerjaan_ayah'] === '' ? $mutationData['siswa_pekerjaan_ibu'] : $mutationData['siswa_pekerjaan_ayah'];
 
@@ -162,6 +188,7 @@ class PindahSekolah extends BaseController
         $data = [
             'pageTitle' => 'Surat Keterangan Pindah Sekolah',
             'content'   => view('mutasi/pindah_sekolah', $contentData),
+            'institusi' => $institusi
         ];
 
         $html = view('layout/main', $data);
@@ -170,15 +197,19 @@ class PindahSekolah extends BaseController
 
     public function createSuratPindahRayon()
     {
-        $mutationId = $this->request->getGetPost('id');
-        $mutationData = $this->model->findByIdWithSiswa($mutationId);
+        if ($this->institusiId === null || !$this->mutationId) {
+            $message = 'Surat Pindah Rayon tidak ditemukan. <br/>' . $this->notfoundReason;
+            return view('mutasi/surat_notfound', ['message' => $message]);
+        }
+
+        $mutationData = $this->model->findByIdWithSiswa($this->mutationId);
 
         if ((int)$mutationData['pindah_rayon'] !== 1) {
             $data = [
-                'namaSiswa' => $mutationData['siswa_nama'],
+                'message' => '<p>Permohonan pindah rayon atas nama <span class="highlight">' . $mutationData['siswa_nama'] . '</span> tidak ditemukan.</p>'
             ];
 
-            return view('mutasi/pindah_rayon_notfound', $data);
+            return view('mutasi/surat_notfound', $data);
         }
 
         $pdf = new \PDFCreator([
@@ -188,7 +219,7 @@ class PindahSekolah extends BaseController
         $institusi = $this->dataInstitusiModel->getWithInstitusi($this->institusiId);
 
         $title = 'Permohonan Pindah Rayon';
-        $letterDetail = $this->getSuratPindahByRelation('tb_pindah_sekolah.id=' . $mutationId)->findAll();
+        $letterDetail = $this->getSuratPindahByRelation('tb_pindah_sekolah.id=' . $this->mutationId)->findAll();
 
 
         $parentName = $mutationData['siswa_nama_ayah'] === null || $mutationData['siswa_nama_ayah'] === '' ? $mutationData['siswa_nama_ibu'] : $mutationData['siswa_nama_ayah'];
@@ -207,6 +238,7 @@ class PindahSekolah extends BaseController
         $data = [
             'pageTitle' => $title,
             'content'   => view('mutasi/pindah_rayon', $contentData),
+            'institusi' => $institusi
         ];
 
         $html = view('layout/main', $data);
@@ -215,8 +247,12 @@ class PindahSekolah extends BaseController
 
     public function createLembarMutasiRapor()
     {
-        $mutationId = $this->request->getGetPost('id');
-        $mutationData = $this->model->findByIdWithSiswa($mutationId);
+        if ($this->institusiId === null || !$this->mutationId) {
+            $message = 'Lembar mutasi rapor tidak ditemukan. <br/>' . $this->notfoundReason;
+            return view('mutasi/surat_notfound', ['message' => $message]);
+        }
+
+        $mutationData = $this->model->findByIdWithSiswa($this->mutationId);
         $pdf = new \PDFCreator([
             'paperSize' => 'A4',
         ]);
@@ -241,6 +277,7 @@ class PindahSekolah extends BaseController
         $data = [
             'pageTitle' => $title,
             'content'   => view('mutasi/lembar_rapor', $contentData),
+            'institusi' => $institusi
         ];
 
         $html = view('layout/main', $data);

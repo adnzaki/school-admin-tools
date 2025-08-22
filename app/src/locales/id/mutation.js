@@ -11,5 +11,8 @@ export default {
   letterNumber: 'Nomor Surat Pindah Sekolah',
   rayon: 'Pindah Rayon',
   rayonNumber: 'Nomor Surat Pindah Rayon',
-  findStudent: 'Silakan ketik minimal 3 karakter untuk mencari siswa'
+  findStudent: 'Silakan ketik minimal 3 karakter untuk mencari siswa',
+  printMutationLetter: 'Cetak Surat Pindah Sekolah',
+  printRayonLetter: 'Cetak Surat Pindah Rayon',
+  printReportSheet: 'Cetak Lembar Mutasi Rapor'
 }

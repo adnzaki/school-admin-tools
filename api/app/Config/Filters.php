@@ -80,6 +80,7 @@ class Filters extends BaseFilters
                     'auth/login',
                     'auth/logout',
                     'user/*',
+                    'pindah-sekolah/cetak-*',
                 ],
             ],
             'institusi' => [
@@ -87,6 +88,7 @@ class Filters extends BaseFilters
                     'auth/login',
                     'auth/logout',
                     'user/*',
+                    'pindah-sekolah/cetak-*',
                 ],
             ],
             // 'honeypot',

@@ -96,11 +96,15 @@ class Auth extends BaseController
 
         $getToken = $this->model->validateLogin($credentials);
         if ($getToken['status'] !== false) {
+            $user = auth()->getProvider()->findById(auth()->id());
 
             return $this->response->setJSON([
                 'status'    => 'success',
                 'token'     => $getToken['token'],
-                'user'      => auth()->getProvider()->findById(auth()->id())
+                'user'      => [
+                    'id'    => encrypt($user->id, env('encryption_key')),
+                    'name'  => $user->username
+                ]
             ]);
         } else {
             return $this->response->setJSON([
