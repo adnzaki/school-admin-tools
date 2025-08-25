@@ -29,6 +29,7 @@ export const useOutLetterStore = defineStore('out-letter', {
       start: '',
       end: ''
     },
+    disableForm: false,
     formEvent: 'add', // add | edit
     submitted: false, // whether the form has been submitted and submitted to the database or not
     disableButton: false,
@@ -36,11 +37,11 @@ export const useOutLetterStore = defineStore('out-letter', {
   }),
   actions: {
     delete(action) {
+      const editableIds = this.selected.filter((item) => item.editable === 1).map((item) => item.id)
+
       api
         .delete(`${this.endpoint}delete`, {
-          data: {
-            id: this.selected.map((item) => item.id)
-          }
+          data: { id: editableIds }
         })
         .then(({ data }) => {
           if (data.status === 'success') {
@@ -75,6 +76,7 @@ export const useOutLetterStore = defineStore('out-letter', {
         this.formTitle = t('letterArchive.editInLetter')
         this.formEvent = 'edit'
         this.showForm = true
+        this.disableForm = data.editable === 1 ? false : true
       })
     },
     upload(file, action) {
@@ -115,6 +117,8 @@ export const useOutLetterStore = defineStore('out-letter', {
       if (this.formData.tgl_surat !== '') {
         this.formData.tgl_surat = this.formData.tgl_surat.toLocaleDateString('en-CA')
       }
+
+      this.formData.editable = this.disableForm ? 0 : 1
 
       api
         .post(`${this.endpoint}save`, this.formData, {

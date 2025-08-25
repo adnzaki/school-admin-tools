@@ -42,6 +42,7 @@ class SuratKeluar extends BaseController
 
         foreach ($data as $key => $value) {
             $data[$key]['tujuan_surat'] = strip_tags($value['tujuan_surat']);
+            $data[$key]['editable']     = $data[$key]['relasi_tabel'] === null ? 1 : 0;
         }
 
         $total = $like->where('institusi_id', get_institusi())->countAllResults();
@@ -111,7 +112,10 @@ class SuratKeluar extends BaseController
             }
         }
 
-        $this->suratModel->save($data);
+        // Skip save jika editable = 0
+        if (! isset($p['editable']) || $p['editable'] === '1') {
+            $this->suratModel->save($data);
+        }
 
         // Ambil ID surat yg baru disimpan
         $suratId = isset($data['id']) ? $data['id'] : $this->suratModel->getInsertID();
@@ -153,10 +157,19 @@ class SuratKeluar extends BaseController
             $file['file_url'] = $this->cf->getPresignedObjectUrl($file['nama_file']);
         }
 
+        $editable = 1;
+
+        // if the outbond letter was generated from outside of in-out letter administration,
+        // then it can only be edited from its source.
+        if ($data['relasi_tabel'] !== null) {
+            $editable = 0;
+        }
+
         return $this->response->setJSON([
             'status'    => 'success',
             'data'      => $data,
             'lampiran'  => $file,
+            'editable'  => $editable
         ]);
     }
 }

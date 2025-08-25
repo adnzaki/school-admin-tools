@@ -35,10 +35,14 @@ const contextMenu = ref([
       store.selected = []
 
       // push selected data
-      store.selected.push(store.selectedSingle)
-      store.showDeleteConfirmation(() => {
-        toast.add({ severity: 'error', summary: t('common.error'), detail: t('common.unableToDelete'), life: 5000 })
-      })
+      if (store.selectedSingle.editable === 1) {
+        store.selected.push(store.selectedSingle)
+        store.showDeleteConfirmation(() => {
+          toast.add({ severity: 'error', summary: t('common.error'), detail: t('common.unableToDelete'), life: 5000 })
+        })
+      } else {
+        toast.add({ severity: 'error', summary: t('common.error'), detail: t('letterArchive.deleteLimited'), life: 7000 })
+      }
     }
   }
 ])

@@ -1,29 +1,32 @@
 <template>
   <Dialog :header="store.formTitle" v-model:visible="store.showForm" @show="onDialogShow" @hide="onDialogHide" :breakpoints="{ '960px': '75vw' }" :style="{ width: '30vw' }" :modal="true">
     <div class="flex flex-col gap-4">
+      <p v-if="store.disableForm" class="text-yellow-500">
+        <i>{{ $t('letterArchive.formDisabledNote') }}</i>
+      </p>
       <div class="flex flex-col gap-2">
         <label for="name1">{{ $t('letterArchive.number') }}</label>
-        <InputText type="text" v-model="store.formData.nomor_surat" />
+        <InputText type="text" v-model="store.formData.nomor_surat" :disabled="store.disableForm" />
         <p class="text-red-500">{{ store.errors.nomor_surat }}</p>
       </div>
       <div class="flex flex-col gap-2">
         <label for="name1">{{ $t('letterArchive.destination') }}</label>
-        <InputText type="text" v-model="store.formData.tujuan_surat" />
-        <p class="text-red-500">{{ store.errors.asal_surat }}</p>
+        <InputText type="text" v-model="store.formData.tujuan_surat" :disabled="store.disableForm" />
+        <p class="text-red-500">{{ store.errors.tujuan_surat }}</p>
       </div>
       <div class="flex flex-col gap-2">
         <label for="name1">{{ $t('letterArchive.subject') }}</label>
-        <InputText type="text" v-model="store.formData.perihal" />
+        <InputText type="text" v-model="store.formData.perihal" :disabled="store.disableForm" />
         <p class="text-red-500">{{ store.errors.perihal }}</p>
       </div>
       <div class="flex flex-col gap-2">
         <label for="tgl_lahir">{{ t('letterArchive.date') }}</label>
-        <DatePicker name="date" fluid date-format="dd/mm/yy" v-model="store.formData.tgl_surat" />
+        <DatePicker name="date" fluid date-format="dd/mm/yy" v-model="store.formData.tgl_surat" :disabled="store.disableForm" />
         <p class="text-red-500">{{ store.errors.tgl_surat }}</p>
       </div>
       <div class="flex flex-col gap-2">
         <label for="name1">{{ $t('letterArchive.info') }}</label>
-        <InputText type="text" v-model="store.formData.keterangan" />
+        <InputText type="text" v-model="store.formData.keterangan" :disabled="store.disableForm" />
         <p class="text-red-500">{{ store.errors.keterangan }}</p>
       </div>
       <div class="flex flex-col gap-2">
@@ -58,7 +61,10 @@ const onDialogHide = () => {
     store.removeUploadedFile()
   }
 
-  if (store.formEvent === 'edit') store.resetForm()
+  if (store.formEvent === 'edit') {
+    store.resetForm()
+    store.disableForm = false
+  }
 
   if (store.submitted) store.submitted = false
   if (store.hasNewUpload) store.hasNewUpload = false

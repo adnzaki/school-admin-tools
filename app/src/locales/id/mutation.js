@@ -1,7 +1,7 @@
 export default {
   add: 'Tambah Mutasi Baru',
   edit: 'Edit Mutasi',
-  search: 'Cari nama siswa atau sekolah tujuan',
+  search: 'Cari nomor surat, nama siswa atau sekolah tujuan',
   destination: 'Sekolah Tujuan',
   moveDate: 'Tanggal Pindah',
   selectStudent: 'Pilih Siswa',

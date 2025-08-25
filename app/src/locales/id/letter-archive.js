@@ -16,5 +16,7 @@ export default {
   file: 'Berkas',
   searchInLetter: 'Cari perihal dan asal surat',
   searchOutLetter: 'Cari perihal dan tujuan surat',
-  filterDate: 'Filter Tanggal'
+  filterDate: 'Filter Tanggal',
+  formDisabledNote: 'Perhatian! Surat ini tidak dapat diedit karena dihasilkan secara otomatis dari administrasi lain.',
+  deleteLimited: 'Tidak dapat menghapus surat ini karena terhubung dengan administrasi lain.'
 }
