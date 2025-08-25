@@ -318,7 +318,7 @@ class PindahSekolah extends BaseController
 
     public function save()
     {
-        $pindahRayon = $this->request->getPost('pindah_rayon');
+        $pindahRayon = (int)$this->request->getPost('pindah_rayon');
         $nomorSuratRayon = $this->request->getPost('no_surat_rayon');
         $rules = [
             'id'                => ['rules' => 'permit_empty', 'label' => 'ID'],
