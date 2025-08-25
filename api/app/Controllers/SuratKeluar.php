@@ -40,6 +40,10 @@ class SuratKeluar extends BaseController
             ->orderBy($orderBy, $sort)
             ->findAll($limit, $offset);
 
+        foreach ($data as $key => $value) {
+            $data[$key]['tujuan_surat'] = strip_tags($value['tujuan_surat']);
+        }
+
         $total = $like->where('institusi_id', get_institusi())->countAllResults();
 
         return $this->response->setJSON([

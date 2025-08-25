@@ -409,7 +409,7 @@ class PindahSekolah extends BaseController
             $dataPindahRayon = [
                 'institusi_id' => get_institusi(),
                 'nomor_surat'  => $nomorSuratRayon,
-                'tujuan_surat' => 'Dinas Pendidikan ' . $institusiDetail['kab_kota'],
+                'tujuan_surat' => 'Dinas Pendidikan <br/>' . $institusiDetail['kab_kota'],
                 'perihal'      => 'Permohonan Pindah Rayon',
                 'tgl_surat'    => $data['tgl_pindah'],
                 'keterangan'   => $siswaDetail['nama'],
