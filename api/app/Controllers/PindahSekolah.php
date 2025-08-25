@@ -125,6 +125,10 @@ class PindahSekolah extends BaseController
     {
         $id = decrypt($id, env('encryption_key'));
         $detail = $this->model->findByIdWithSiswa($id);
+        $getSuratPindah = $this->getSuratPindahByRelation($id)->findAll();
+        if (count($getSuratPindah) > 1) {
+            $detail['no_surat_rayon'] = $getSuratPindah[1]['nomor_surat'];
+        }
 
         return $this->response->setJSON([
             'status'        => 'OK',
@@ -219,7 +223,7 @@ class PindahSekolah extends BaseController
         $institusi = $this->dataInstitusiModel->getWithInstitusi($this->institusiId);
 
         $title = 'Permohonan Pindah Rayon';
-        $letterDetail = $this->getSuratPindahByRelation('tb_pindah_sekolah.id=' . $this->mutationId)->findAll();
+        $letterDetail = $this->getSuratPindahByRelation($this->mutationId, true)->findAll();
 
 
         $parentName = $mutationData['siswa_nama_ayah'] === null || $mutationData['siswa_nama_ayah'] === '' ? $mutationData['siswa_nama_ibu'] : $mutationData['siswa_nama_ayah'];
@@ -287,9 +291,10 @@ class PindahSekolah extends BaseController
     public function delete()
     {
         $id = $this->request->getPost('id');
+        $id = decrypt($id, env('encryption_key'));
 
         // get "Surat Keterangan Pindah Sekolah" and "Surat Permohonan Pindah Rayon"
-        $suratPindah = $this->getSuratPindahByRelation('tb_pindah_sekolah.id=' . $id)->findAll();
+        $suratPindah = $this->getSuratPindahByRelation($id)->findAll();
 
         // delete archived letter
         foreach ($suratPindah as $key) {
@@ -306,14 +311,14 @@ class PindahSekolah extends BaseController
         $this->siswaModel->update($detail['siswa_id'], ['mutasi' => 0]);
 
         return $this->response->setJSON([
-            'status'  => 'OK',
+            'status'  => 'success',
             'message' => lang('General.dataDeleted'),
         ]);
     }
 
     public function save()
     {
-        $pindahRayon = (int)$this->request->getPost('pindah_rayon');
+        $pindahRayon = $this->request->getPost('pindah_rayon');
         $nomorSuratRayon = $this->request->getPost('no_surat_rayon');
         $rules = [
             'id'                => ['rules' => 'permit_empty', 'label' => 'ID'],
@@ -363,6 +368,10 @@ class PindahSekolah extends BaseController
 
         if ($id) {
             $data['id'] = $id;
+            $detail = $this->model->findByIdWithSiswa($id);
+            if ($siswaId !== $detail['siswa_id']) {
+                $this->siswaModel->update($detail['siswa_id'], ['mutasi' => 0]);
+            }
         }
 
         $this->model->save($data);
@@ -385,7 +394,7 @@ class PindahSekolah extends BaseController
             'relasi_tabel' => $relasiTabel,
         ];
 
-        $getSuratPindah = $id ? $this->getSuratPindahByRelation($relasiTabel)->findAll() : [];
+        $getSuratPindah = $id ? $this->getSuratPindahByRelation($pindahSekolahId)->findAll() : [];
 
         if ($id && count($getSuratPindah) > 0) {
             $dataSuratPindah['id'] = $getSuratPindah[0]['id'];
@@ -425,11 +434,11 @@ class PindahSekolah extends BaseController
         ]);
     }
 
-    private function getSuratPindahByRelation(string $relasiTabel)
+    private function getSuratPindahByRelation($id, $forPDF = false)
     {
         return $this->suratKeluarModel->where([
-            'institusi_id' => $this->institusiId,
-            'relasi_tabel' => $relasiTabel
+            'institusi_id' => $forPDF ? $this->institusiId : get_institusi(),
+            'relasi_tabel' => 'tb_pindah_sekolah.id=' . $id
         ]);
     }
 }

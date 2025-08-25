@@ -96,8 +96,10 @@ const showForm = () => {
 }
 
 const showDeleteDialog = () => {
-  store.showDeleteConfirmation(() => {
+  if (store.selected === null) {
     toast.add({ severity: 'error', summary: t('common.error'), detail: t('common.unableToDelete'), life: 5000 })
-  })
+  } else {
+    store.showDeleteDialog = true
+  }
 }
 </script>

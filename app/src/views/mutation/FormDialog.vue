@@ -79,7 +79,7 @@
       </div>
 
       <!-- Nomor Surat Rayon -->
-      <div class="flex flex-col gap-2" v-if="store.formData.pindah_rayon === 1">
+      <div class="flex flex-col gap-2" v-if="parseInt(store.formData.pindah_rayon) === 1">
         <label>{{ $t('mutation.rayonNumber') }}</label>
         <InputText type="text" v-model="store.formData.no_surat_rayon" />
         <p class="text-red-500">{{ store.errors.no_surat_rayon }}</p>
@@ -125,6 +125,8 @@ const onDialogHide = () => {
   if (store.formEvent === 'edit') {
     store.resetForm()
     store.studentOptions = []
+    checked.value = false
+    store.formData.pindah_rayon = 0
 
     if (store.formData.siswa_nama) store.formData.siswa_nama = ''
   }
@@ -134,7 +136,7 @@ const onDialogHide = () => {
 
 const onDialogShow = () => {
   if (store.formEvent === 'edit') {
-    checked.value = store.formData.pindah_rayon === 1
+    checked.value = parseInt(store.formData.pindah_rayon) === 1
     store.studentOptions = []
     store.studentOptions.push({ nama: store.formData.siswa_nama, id: store.formData.siswa_id })
     selectedStudent.value = store.formData.siswa_id

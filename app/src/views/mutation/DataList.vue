@@ -31,20 +31,6 @@ const contextMenu = ref([
     }
   },
   {
-    label: t('common.buttons.delete'),
-    icon: 'pi pi-trash',
-    command: () => {
-      // clear first before pushing selected data
-      store.selected = []
-
-      // push selected data
-      store.selected.push(store.selectedSingle)
-      store.showDeleteConfirmation(() => {
-        toast.add({ severity: 'error', summary: t('common.error'), detail: t('common.unableToDelete'), life: 5000 })
-      })
-    }
-  },
-  {
     label: t('mutation.printMutationLetter'),
     icon: 'pi pi-file-pdf',
     command: () => {
@@ -63,6 +49,13 @@ const contextMenu = ref([
     icon: 'pi pi-file-pdf',
     command: () => {
       window.open(`${conf.apiPublicPath}pindah-sekolah/cetak-lembar-mutasi-rapor?id=${store.selected.id}&user=${userId.value}`, '_blank')
+    }
+  },
+  {
+    label: t('common.buttons.delete'),
+    icon: 'pi pi-trash',
+    command: () => {
+      store.showDeleteDialog = true
     }
   }
 ])

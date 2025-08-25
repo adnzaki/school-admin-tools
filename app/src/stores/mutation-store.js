@@ -78,7 +78,7 @@ export const useMutationStore = defineStore('mutation', {
         )
         .then(({ data }) => {
           if (data.status === 'success') {
-            this.selected = []
+            this.selected = null
             this.getData()
             this.showDeleteDialog = false
           }
@@ -88,10 +88,6 @@ export const useMutationStore = defineStore('mutation', {
         .catch(() => {
           action('failed', t('common.networkError'))
         })
-    },
-    showDeleteConfirmation(action) {
-      if (this.selected.length > 0) this.showDeleteDialog = true
-      else action()
     },
     getDetail() {
       api.get(`${this.endpoint}detail/${this.selected.id}`).then(({ data }) => {
