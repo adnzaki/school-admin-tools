@@ -127,6 +127,7 @@ const onDialogHide = () => {
     store.studentOptions = []
     checked.value = false
     store.formData.pindah_rayon = 0
+    selectedGrade.value = null
 
     if (store.formData.siswa_nama) store.formData.siswa_nama = ''
   }
