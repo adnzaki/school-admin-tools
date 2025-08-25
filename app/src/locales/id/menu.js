@@ -2,6 +2,7 @@ export default {
   employeeAdm: 'Kepegawaian',
   studentAdm: 'Kesiswaan',
   administration: 'Administrasi',
+  finance: 'Keuangan',
   employee: 'Pegawai',
   student: 'Siswa',
   moveSchool: 'Pindah Sekolah',

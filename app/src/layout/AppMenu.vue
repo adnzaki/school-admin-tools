@@ -43,10 +43,10 @@ const model = ref([
     ]
   },
   {
-    label: 'BOSP',
+    label: t('menu.finance'),
     items: [
-      { label: t('menu.bankStatement'), icon: 'pi pi-fw pi-receipt', to: '/uikit/formlayout' },
-      { label: 'Standing Instruction', icon: 'pi pi-fw pi-wallet', to: '/uikit/formlayout' }
+      { label: t('menu.bankStatement'), icon: 'pi pi-fw pi-receipt', to: '/uikit/formlayout' }
+      // { label: 'Standing Instruction', icon: 'pi pi-fw pi-wallet', to: '/uikit/formlayout' }
     ]
   },
   {

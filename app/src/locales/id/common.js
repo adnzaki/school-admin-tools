@@ -8,6 +8,9 @@ export default {
   error: 'Terjadi kesalahan',
   success: 'Berhasil',
   networkError: 'Tidak dapat terhubung dengan server',
+  notFound: 'Halaman tidak ditemukan',
+  unavailable: 'Sumber yang anda minta tidak tersedia',
+  backToDashboard: 'Kembali ke Dashboard',
   buttons: {
     add: 'Tambah',
     edit: 'Ubah',
