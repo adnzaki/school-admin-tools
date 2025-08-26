@@ -18,5 +18,5 @@ export default {
   searchOutLetter: 'Cari perihal dan tujuan surat',
   filterDate: 'Filter Tanggal',
   formDisabledNote: 'Perhatian! Surat ini tidak dapat diedit karena dihasilkan secara otomatis dari administrasi lain.',
-  deleteLimited: 'Tidak dapat menghapus surat ini karena terhubung dengan administrasi lain.'
+  deleteLimited: 'Surat ini tidak dapat dihapus karena terhubung dengan administrasi lain.'
 }
