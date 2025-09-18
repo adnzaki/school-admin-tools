@@ -13,4 +13,5 @@ return [
     'inactiveInstitute' => 'Institute is inactive or subscription has expired.',
     'notRegistered'     => 'You are not registered in any institute',
     'fileDeleted'       => 'File has been deleted',
+    'userNotFound'      => 'Pengguna tidak ditemukan',
 ];

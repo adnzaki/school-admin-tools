@@ -21,7 +21,7 @@ const validate = () =>
     } else if (status === 'success') {
       toast.add({ severity: 'success', summary: t('common.success'), detail: t('auth.redirecting'), life: 6000 })
       store.message = t('auth.loginSuccess')
-    } else if (status === 'blocked') {
+    } else if (status === 'blocked' || status === 'notfound') {
       toast.add({ severity: 'error', summary: t('common.error'), detail: reason, life: 5000 })
     }
   })

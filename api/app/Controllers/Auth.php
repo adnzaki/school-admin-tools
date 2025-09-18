@@ -85,6 +85,13 @@ class Auth extends BaseController
 
         // cek dulu, apakah institusi dari user yg akan login tersebut aktif?
         $user = auth()->getProvider()->findByCredentials(['username' => $credentials['username']]);
+        if ($user === null) {
+            return $this->response->setJSON([
+                'status'    => 'notfound',
+                'reason'    => lang('General.userNotFound')
+            ]);
+        }
+
         $institusiId = $this->userInstitusiModel->getInstitusiIdByCurrentUser($user->id);
         $isActive = $this->institusiModel->isInstitusiAktif($institusiId);
         if (! $isActive) {

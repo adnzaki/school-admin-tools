@@ -50,7 +50,7 @@ export const useLoginStore = defineStore('login', {
             transformRequest: [(data) => createFormData(data)]
           })
           .then(({ data }) => {
-            if (data.status === 'failed' || data.status === 'blocked') {
+            if (data.status !== 'success') {
               this.message = t('auth.signIn')
               this.disableButton = false
             } else {
