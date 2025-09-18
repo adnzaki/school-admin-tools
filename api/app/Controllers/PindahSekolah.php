@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Controllers\BaseController;
 use App\Models\PindahSekolahModel;
 use App\Models\SiswaModel;
 use App\Models\SuratKeluarModel;
