@@ -4,12 +4,9 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\PegawaiModel;
-use CodeIgniter\API\ResponseTrait;
 
 class Pegawai extends BaseController
 {
-    use ResponseTrait;
-
     protected $pegawai;
 
     public function __construct()
