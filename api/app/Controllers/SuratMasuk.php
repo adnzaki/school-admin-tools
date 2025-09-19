@@ -25,48 +25,27 @@ class SuratMasuk extends BaseController
         $limit     = (int)$this->request->getPost('limit');
         $offset    = (int)$this->request->getPost('offset');
         $orderBy   = $this->request->getPost('orderBy');
-        $searchBy  = $this->request->getPost('searchBy');
+        // $searchBy  = $this->request->getPost('searchBy');
         $sort      = $this->request->getPost('sort');
         $search    = $this->request->getPost('search');
 
-        // generate LIKE query if $search is not empty
-        // or return SuratKeluarModel if $search is empty
-        $like = $this->like($searchBy, $search);
+        $builder = $this->suratModel->search($search);
 
         if (! empty($dateStart) && ! empty($dateEnd)) {
-            $like->where('tgl_surat >=', $dateStart)->where('tgl_surat <=', $dateEnd);
+            $builder->where('tgl_surat >=', $dateStart)->where('tgl_surat <=', $dateEnd);
         }
 
-        $data  = $like->where('institusi_id', get_institusi())
-            ->orderBy($orderBy, $sort)
-            ->findAll($limit, $offset);
-
-        $total = $like->where('institusi_id', get_institusi())->countAllResults();
+        $totalRows = $builder->countAllResults(false);
+        $data = $builder->orderBy($orderBy, $sort)->findAll($limit, $offset);
 
         return $this->response->setJSON([
             'container' => $data,
-            'totalRows' => $total,
+            'totalRows' => $totalRows,
             'additionalResponse' => [
                 'status'  => 'OK',
                 'message' => lang('General.dataFetched')
             ]
         ]);
-    }
-
-    public function like($searchBy, $search)
-    {
-        if (! empty($search)) {
-            if (strpos($searchBy, '-') !== false) {
-                $searchBy = explode('-', $searchBy);
-                $like1 = "($searchBy[0] LIKE '%$search%' ESCAPE '!' OR $searchBy[1]";
-                $like2 = "'%$search%' ESCAPE '!')";
-                return $this->suratModel->like($like1, $like2, 'none', false);
-            } else {
-                return $this->suratModel->like($searchBy, $search);
-            }
-        } else {
-            return $this->suratModel;
-        }
     }
 
     public function save()

@@ -19,4 +19,21 @@ class SuratKeluarModel extends Model
         'relasi_tabel'
     ];
     protected $useTimestamps    = true;
+
+    public function search(?string $keyword = null): self
+    {
+        $this->where('institusi_id', get_institusi());
+
+        if (empty($keyword)) {
+            return $this;
+        }
+
+        $this->groupStart();
+        $this->like('perihal', $keyword);
+        $this->orLike('tujuan_surat', $keyword);
+        $this->orLike('keterangan', $keyword);
+        $this->groupEnd();
+
+        return $this;
+    }
 }

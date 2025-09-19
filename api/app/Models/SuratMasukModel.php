@@ -19,4 +19,20 @@ class SuratMasukModel extends Model
         'keterangan'
     ];
     protected $useTimestamps    = true;
+
+    public function search(?string $keyword = null): self
+    {
+        $this->where('institusi_id', get_institusi());
+
+        if (empty($keyword)) {
+            return $this;
+        }
+
+        $this->groupStart();
+        $this->like('asal_surat', $keyword);
+        $this->orLike('perihal', $keyword);
+        $this->groupEnd();
+
+        return $this;
+    }
 }

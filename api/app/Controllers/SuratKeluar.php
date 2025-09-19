@@ -22,32 +22,27 @@ class SuratKeluar extends BaseController
         $limit     = (int)$this->request->getPost('limit');
         $offset    = (int)$this->request->getPost('offset');
         $orderBy   = $this->request->getPost('orderBy');
-        $searchBy  = $this->request->getPost('searchBy');
+        // $searchBy  = $this->request->getPost('searchBy');
         $sort      = $this->request->getPost('sort');
         $search    = $this->request->getPost('search');
 
-        // generate LIKE query if $search is not empty
-        // or return SuratKeluarModel if $search is empty
-        $like = $this->like($searchBy, $search);
+        $builder = $this->suratModel->search($search);
 
         if (! empty($dateStart) && ! empty($dateEnd)) {
-            $like->where('tgl_surat >=', $dateStart)->where('tgl_surat <=', $dateEnd);
+            $builder->where('tgl_surat >=', $dateStart)->where('tgl_surat <=', $dateEnd);
         }
 
-        $data  = $like->where('institusi_id', get_institusi())
-            ->orderBy($orderBy, $sort)
-            ->findAll($limit, $offset);
+        $totalRows = $builder->countAllResults(false);
+        $data = $builder->orderBy($orderBy, $sort)->findAll($limit, $offset);
 
         foreach ($data as $key => $value) {
             $data[$key]['tujuan_surat'] = strip_tags($value['tujuan_surat']);
             $data[$key]['editable']     = $data[$key]['relasi_tabel'] === null ? 1 : 0;
         }
 
-        $total = $like->where('institusi_id', get_institusi())->countAllResults();
-
         return $this->response->setJSON([
             'container' => $data,
-            'totalRows' => $total,
+            'totalRows' => $totalRows,
             'additionalResponse' => [
                 'status'  => 'OK',
                 'message' => lang('General.dataFetched')
