@@ -2,9 +2,9 @@
 
 namespace App\Controllers\Traits;
 
-use App\Models\LampiranSuratModel;
 use App\Models\SuratMasukModel;
 use App\Models\SuratKeluarModel;
+use App\Models\LampiranSuratModel;
 
 trait SuratTrait
 {
@@ -19,6 +19,20 @@ trait SuratTrait
 
     /** @var \CloudflareS3 */
     protected $cf;
+
+    /**
+     * Initialize the SuratTrait.
+     *
+     * @param SuratMasukModel|SuratKeluarModel $suratModel The SuratMasukModel or SuratKeluarModel instance.
+     * @param string $jenisSurat The type of surat ('masuk' or 'keluar').
+     */
+    public function initialize($suratModel, $jenisSurat)
+    {
+        $this->suratModel    = $suratModel;
+        $this->jenisSurat    = $jenisSurat;
+        $this->lampiranModel = new LampiranSuratModel();
+        $this->cf            = new \CloudflareS3('surat-' . $this->jenisSurat);
+    }
 
     /**
      * Ambil semua lampiran berdasarkan ID surat dan jenis surat.
@@ -64,9 +78,9 @@ trait SuratTrait
         ]);
     }
 
-    public function delete()
+    public function deleteSurat($letterIds = [], $purge = false)
     {
-        $ids = $this->request->getJSON(true)['id'] ?? [];
+        $ids = $letterIds ?: $this->request->getJSON(true)['id'] ?? [];
 
         if (empty($ids)) {
             return $this->response->setJSON([
@@ -93,11 +107,11 @@ trait SuratTrait
 
         // Hapus data lampiran di DB
         foreach ($lampiran as $data) {
-            $this->lampiranModel->where('id', $data['id'])->delete($data['id']);
+            $this->lampiranModel->where('id', $data['id'])->delete($data['id'], $purge);
         }
 
-        // Hapus data surat masuk
-        $this->suratModel->whereIn('id', $ids)->delete($ids);
+        // Hapus data surat masuk/keluar
+        $this->suratModel->whereIn('id', $ids)->delete($ids, $purge);
 
         return $this->response->setJSON([
             'status'  => 'success',

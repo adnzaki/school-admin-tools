@@ -13,10 +13,8 @@ class SuratKeluar extends BaseController
 
     public function __construct()
     {
-        $this->suratModel    = new SuratKeluarModel();
-        $this->lampiranModel = new LampiranSuratModel();
-        $this->jenisSurat    = 'keluar';
-        $this->cf            = new \CloudflareS3('surat-' . $this->jenisSurat);
+        $this->suratModel = new SuratKeluarModel();
+        $this->initialize($this->suratModel, 'keluar');
     }
 
     public function getData($dateStart = '', $dateEnd = '')

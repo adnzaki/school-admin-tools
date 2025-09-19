@@ -9,6 +9,8 @@ use App\Models\DataInstitusiModel;
 
 class PindahSekolah extends BaseController
 {
+    use Traits\SuratTrait;
+
     private $model;
 
     private $suratKeluarModel;
@@ -16,8 +18,6 @@ class PindahSekolah extends BaseController
     private $siswaModel;
 
     private $dataInstitusiModel;
-
-    private $institusiId;
 
     private $kelas = [
         1  => 'I (Satu)',
@@ -50,15 +50,13 @@ class PindahSekolah extends BaseController
         $this->siswaModel = new SiswaModel();
         $this->dataInstitusiModel = new DataInstitusiModel();
 
+        // initialize SuratTrait
+        $this->initialize($this->suratKeluarModel, 'keluar');
+
         // get institusi_id based on PDF creation mode
         helper('sakola');
 
-        /** @var \CodeIgniter\HTTP\IncomingRequest */
-        $request = service('request');
-
-        $userId = decrypt($request->getGet('user'), env('encryption_key'));
-        $this->institusiId = env('pdf_mode') === 'production' ? get_institusi($userId) : env('institusi_id');
-        $this->mutationId = decrypt($request->getGet('id'), env('encryption_key'));
+        $this->mutationId = decrypt(request()->getGet('id'), env('encryption_key'));
     }
 
     public function getData(?string $rawParams = null)
@@ -296,9 +294,7 @@ class PindahSekolah extends BaseController
         $suratPindah = $this->getSuratPindahByRelation($id)->findAll();
 
         // delete archived letter
-        foreach ($suratPindah as $key) {
-            $this->suratKeluarModel->delete($key['id'], true);
-        }
+        $this->deleteSurat(array_map(fn($item) => $item['id'], $suratPindah), true);
 
         // get mutation with student data
         $detail = $this->model->findByIdWithSiswa($id);
