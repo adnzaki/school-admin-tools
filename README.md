@@ -23,7 +23,7 @@ POST    user/create
 POST    user/update/{id}
 POST    user/delete
 ```
-Add institution in `tb_institusi` and its users in `tb_user_institusi`<br/><br/>
+Add institution in `tb_institusi`, detail institution data in `tb_data_institusi` and its users in `tb_user_institusi`<br/><br/>
 _**Note**: You have to set database configurations in the `.env` file before running all migrations._
 
 ### Additional ENV Configuration
