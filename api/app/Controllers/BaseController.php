@@ -38,6 +38,18 @@ abstract class BaseController extends Controller
     protected $helpers = ['sakola', 'cookie'];
 
     /**
+     * Institusi ID
+     * @var int|string|null
+     */
+    protected $institusiId;
+
+    /**
+     * User ID
+     * 
+     */
+    protected $userId;
+
+    /**
      * Be sure to declare properties for any property fetch you initialized.
      * The creation of dynamic property is deprecated in PHP 8.2.
      */
@@ -74,6 +86,9 @@ abstract class BaseController extends Controller
         if ($lang && in_array($lang, ['id', 'en'])) {
             service('request')->setLocale($lang);
         }
+
+        $this->userId = decrypt($this->request->getGet('user'), env('encryption_key'));
+        $this->institusiId = env('pdf_mode') === 'production' ? get_institusi($this->userId) : env('institusi_id');
     }
 
     protected function setStatus($code)

@@ -42,7 +42,7 @@ $routes->group('surat-masuk', function (RouteCollection $routes) {
     $routes->post('get-data', 'SuratMasuk::getData');
     $routes->post('get-data/(:any)/(:any)', 'SuratMasuk::getData/$1/$2');
     $routes->post('save', 'SuratMasuk::save');
-    $routes->delete('delete', 'SuratMasuk::delete');
+    $routes->delete('delete', 'SuratMasuk::deleteSurat');
     $routes->get('detail/(:num)', 'SuratMasuk::detail/$1');
     $routes->post('upload', 'SuratMasuk::uploadSuratPdf');
     $routes->delete('delete-saved-berkas', 'SuratMasuk::deleteSavedBerkas');
@@ -53,7 +53,7 @@ $routes->group('surat-keluar', function (RouteCollection $routes) {
     $routes->post('get-data', 'SuratKeluar::getData');
     $routes->post('get-data/(:any)/(:any)', 'SuratKeluar::getData/$1/$2');
     $routes->post('save', 'SuratKeluar::save');
-    $routes->delete('delete', 'SuratKeluar::delete');
+    $routes->delete('delete', 'SuratKeluar::deleteSurat');
     $routes->get('detail/(:num)', 'SuratKeluar::detail/$1');
     $routes->post('upload', 'SuratKeluar::uploadSuratPdf');
     $routes->delete('delete-saved-berkas', 'SuratKeluar::deleteSavedBerkas');
@@ -79,6 +79,15 @@ $routes->group('pindah-sekolah', function (RouteCollection $routes) {
     $routes->get('cetak-surat-pindah', 'PindahSekolah::createSuratPindahSekolah');
     $routes->get('cetak-pindah-rayon', 'PindahSekolah::createSuratPindahRayon');
     $routes->get('cetak-lembar-mutasi-rapor', 'PindahSekolah::createLembarMutasiRapor');
+});
+
+$routes->group('pengantar-nisn', function (RouteCollection $routes) {
+    $routes->post('get-data', 'PengantarNISN::getData');
+    $routes->post('save', 'PengantarNISN::save');
+    $routes->delete('delete', 'PengantarNISN::delete');
+    $routes->get('detail/(:any)', 'PengantarNISN::getDetail/$1');
+
+    // route for letters
 });
 
 

@@ -4,6 +4,19 @@ use ExcelTools\Reader;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\Services;
 use App\Models\UserInstitusiModel;
+use App\Models\SiswaModel;
+
+if (! function_exists('request')) {
+    /**
+     * Shortcut to CodeIgniter request object
+     * 
+     * @return \CodeIgniter\HTTP\IncomingRequest
+     */
+    function request()
+    {
+        return service('request');
+    }
+}
 
 if (! function_exists('encrypt')) {
     /**
