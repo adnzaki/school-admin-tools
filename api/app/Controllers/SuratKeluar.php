@@ -165,6 +165,8 @@ class SuratKeluar extends BaseController
             $editable = 0;
         }
 
+        $data['tujuan_surat'] = strip_tags($data['tujuan_surat']);
+
         return $this->response->setJSON([
             'status'    => 'success',
             'data'      => $data,
