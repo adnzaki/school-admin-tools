@@ -4,6 +4,14 @@
 @use '@/assets/layout/layout.scss';
 @use '@/assets/demo/demo.scss';
 
+.app-dark .layout-menu ul a.active-route {
+  background: #222;
+}
+
+.layout-menu ul a.active-route {
+  background: #eaeaea;
+}
+
 .p-menu-item-content {
   padding-top: 8px !important;
   padding-bottom: 8px !important;
