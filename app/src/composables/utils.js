@@ -86,4 +86,22 @@ const createFormData = (obj) => {
   return formData
 }
 
-export { api, createFormData, localeForPaging, t, validatePage }
+const findStudent = (search, callback) => {
+  api
+    .post(
+      `pindah-sekolah/find-student`,
+      { search },
+      {
+        transformRequest: [
+          (data) => {
+            return createFormData(data)
+          }
+        ]
+      }
+    )
+    .then(({ data }) => {
+      callback(data.result)
+    })
+}
+
+export { api, createFormData, findStudent, localeForPaging, t, validatePage }
