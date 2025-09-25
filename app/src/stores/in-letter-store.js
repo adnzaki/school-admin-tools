@@ -114,11 +114,11 @@ export const useInLetterStore = defineStore('in-letter', {
         })
     },
     save(action, error) {
-      if (this.formData.tgl_surat !== '') {
+      if (this.formData.tgl_surat) {
         this.formData.tgl_surat = this.formData.tgl_surat.toLocaleDateString('en-CA')
       }
 
-      if (this.formData.tgl_diterima !== '') {
+      if (this.formData.tgl_diterima) {
         this.formData.tgl_diterima = this.formData.tgl_diterima.toLocaleDateString('en-CA')
       }
 

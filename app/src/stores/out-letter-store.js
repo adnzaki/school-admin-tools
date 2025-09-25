@@ -113,8 +113,7 @@ export const useOutLetterStore = defineStore('out-letter', {
         })
     },
     save(action, error) {
-      console.log(this.formData.tgl_surat)
-      if (this.formData.tgl_surat !== '') {
+      if (this.formData.tgl_surat) {
         this.formData.tgl_surat = this.formData.tgl_surat.toLocaleDateString('en-CA')
       }
 
@@ -129,7 +128,6 @@ export const useOutLetterStore = defineStore('out-letter', {
           ]
         })
         .then(({ data }) => {
-          console.log(this.formData.tgl_surat)
           if (data.status === 'success') {
             this.showForm = false
             this.getData(error)
