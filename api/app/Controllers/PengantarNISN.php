@@ -84,7 +84,7 @@ class PengantarNISN extends BaseController
 
         // karena ID dikirim dalam bentuk terenkripsi, maka perlu didekripsi dulu
         // format array yg harus diolah adalah [{"id": "encrypted_id1"}, {"id": "encrypted_id2"}, ...]
-        $ids = array_map(fn($item) => decrypt($item['id'], env('encryption_key')), $ids);
+        $ids = array_map(fn($item) => decrypt($item, env('encryption_key')), $ids);
 
         // Validasi: pastikan semua ID siswa tersedia
         $existing = $this->model->whereIn('id', $ids)->findAll();

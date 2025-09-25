@@ -4,6 +4,7 @@ import employee from './employee'
 import letterArchive from './letter-archive'
 import menu from './menu'
 import mutation from './mutation'
+import nisn from './nisn'
 import school from './school'
 import student from './student'
 
@@ -15,5 +16,6 @@ export default {
   student,
   letterArchive,
   school,
-  mutation
+  mutation,
+  nisn
 }

@@ -46,6 +46,11 @@ const router = createRouter({
           name: 'PindahSekolah',
           component: () => import('@/views/mutation/IndexPage.vue')
         },
+        {
+          path: '/pengantar-nisn',
+          name: 'PengantarNisn',
+          component: () => import('@/views/nisn/IndexPage.vue')
+        },
 
         // --------- ROUTES FOR DEMO --------- //
         {

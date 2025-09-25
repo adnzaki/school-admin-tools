@@ -91,6 +91,7 @@
   </Dialog>
 </template>
 <script setup>
+import { findStudent } from '@/composables/utils'
 import { useMutationStore } from '@/stores/mutation-store'
 import { useToast } from 'primevue/usetoast'
 import { ref } from 'vue'
@@ -113,7 +114,9 @@ const onStudentChange = (value) => {
 
 const onStudentFilter = (event) => {
   if (event.value.length > 2) {
-    store.findStudent(event.value)
+    findStudent(event.value, (results) => {
+      store.studentOptions = results
+    })
   }
 }
 
