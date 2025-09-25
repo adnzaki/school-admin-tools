@@ -138,6 +138,14 @@ export const useInLetterStore = defineStore('in-letter', {
             this.errors = {}
             this.submitted = true
           } else {
+            if (this.formData.tgl_surat) {
+              this.formData.tgl_surat = new Date(this.formData.tgl_surat)
+            }
+
+            if (this.formData.tgl_diterima) {
+              this.formData.tgl_diterima = new Date(this.formData.tgl_diterima)
+            }
+
             this.errors = data.message
           }
 

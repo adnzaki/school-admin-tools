@@ -135,6 +135,10 @@ export const useOutLetterStore = defineStore('out-letter', {
             this.errors = {}
             this.submitted = true
           } else {
+            if (this.formData.tgl_surat) {
+              this.formData.tgl_surat = new Date(this.formData.tgl_surat)
+            }
+
             this.errors = data.message
           }
 
