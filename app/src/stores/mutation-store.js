@@ -60,11 +60,6 @@ export const useMutationStore = defineStore('mutation', {
     disableButton: false
   }),
   actions: {
-    findStudent(search) {
-      api.post(`${this.endpoint}find-student`, { search }, { transformRequest: [(data) => createFormData(data)] }).then(({ data }) => {
-        this.studentOptions = data.result
-      })
-    },
     delete(action) {
       api
         .post(
