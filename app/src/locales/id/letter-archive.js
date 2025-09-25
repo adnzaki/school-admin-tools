@@ -15,7 +15,7 @@ export default {
   uploadError: 'Gagal mengunggah berkas surat',
   file: 'Berkas',
   searchInLetter: 'Cari perihal dan asal surat',
-  searchOutLetter: 'Cari perihal dan tujuan surat',
+  searchOutLetter: 'Cari perihal, tujuan atau keterangan surat',
   filterDate: 'Filter Tanggal',
   formDisabledNote: 'Perhatian! Surat ini tidak dapat diedit karena dihasilkan secara otomatis dari administrasi lain.',
   deleteLimited: 'Surat ini tidak dapat dihapus karena terhubung dengan administrasi lain.'
