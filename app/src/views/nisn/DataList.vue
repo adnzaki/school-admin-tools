@@ -4,6 +4,7 @@ import { useToast } from 'primevue'
 import { usePagingStore } from 'ss-paging-vue'
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import conf from '../../../admins.config'
 const { t } = useI18n()
 
 const store = useNisnStore()
@@ -18,6 +19,7 @@ const tableColumns = ref([
 ])
 
 const cm = ref()
+const userId = ref(JSON.parse(localStorage.getItem('sakola_user')).id)
 
 const contextMenu = ref([
   {
@@ -25,6 +27,13 @@ const contextMenu = ref([
     icon: 'pi pi-pencil',
     command: () => {
       store.getDetail()
+    }
+  },
+  {
+    label: t('nisn.print'),
+    icon: 'pi pi-file-pdf',
+    command: () => {
+      window.open(`${conf.apiPublicPath}pengantar-nisn/cetak-surat-pengantar-nisn?id=${store.selectedSingle.id}&user=${userId.value}`, '_blank')
     }
   },
   {

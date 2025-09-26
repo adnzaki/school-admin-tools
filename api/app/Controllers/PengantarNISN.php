@@ -71,6 +71,44 @@ class PengantarNISN extends BaseController
         return $this->response->setJSON($data);
     }
 
+    public function createSuratPengantarNISN()
+    {
+        if ($this->institusiId === null || !$this->letterId) {
+            $message = 'Surat Pengantar NISN tidak ditemukan. <br/>' . $this->notfoundReason;
+            return view('surat_notfound', ['message' => $message]);
+        }
+
+        $pdf = new \PDFCreator([
+            'paperSize' => 'F4',
+        ]);
+
+        $institusi = $this->dataInstitusiModel->getWithInstitusi($this->institusiId);
+        $title = 'Surat Pengantar NISN';
+        $data = $this->model->withSiswaAndSurat()
+            ->where('tb_pengantar_nisn.id', $this->letterId)
+            ->first();
+
+        $contentData = [
+            'title'         => $title,
+            'letterNumber'  => $data['no_surat'],
+            'schoolName'    => $institusi['nama_sekolah'],
+            'district'      => $institusi['kecamatan'],
+            'city'          => $institusi['kab_kota'],
+            'province'      => $institusi['provinsi'],
+            'letter'        => $data,
+            'date'          => osdate()->create($data['tgl_surat']),
+        ];
+
+        $data = [
+            'pageTitle' => $title,
+            'content'   => view('surat-siswa/pengantar_nisn', $contentData),
+            'institusi' => $institusi
+        ];
+
+        $html = view('layout/main', $data);
+        $pdf->loadHTML($html)->render()->stream('Surat-Pengantar-NISN.pdf');
+    }
+
     public function delete()
     {
         $ids = $this->request->getJSON(true);

@@ -88,6 +88,7 @@ $routes->group('pengantar-nisn', function (RouteCollection $routes) {
     $routes->get('detail/(:any)', 'PengantarNISN::getDetail/$1');
 
     // route for letters
+    $routes->get('cetak-surat-pengantar-nisn', 'PengantarNISN::createSuratPengantarNISN');
 });
 
 
