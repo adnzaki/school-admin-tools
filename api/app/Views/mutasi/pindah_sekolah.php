@@ -44,7 +44,7 @@
         <tr>
             <td style="vertical-align: top;">Alamat</td>
             <td>
-                : <?= $mutation['siswa_alamat'] ?> Kel. <?= $mutation['siswa_kelurahan'] ?>
+                : <?= $mutation['siswa_alamat'] ?> RT <?= add_zero_prefix($mutation['siswa_rt']) ?> / <?= add_zero_prefix($mutation['siswa_rw']) ?> Kel. <?= $mutation['siswa_kelurahan'] ?>
                 <br /> <span style="margin-left: 8px;">Kec.</span> <?= $mutation['siswa_kecamatan'] ?> Kab/Kota <?= $mutation['siswa_kab_kota'] ?>
             </td>
         </tr>

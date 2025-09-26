@@ -4,7 +4,22 @@ use ExcelTools\Reader;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\Services;
 use App\Models\UserInstitusiModel;
-use App\Models\SiswaModel;
+
+if (! function_exists('add_zero_prefix')) {
+    /**
+     * Menambahkan awalan nol pada angka jika
+     * string angka kurang dari panjang tertentu.
+     * Default panjang adalah 1
+     * 
+     * @param int $number Angka yang akan ditambahkan awalan nol
+     * @param int $length Panjang string angka
+     * @return string
+     */
+    function add_zero_prefix(int $number, int $length = 1): string
+    {
+        return str_pad((string)$number, $length + 1, '0', STR_PAD_LEFT);
+    }
+}
 
 if (! function_exists('request')) {
     /**

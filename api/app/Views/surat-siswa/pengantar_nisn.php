@@ -26,7 +26,7 @@
         <tr>
             <td style="vertical-align: top;">Alamat</td>
             <td>
-                : <?= $letter['siswa_alamat'] ?> RT 0<?= $letter['siswa_rt'] ?> / 0<?= $letter['siswa_rw'] ?> Kel. <?= $letter['siswa_kelurahan'] ?>
+                : <?= $letter['siswa_alamat'] ?> RT <?= add_zero_prefix($letter['siswa_rt']) ?> / <?= add_zero_prefix($letter['siswa_rw']) ?> Kel. <?= $letter['siswa_kelurahan'] ?>
                 <br /> <span style="margin-left: 8px;">Kec.</span> <?= $letter['siswa_kecamatan'] ?> Kab/Kota <?= $letter['siswa_kab_kota'] ?>
             </td>
         </tr>
