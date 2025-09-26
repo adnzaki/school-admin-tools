@@ -41,8 +41,6 @@ class PindahSekolah extends BaseController
 
     private $mutationId;
 
-    private $notfoundReason = '[ <i>Alasan: ID pengguna atau ID mutasi tidak valid.</i> ]';
-
     public function __construct()
     {
         $this->model = new PindahSekolahModel();
@@ -57,6 +55,8 @@ class PindahSekolah extends BaseController
         helper('sakola');
 
         $this->mutationId = decrypt(request()->getGet('id'), env('encryption_key'));
+
+        $this->notfoundReason = '[ <i>Alasan: ID pengguna atau ID mutasi tidak valid.</i> ]';
     }
 
     public function getData(?string $rawParams = null)
@@ -157,7 +157,7 @@ class PindahSekolah extends BaseController
     {
         if ($this->institusiId === null || !$this->mutationId) {
             $message = 'Surat pindah sekolah tidak ditemukan. <br /> ' . $this->notfoundReason;
-            return view('mutasi/surat_notfound', ['message' => $message]);
+            return view('surat_notfound', ['message' => $message]);
         }
 
         $pdf = new \PDFCreator([
@@ -200,7 +200,7 @@ class PindahSekolah extends BaseController
     {
         if ($this->institusiId === null || !$this->mutationId) {
             $message = 'Surat Pindah Rayon tidak ditemukan. <br/>' . $this->notfoundReason;
-            return view('mutasi/surat_notfound', ['message' => $message]);
+            return view('surat_notfound', ['message' => $message]);
         }
 
         $mutationData = $this->model->findByIdWithSiswa($this->mutationId);
@@ -250,7 +250,7 @@ class PindahSekolah extends BaseController
     {
         if ($this->institusiId === null || !$this->mutationId) {
             $message = 'Lembar mutasi rapor tidak ditemukan. <br/>' . $this->notfoundReason;
-            return view('mutasi/surat_notfound', ['message' => $message]);
+            return view('surat_notfound', ['message' => $message]);
         }
 
         $mutationData = $this->model->findByIdWithSiswa($this->mutationId);

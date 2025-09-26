@@ -68,6 +68,8 @@ abstract class BaseController extends Controller
         503 => 'Unauthorized Access'
     ];
 
+    protected $notfoundReason = '[ <i>Alasan: ID pengguna atau ID surat tidak valid.</i> ]';
+
     /**
      * @return void
      */
