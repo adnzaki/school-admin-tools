@@ -74,7 +74,7 @@ export const useMutationStore = defineStore('mutation', {
         .then(({ data }) => {
           if (data.status === 'success') {
             this.selected = null
-            this.getData()
+            paging().reloadData()
             this.showDeleteDialog = false
           }
 
@@ -125,7 +125,7 @@ export const useMutationStore = defineStore('mutation', {
         .then(({ data }) => {
           if (data.status === 'success') {
             this.showForm = false
-            this.getData(error)
+            paging().reloadData()
             this.resetForm()
             this.errors = {}
             this.submitted = true

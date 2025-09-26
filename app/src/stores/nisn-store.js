@@ -46,7 +46,7 @@ export const useNisnStore = defineStore('nisn', {
         .then(({ data }) => {
           if (data.status === 'success') {
             this.selected = []
-            this.getData()
+            paging().reloadData()
             this.showDeleteDialog = false
           }
 
@@ -126,7 +126,7 @@ export const useNisnStore = defineStore('nisn', {
         .then(({ data }) => {
           if (data.status === 'success') {
             this.showForm = false
-            this.getData(error)
+            paging().reloadData()
             this.resetForm()
             this.errors = {}
             this.submitted = true
