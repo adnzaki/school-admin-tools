@@ -21,7 +21,7 @@ class CustomRules
         return [$builder, $ignoreField, $ignoreValue];
     }
 
-    private function isUniqueWithCustomMessage(string $value, string $field, array $data, ?string &$error = null, string $errorLangKey): bool
+    private function isUniqueWithCustomMessage(string $value, string $field, array $data, string $errorLangKey, ?string &$error = null): bool
     {
         [$builder, $ignoreField, $ignoreValue] = $this->prepareUniqueQuery($value, $field, $data);
 
@@ -44,16 +44,16 @@ class CustomRules
 
     public function is_unique_nip($value, string $field, array $data, ?string &$error = null): bool
     {
-        return $this->isUniqueWithCustomMessage((string)$value, $field, $data, $error, 'is_unique_nip');
+        return $this->isUniqueWithCustomMessage((string)$value, $field, $data, 'is_unique_nip', $error);
     }
 
     public function is_unique_nisn($value, string $field, array $data, ?string &$error = null): bool
     {
-        return $this->isUniqueWithCustomMessage((string)$value, $field, $data, $error, 'is_unique_nisn');
+        return $this->isUniqueWithCustomMessage((string)$value, $field, $data, 'is_unique_nisn', $error);
     }
 
     public function is_unique_no_induk($value, string $field, array $data, ?string &$error = null): bool
     {
-        return $this->isUniqueWithCustomMessage((string)$value, $field, $data, $error, 'is_unique_no_induk');
+        return $this->isUniqueWithCustomMessage((string)$value, $field, $data, 'is_unique_no_induk', $error);
     }
 }
