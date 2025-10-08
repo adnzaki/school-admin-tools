@@ -30,29 +30,29 @@ const model = ref([
     items: [
       { label: t('menu.moveSchool'), icon: 'pi pi-fw pi-directions', to: '/pindah-sekolah' },
       { label: t('menu.printNISN'), icon: 'pi pi-fw pi-id-card', to: '/pengantar-nisn' },
-      { label: t('menu.letterOfStudent'), icon: 'pi pi-fw pi-clipboard', to: '/uikit/formlayout' }
+      { label: t('menu.letterOfStudent'), icon: 'pi pi-fw pi-clipboard', to: '/suket-siswa' }
     ]
   },
   {
     label: t('menu.employeeAdm'),
     items: [
-      { label: t('menu.letterOfEmployee'), icon: 'pi pi-fw pi-file-check', to: '/uikit/formlayout' },
-      { label: t('menu.taskLetter'), icon: 'pi pi-fw pi-hourglass', to: '/uikit/formlayout' },
-      { label: t('menu.travelLetter'), icon: 'pi pi-fw pi-truck', to: '/uikit/formlayout' },
-      { label: t('menu.permitRequest'), icon: 'pi pi-fw pi-folder-plus', to: '/uikit/formlayout' }
+      { label: t('menu.letterOfEmployee'), icon: 'pi pi-fw pi-file-check', to: '/suket-pegawai' },
+      { label: t('menu.taskLetter'), icon: 'pi pi-fw pi-hourglass', to: '/surat-tugas' },
+      { label: t('menu.travelLetter'), icon: 'pi pi-fw pi-truck', to: '/perjalanan-dinas' },
+      { label: t('menu.permitRequest'), icon: 'pi pi-fw pi-folder-plus', to: '/surat-izin' }
     ]
   },
   {
     label: t('menu.finance'),
     items: [
-      { label: t('menu.bankStatement'), icon: 'pi pi-fw pi-receipt', to: '/uikit/formlayout' }
-      // { label: 'Standing Instruction', icon: 'pi pi-fw pi-wallet', to: '/uikit/formlayout' }
+      { label: t('menu.bankStatement'), icon: 'pi pi-fw pi-receipt', to: '/rekening-koran' }
+      // { label: 'Standing Instruction', icon: 'pi pi-fw pi-wallet', to: '/#' }
     ]
   }
   // {
   //   label: 'UI Components',
   //   items: [
-  //     { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', to: '/uikit/formlayout' },
+  //     { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', to: '/#' },
   //     { label: 'Input', icon: 'pi pi-fw pi-check-square', to: '/uikit/input' },
   //     { label: 'Button', icon: 'pi pi-fw pi-mobile', to: '/uikit/button', class: 'rotated-icon' },
   //     { label: 'Table', icon: 'pi pi-fw pi-table', to: '/uikit/table' },
