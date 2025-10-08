@@ -3,19 +3,33 @@
     <p>{{ $t('employee.importNote') }}</p>
     <Button :label="$t('common.buttons.download')" @click="download" icon="pi pi-download" severity="primary" outlined class="mr-2 mb-2"></Button>
     <h5>{{ $t('common.buttons.upload') }}</h5>
-    <FileUpload name="import[]" :file-limit="1" @uploader="onUpload" accept=".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" :maxFileSize="1000000" customUpload />
+    <FileUpload ref="fileUpload" name="import[]" :file-limit="1" @uploader="onUpload" accept=".xls, .xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" :maxFileSize="1000000" customUpload />
+    <Accordion v-if="store.uploadErrors !== null && store.uploadErrors !== undefined">
+      <AccordionPanel value="0">
+        <AccordionHeader>{{ $t('common.showErrorDetail') }}</AccordionHeader>
+        <AccordionContent>
+          <ul>
+            <li class="mb-2" v-for="(error, index) in store.uploadErrors" :key="index">
+              <span v-html="error"></span>
+            </li>
+          </ul>
+        </AccordionContent>
+      </AccordionPanel>
+    </Accordion>
   </Dialog>
 </template>
 
 <script setup>
 import { useEmployeeStore } from '@/stores/employee-store'
 import { useToast } from 'primevue'
+import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import conf from '../../../admins.config'
 
 const store = useEmployeeStore()
 const toast = useToast()
 const { t } = useI18n()
+const fileUpload = ref()
 
 const download = () => {
   const url = conf.apiPublicPath + 'template/TEMPLATE-IMPOR-PEGAWAI.xlsx'
@@ -37,6 +51,9 @@ const onUpload = (event) => {
     } else if (status === 'failed') {
       toast.add({ severity: 'error', summary: t('common.error'), detail: t('common.networkError'), life: 5000 })
     }
+
+    fileUpload.value.clear()
+    fileUpload.value.uploadedFileCount = 0
   })
 }
 </script>

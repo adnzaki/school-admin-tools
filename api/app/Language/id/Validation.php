@@ -13,7 +13,7 @@ return [
     'min_length'            => 'Kolom {field} harus berisi setidaknya {param} karakter',
     'max_length'            => 'Kolom {field} tidak boleh lebih dari {param} karakter',
     'exact_length'          => 'Kolom {field} hanya boleh diisi dengan {param} karakter',
-    'in_list'               => 'Pilihan {field} tidak tersedia',
+    'in_list'               => 'Pilihan {field} tidak tersedia. Nilai yang diperbolehkan adalah: {param}',
     'valid_url'             => 'Kolom {field} harus berisi URL yang valid. (Contoh: http://example.com / https://example2.com)',
     'valid_email'           => 'Kolom {field} harus berisi alamat email yang valid',
     'valid_date'            => 'Kolom {field} harus berisi tanggal yang valid',

@@ -14,4 +14,5 @@ return [
     'notRegistered'     => 'You are not registered in any institute',
     'fileDeleted'       => 'File has been deleted',
     'userNotFound'      => 'Pengguna tidak ditemukan',
+    'excelImportError'  => 'Row: {0}. Mistake: <span class="text-red-500">{1}</span>',
 ];

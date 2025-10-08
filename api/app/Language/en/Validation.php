@@ -13,7 +13,7 @@ return [
     'min_length'            => 'The {field} field must be at least {param} characters.',
     'max_length'            => 'The {field} field may not be more than {param} characters.',
     'exact_length'          => 'The {field} field must be exactly {param} characters.',
-    'in_list'               => 'The selected {field} is invalid.',
+    'in_list'               => 'The selected {field} is invalid. Allowed values are: {param}.',
     'valid_url'             => 'The {field} field must contain a valid URL.',
     'valid_email'           => 'The {field} field must contain a valid email address.',
     'valid_date'            => 'The {field} field must contain a valid date.',

@@ -189,17 +189,18 @@ if (!function_exists('import_spreadsheet')) {
             ];
         }
 
-        $mimeTypes = [
-            'application/vnd.ms-excel',
-            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        ];
+        // $mimeTypes = [
+        //     'application/vnd.ms-excel',
+        //     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        // ];
 
-        if (! in_array($file->getMimeType(), $mimeTypes)) {
-            return [
-                'status'  => 'error',
-                'message' => lang('Validation.spreadsheet_only'),
-            ];
-        }
+        // if (! in_array($file->getMimeType(), $mimeTypes)) {
+        //     return [
+        //         'status'  => 'error',
+        //         'message' => lang('Validation.spreadsheet_only'),
+        //         'mime'    => $file->getMimeType(),
+        //     ];
+        // }
 
         try {
             $reader = new Reader();
@@ -230,10 +231,18 @@ if (!function_exists('import_spreadsheet')) {
         }
 
         if (! empty($errors)) {
+            $formattedErrosDetails = [];
+
+            $num = 0;
+            foreach ($errors as $index => $error) {
+                if($num++ > 0) break;
+                $formattedErrosDetails[] = lang('General.excelImportError', [$index, implode(', ', $error)]);
+            }
+
             return [
                 'status'  => 'error',
                 'message' => lang('Validation.invalid_rows'),
-                'errors'  => $errors,
+                'errors'  => $formattedErrosDetails,
             ];
         }
 

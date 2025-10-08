@@ -16,6 +16,7 @@ class CustomRules
             ->table($table)
             ->select('1')
             ->where($column, $value)
+            ->where('deleted_at', null)
             ->limit(1);
 
         return [$builder, $ignoreField, $ignoreValue];

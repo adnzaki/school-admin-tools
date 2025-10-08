@@ -14,6 +14,7 @@ export const useEmployeeStore = defineStore('employee', {
     showImportDialog: false,
     showDeleteDialog: false,
     errorImport: '',
+    uploadErrors: null,
     errors: {},
     formTitle: '',
     formData: {
@@ -80,10 +81,14 @@ export const useEmployeeStore = defineStore('employee', {
           .then(({ data }) => {
             if (data.status === 'success') {
               this.showImportDialog = false
+              this.uploadErrors = null
             }
 
             action(data.status, data.message)
-            this.getData()
+            if (data.status === 'error') {
+              this.uploadErrors = data.errors
+            }
+            paging().reloadData()
           })
       } catch {
         action('failed', '')

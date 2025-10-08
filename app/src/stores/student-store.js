@@ -15,6 +15,7 @@ export const useStudentStore = defineStore('student', {
     showDeleteDialog: false,
     errorImport: '',
     errors: {},
+    uploadErrors: null,
     formTitle: '',
     formData: {
       nama: '',
@@ -103,10 +104,14 @@ export const useStudentStore = defineStore('student', {
           .then(({ data }) => {
             if (data.status === 'success') {
               this.showImportDialog = false
+              this.uploadErrors = null
             }
 
             action(data.status, data.message)
-            this.getData()
+            if (data.status === 'error') {
+              this.uploadErrors = data.errors
+            }
+            paging().reloadData()
           })
       } catch {
         action('failed', '')

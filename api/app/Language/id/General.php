@@ -14,4 +14,5 @@ return [
     'notRegistered'     => 'Anda belum terdaftar dalam institusi manapun',
     'fileDeleted'       => 'File berhasil dihapus',
     'userNotFound'      => 'Pengguna tidak ditemukan',
+    'excelImportError'  => 'Baris: {0}. Kesalahan: <span class="text-red-500">{1}</span>',
 ];
