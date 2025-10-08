@@ -45,9 +45,9 @@ function showAccountMenu(event) {
         <i class="pi pi-bars"></i>
       </button>
       <router-link to="/" class="layout-topbar-logo">
-        <Image src="/main-logo-grey.png" alt="Image" width="30" />
+        <Image src="/main-logo.png" alt="Image" width="30" />
 
-        <span>Sakola</span>
+        <span>Surpress</span>
       </router-link>
     </div>
 

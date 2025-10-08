@@ -37,5 +37,6 @@ app.component('SearchBox', SearchBox)
 app.component('PagingRows', PagingRows)
 app.component('Navigator', Navigator)
 app.component('DeleteConfirmation', DeleteConfirmation)
+app.config.globalProperties.$appName = 'Surpress'
 
 app.mount('#app')
