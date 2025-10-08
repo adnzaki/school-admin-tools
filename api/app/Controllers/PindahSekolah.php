@@ -210,7 +210,7 @@ class PindahSekolah extends BaseController
                 'message' => '<p>Permohonan pindah rayon atas nama <span class="highlight">' . $mutationData['siswa_nama'] . '</span> tidak ditemukan.</p>'
             ];
 
-            return view('mutasi/surat_notfound', $data);
+            return view('surat_notfound', $data);
         }
 
         $pdf = new \PDFCreator([
