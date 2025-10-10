@@ -3,7 +3,7 @@ import AppLayout from '@/layout/AppLayout.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory('/surpress/'),
   routes: [
     {
       path: '/',

@@ -6,7 +6,7 @@ import FloatingConfigurator from '@/components/FloatingConfigurator.vue'
   <FloatingConfigurator />
   <div class="flex items-center justify-center min-h-screen overflow-hidden">
     <div class="flex flex-col items-center justify-center">
-      <Image src="/main-logo.png" alt="Image" width="50" class="mb-2" />
+      <Image src="/surpress/main-logo.png" alt="Image" width="50" class="mb-2" />
       <div style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, color-mix(in srgb, var(--primary-color), transparent 60%) 10%, var(--surface-ground) 30%)">
         <div class="w-full bg-surface-0 dark:bg-surface-900 py-20 px-8 sm:px-20 flex flex-col items-center" style="border-radius: 53px">
           <span class="text-primary font-bold text-3xl">404</span>
