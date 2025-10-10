@@ -85,6 +85,8 @@ class Pegawai extends BaseController
             $this->pegawai->insertBatch($rows);
         });
 
+        add_log('mengimport data pegawai sebanyak ' . $result['count'] . ' baris');
+
         return $this->response->setJSON($result);
     }
 
@@ -145,10 +147,14 @@ class Pegawai extends BaseController
             'telepon'       => $this->request->getPost('telepon'),
         ];
 
+        $logMessage = 'menambahkan data pegawai atas nama ' . $data['nama'];
+
         if ($id) {
             $data['id'] = $id;
+            $logMessage = str_replace('menambahkan', 'memperbarui', $logMessage);
         }
 
+        add_log($logMessage);
         $this->pegawai->save($data);
 
         return $this->response->setJSON([
@@ -182,6 +188,8 @@ class Pegawai extends BaseController
         }
 
         $this->pegawai->whereIn('id', $ids)->delete($ids);
+
+        add_log('menghapus data pegawai sebanyak ' . count($ids) . ' baris dengan ID [ ' . implode(', ', $ids) . ' ]');
 
         return $this->response->setJSON([
             'status'  => 'success',

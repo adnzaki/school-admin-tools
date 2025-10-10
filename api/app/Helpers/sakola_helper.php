@@ -4,6 +4,16 @@ use ExcelTools\Reader;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\Services;
 use App\Models\UserInstitusiModel;
+use App\Models\LogModel;
+
+if(! function_exists('add_log')) {
+    function add_log($log) 
+    {
+        $user = auth()->user()->username;
+        $model = new LogModel();
+        $model->insert(['log' => $user . ' ' . $log]);
+    }
+}
 
 if (! function_exists('add_zero_prefix')) {
     /**
@@ -252,6 +262,7 @@ if (!function_exists('import_spreadsheet')) {
         return [
             'status'  => 'success',
             'message' => lang('General.dataSaved'),
+            'count'   => count($validRows),
         ];
     }
 }

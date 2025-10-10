@@ -97,7 +97,10 @@ class SuratKeluar extends BaseController
 
         $archive = null;
 
+        $logMessage = 'menambahkan surat keluar dengan nomor ' . $p['nomor_surat'];
+
         if (! empty($p['id'])) {
+            $logMessage = str_replace('menambahkan', 'memperbarui', $logMessage);
             $archive = $this->getLampiran($p['id']);
             $data['id'] = $p['id'];
             if (! empty($p['berkas']) && $archive !== null) {
@@ -108,6 +111,7 @@ class SuratKeluar extends BaseController
         // Skip save jika editable = 0
         if (! isset($p['editable']) || $p['editable'] === '1') {
             $this->suratModel->save($data);
+            add_log($logMessage);
         }
 
         // Ambil ID surat yg baru disimpan

@@ -301,6 +301,7 @@ class PindahSekolah extends BaseController
 
         // delete mutation data
         $this->model->delete($id, true);
+        add_log('menghapus data pindah sekolah atas nama ' . $detail['siswa_nama']);
 
         // return student mutation status back to 0
         $this->siswaModel->update($detail['siswa_id'], ['mutasi' => 0]);
@@ -361,15 +362,20 @@ class PindahSekolah extends BaseController
             'pindah_rayon' => $pindahRayon,
         ];
 
+        $logMessage = 'membuat data pindah sekolah atas nama ' . $this->siswaModel->find($siswaId)['nama'];
+
         if ($id) {
             $data['id'] = $id;
+            $logMessage = str_replace('membuat', 'memperbarui', $logMessage);
             $detail = $this->model->findByIdWithSiswa($id);
             if ($siswaId !== $detail['siswa_id']) {
                 $this->siswaModel->update($detail['siswa_id'], ['mutasi' => 0]);
+                $logMessage = 'mengganti data pindah sekolah dari ' . $detail['siswa_nama'] . ' menjadi ' . $this->siswaModel->find($siswaId)['nama'];
             }
         }
 
         $this->model->save($data);
+        add_log($logMessage);
 
         // Update status mutasi siswa
         $this->siswaModel->update($siswaId, ['mutasi' => 1]);

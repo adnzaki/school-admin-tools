@@ -89,6 +89,8 @@ class Siswa extends BaseController
             $this->siswa->insertBatch($rows);
         });
 
+        add_log('mengimport data siswa sebanyak ' . $result['count'] . ' baris');
+
         return $this->response->setJSON($result);
     }
 
@@ -150,11 +152,14 @@ class Siswa extends BaseController
             'provinsi'        => $this->request->getPost('provinsi'),
         ];
 
+        $logMessage = 'menambahkan siswa atas nama ' . $data['nama'];
         if ($id) {
             $data['id'] = $id;
+            $logMessage = str_replace('menambahkan', 'memperbarui', $logMessage);
         }
 
         $this->siswa->save($data);
+        add_log($logMessage);
 
         return $this->response->setJSON([
             'status'  => 'success',
@@ -184,6 +189,7 @@ class Siswa extends BaseController
         }
 
         $this->siswa->whereIn('id', $ids)->delete($ids);
+        add_log('menghapus data sebanyak sebanyak ' . count($ids) . ' baris dengan ID [ ' . implode(', ', $ids) . ' ]');
 
         return $this->response->setJSON([
             'status'  => 'success',

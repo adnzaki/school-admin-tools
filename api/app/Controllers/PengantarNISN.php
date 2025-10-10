@@ -143,6 +143,8 @@ class PengantarNISN extends BaseController
         // hapus data surat keluar terkait
         $this->deleteSurat($suratIds, true);
 
+        add_log('menghapus data pengantar nisn sebanyak ' . count($ids) . ' baris dengan ID [ ' . implode(', ', $ids) . ' ]');
+
         return $this->response->setJSON([
             'status'  => 'success',
             'message' => lang('General.dataDeleted')
@@ -204,11 +206,15 @@ class PengantarNISN extends BaseController
             'surat_id'  => $suratId ?? $this->suratKeluarModel->getInsertID(),
         ];
 
+        $logMessage = 'membuat surat pengantar NISN atas nama ' . $siswaDetail['nama'] . ' (' . $siswaDetail['nisn'] . ')';
+
         if ($id) {
             $suratNisnValues['id'] = $id;
+            $logMessage = str_replace('membuat', 'memperbarui', $logMessage);
         }
 
         $this->model->save($suratNisnValues);
+        add_log($logMessage);
 
         return $this->response->setJSON([
             'status'  => 'success',

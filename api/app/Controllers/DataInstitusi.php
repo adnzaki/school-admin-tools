@@ -56,6 +56,7 @@ class DataInstitusi extends BaseController
 
         $uploader = new \Uploader;
         $response = $uploader->uploadImage($config);
+        add_log('memperbarui kop sekolah');
 
         return $this->response->setJSON($response);
     }
@@ -65,6 +66,8 @@ class DataInstitusi extends BaseController
         $filename = $this->request->getPost('filename');
         $uploader = new \Uploader;
         $uploader->removeFile('kop/' . $filename);
+        add_log('menghapus kop sekolah');
+
         return $this->response->setJSON([
             'status'  => 'success',
             'message' => lang('General.fileDeleted')
@@ -137,6 +140,7 @@ class DataInstitusi extends BaseController
         }
 
         $this->model->save($data);
+        add_log('memperbarui data sekolah');
 
         return $this->response->setJSON([
             'status'  => 'success',

@@ -113,6 +113,8 @@ trait SuratTrait
         // Hapus data surat masuk/keluar
         $this->suratModel->whereIn('id', $ids)->delete($ids, $purge);
 
+        add_log('menghapus sebanyak ' . count($ids) . ' surat ' . $this->jenisSurat . ' dengan ID [ ' . implode(', ', $ids) . ' ]');
+
         return $this->response->setJSON([
             'status'  => 'success',
             'message' => lang('General.dataDeleted')

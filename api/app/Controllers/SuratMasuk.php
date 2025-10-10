@@ -81,7 +81,10 @@ class SuratMasuk extends BaseController
 
         $archive = null;
 
+        $logMessage = 'menambahkan surat masuk dengan nomor ' . $p['nomor_surat'];
+
         if (! empty($p['id'])) {
+            $logMessage = str_replace('menambahkan', 'memperbarui', $logMessage);
             $archive = $this->getLampiran($p['id']);
             $data['id'] = $p['id'];
             if (! empty($p['berkas']) && $archive !== null) {
@@ -90,6 +93,7 @@ class SuratMasuk extends BaseController
         }
 
         $this->suratModel->save($data);
+        add_log($logMessage);
 
         // Ambil ID surat yg baru disimpan
         $suratId = isset($data['id']) ? $data['id'] : $this->suratModel->getInsertID();
