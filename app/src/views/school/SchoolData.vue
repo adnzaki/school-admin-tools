@@ -9,6 +9,17 @@ const toast = useToast()
 const store = useSchoolStore()
 const menu = ref(null)
 
+defineProps({
+  hideEditButton: {
+    default: false,
+    type: Boolean
+  },
+  hideHeader: {
+    default: false,
+    type: Boolean
+  }
+})
+
 store.getDetail()
 const detail = computed(() => store.formData)
 
@@ -32,7 +43,7 @@ const items = ref([{ label: t('common.buttons.edit'), icon: 'pi pi-fw pi-pencil'
   <div class="card">
     <div class="flex justify-between items-center mb-6">
       <div class="font-semibold text-xl">{{ store.schoolName }}</div>
-      <div>
+      <div v-if="!hideEditButton">
         <Button icon="pi pi-ellipsis-v" class="p-button-text p-button-plain p-button-rounded" @click="$refs.menu.toggle($event)"></Button>
         <Menu ref="menu" popup :model="items" class="!min-w-40"></Menu>
       </div>
@@ -98,12 +109,12 @@ const items = ref([{ label: t('common.buttons.edit'), icon: 'pi pi-fw pi-pencil'
           <span class="text-surface-900 dark:text-surface-0 font-medium mb-1 md:mb-0">{{ detail.kab_kota }}</span>
         </div>
       </li>
-      <li class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+      <li class="flex flex-col md:flex-row md:items-center md:justify-between mb-6" v-if="!hideHeader">
         <div>
           <span class="text-surface-900 dark:text-surface-0 font-medium mb-1 md:mb-0">{{ $t('school.file_kop') }}:</span>
         </div>
       </li>
-      <li class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 bg-white p-[10px] rounded-[10px]">
+      <li v-if="!hideHeader" class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 bg-white p-[10px] rounded-[10px]">
         <Image :src="detail.file_kop_path" alt="Image" style="width: 100%" />
       </li>
     </ul>

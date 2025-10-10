@@ -23,5 +23,7 @@ export default {
   add: 'Tambah Siswa Baru',
   edit: 'Edit Siswa',
   import: 'Import Siswa',
-  importNote: 'Silakan unduh file template untuk import data siswa berikut terlebih dahulu, kemudian unggah pada form yang telah disediakan.'
+  importNote: 'Silakan unduh file template untuk import data siswa berikut terlebih dahulu, kemudian unggah pada form yang telah disediakan.',
+  noActiveStudents: 'Belum ada siswa terdaftar saat ini',
+  totalActiveStudents: 'Jumlah siswa terdaftar saat ini'
 }

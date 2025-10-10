@@ -5,7 +5,9 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Home::index');
+$routes->group('home', function (RouteCollection $routes) {
+    $routes->get('summary', 'Home::summary');
+});
 
 $routes->group('user', function (RouteCollection $routes) {
     $routes->post('create', 'UserManager::createUser');
