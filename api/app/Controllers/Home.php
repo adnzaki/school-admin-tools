@@ -17,7 +17,7 @@ class Home extends BaseController
         $pegawai = new PegawaiModel();
 
         return $this->response->setJSON([
-            'suratKeluar' => [$suratKeluar->countAllResults(), ],
+            'suratKeluar' => $suratKeluar->countAllResults(),
             'suratMasuk' => $suratMasuk->countAllResults(),
             'siswa' => $siswa->countAllResults(),
             'pegawai' => $pegawai->countAllResults(),
