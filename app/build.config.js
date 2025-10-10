@@ -29,7 +29,7 @@ const apiPort = ''
 
 const uiPort = ':5173'
 
-const mode = 'development' // development, build, production
+const mode = 'production' // development, build, production
 
 // ------ WARNING! Do not touch below this line ------
 /**
@@ -53,7 +53,7 @@ const host = () => {
 const uiPath = () => {
   switch (mode) {
     case 'production': // production mode using available web server in the cloud hosting
-      return `${host()}/`
+      return `${host()}/surpress/`
     case 'development': // development mode using Node.js
       return `${host()}${uiPort}/`
     case 'build': // build mode using localhost
@@ -67,7 +67,7 @@ const uiPath = () => {
  * @returns string
  */
 const baseUrl = () => {
-  return mode === 'production' ? `${host()}/api/public/` : `${host()}${apiPort}/school-admin-tools/api/public/`
+  return mode === 'production' ? `${host()}/surpress/api/public/` : `${host()}${apiPort}/school-admin-tools/api/public/`
 }
 
 export { baseUrl, host, mode, uiPath, uiPort }
