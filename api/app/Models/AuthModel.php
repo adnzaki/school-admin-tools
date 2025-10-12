@@ -23,7 +23,7 @@ class AuthModel extends UserModel
         if ($loginAttempt->isOK()) {
             $user = new UserModel();
             $userData = $user->find(auth()->id());
-            $token = $userData->generateAccessToken('SisaUang API');
+            $token = $userData->generateAccessToken('Surpress API');
 
             return ['status' => true, 'token' => $token->raw_token];
         } else {
