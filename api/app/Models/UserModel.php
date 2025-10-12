@@ -58,12 +58,20 @@ class UserModel
         ], ['user_id' => $user->id]);
     }
 
-    public function deleteUser(string $email)
+    public function deleteUser(string $username)
     {
         // Get the User Provider (UserModel by default)
         $users = auth()->getProvider();
-        $user = $users->findByCredentials(['email' => $email]);
+        $user = $users->findByCredentials(['username' => $username]);
 
-        $users->delete($user->id, true);
+        $users->delete($user->id);
+    }
+
+    public function checkUserExists(string $username, string $email): bool
+    {
+        // Get the User Provider (UserModel by default)
+        $users = auth()->getProvider();
+
+        return $users->findByCredentials(['username' => $username]) !== null || $users->findByCredentials(['email' => $email]) !== null;
     }
 }

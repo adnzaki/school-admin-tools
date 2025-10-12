@@ -17,6 +17,7 @@ class UserManager extends BaseController
     {
         if ($this->validateUser()) {
             $data = $this->request->getPost(['username', 'email', 'password', 'institusi_id']);
+            if($this->model->checkUserExists($data['username'], $data['email'])) return $this->response->setJSON(['status' => 'failed', 'message' => 'User already exists.']);
             $this->model->create($data);
 
             return $this->response->setJSON(['status' => 'success']);
@@ -40,8 +41,8 @@ class UserManager extends BaseController
     public function deleteUser()
     {
         if ($this->validateUser()) {
-            $email = $this->request->getPost('email');
-            $this->model->deleteUser($email);
+            $username = $this->request->getPost('username');
+            $this->model->deleteUser($username);
 
             return $this->response->setJSON(['status' => 'success']);
         } else {
