@@ -64,7 +64,7 @@ class UserModel
         $users = auth()->getProvider();
         $user = $users->findByCredentials(['username' => $username]);
 
-        $users->delete($user->id);
+        $users->delete($user->id, true);
     }
 
     public function checkUserExists(string $username, string $email): bool
