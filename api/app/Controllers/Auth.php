@@ -123,7 +123,7 @@ class Auth extends BaseController
 
     public function deleteDefaultCookie()
     {
-        delete_cookie('sakola_session');
+        delete_cookie('surpress_session');
 
         return $this->response->setJSON(['status' => 'success']);
     }
@@ -132,7 +132,7 @@ class Auth extends BaseController
     {
         if (auth()->loggedIn()) {
             auth()->logout();
-            delete_cookie('sakola_session');
+            delete_cookie('surpress_session');
         }
 
         return $this->response->setJSON(['status' => 'success']);
