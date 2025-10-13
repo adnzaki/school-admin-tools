@@ -85,7 +85,9 @@ class Pegawai extends BaseController
             $this->pegawai->insertBatch($rows);
         });
 
-        add_log('mengimport data pegawai sebanyak ' . $result['count'] . ' baris');
+        if ($result['status'] === 'success') {
+            add_log('mengimport data pegawai sebanyak ' . $result['count'] . ' baris');
+        }
 
         return $this->response->setJSON($result);
     }
