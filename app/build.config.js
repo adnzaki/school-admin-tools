@@ -53,9 +53,9 @@ const host = () => {
 const uiPath = () => {
   switch (mode) {
     case 'production': // production mode using available web server in the cloud hosting
-      return `${host()}/surpress/`
+      return `${host()}/`
     case 'development': // development mode using Node.js
-      return `${host()}${uiPort}/surpress/`
+      return `${host()}${uiPort}/`
     case 'build': // build mode using localhost
       return `${host()}${apiPort}/school-admin-tools/`
   }

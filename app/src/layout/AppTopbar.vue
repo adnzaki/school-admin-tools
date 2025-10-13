@@ -45,7 +45,7 @@ function showAccountMenu(event) {
         <i class="pi pi-bars"></i>
       </button>
       <router-link to="/" class="layout-topbar-logo">
-        <Image src="/surpress/android-chrome-192x192.png" alt="Image" width="30" />
+        <Image src="/android-chrome-192x192.png" alt="Image" width="30" />
 
         <span>Surpress</span>
       </router-link>
