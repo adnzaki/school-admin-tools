@@ -35,7 +35,7 @@ const validate = () =>
       <div style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)">
         <div class="w-full bg-surface-0 dark:bg-surface-900 py-20 px-8 sm:px-20" style="border-radius: 53px">
           <div class="flex flex-col items-center justify-center mb-8">
-            <Image src="/surpress/main-logo.png" alt="Image" width="70" class="mb-2" />
+            <Image src="/main-logo.png" alt="Image" width="70" class="mb-2" />
             <!-- <svg viewBox="0 0 54 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="mb-8 w-16 shrink-0 mx-auto">
               <path
                 fill-rule="evenodd"
@@ -53,7 +53,7 @@ const validate = () =>
                 />
               </g>
             </svg> -->
-            <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">
+            <div class="text-surface-900 text-center dark:text-surface-0 text-3xl font-medium mb-4">
               {{ $t('common.app.welcome') }} <strong>{{ $appName }}</strong>
             </div>
             <span class="text-muted-color font-medium">{{ $t('auth.pleaseLogin') }}</span>
