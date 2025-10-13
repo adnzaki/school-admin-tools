@@ -89,7 +89,9 @@ class Siswa extends BaseController
             $this->siswa->insertBatch($rows);
         });
 
-        add_log('mengimport data siswa sebanyak ' . $result['count'] . ' baris');
+        if($result['status'] === 'success') {
+            add_log('mengimport data siswa sebanyak ' . $result['count'] . ' baris');
+        }
 
         return $this->response->setJSON($result);
     }
