@@ -67,7 +67,7 @@ const uiPath = () => {
  * @returns string
  */
 const baseUrl = () => {
-  return mode === 'production' ? `${host()}/surpress/api/public/` : `${host()}${apiPort}/school-admin-tools/api/public/`
+  return mode === 'production' ? `${host()}/api/public/` : `${host()}${apiPort}/school-admin-tools/api/public/`
 }
 
 export { baseUrl, host, mode, uiPath, uiPort }
