@@ -17,10 +17,10 @@ class Home extends BaseController
         $pegawai = new PegawaiModel();
 
         return $this->response->setJSON([
-            'suratKeluar' => $suratKeluar->countAllResults(),
-            'suratMasuk' => $suratMasuk->countAllResults(),
-            'siswa' => $siswa->countAllResults(),
-            'pegawai' => $pegawai->countAllResults(),
+            'suratKeluar' => $suratKeluar->where('institusi_id', get_institusi())->countAllResults(),
+            'suratMasuk' => $suratMasuk->where('institusi_id', get_institusi())->countAllResults(),
+            'siswa' => $siswa->findActiveStudent()->countAllResults(),
+            'pegawai' => $pegawai->where('institusi_id', get_institusi())->countAllResults(),
         ]);
     }
 }
