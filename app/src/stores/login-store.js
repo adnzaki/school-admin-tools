@@ -1,5 +1,4 @@
 import { api, createFormData, t } from '@/composables/utils'
-import axios from 'axios'
 import Cookies from 'js-cookie'
 import { defineStore } from 'pinia'
 import conf from '../../admins.config'
@@ -25,7 +24,7 @@ export const useLoginStore = defineStore('login', {
     },
     logout() {
       // do a logout request with axios: auth/logout
-      axios('auth/logout').then(({ data }) => {
+      api.get('auth/logout').then(({ data }) => {
         if (data.status === 'success') {
           Cookies.remove(conf.cookieName)
           Cookies.remove('surpress_session')
