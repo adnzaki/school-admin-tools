@@ -68,31 +68,20 @@ function showAccountMenu(event) {
         </div>
       </div>
 
-      <button
-        class="layout-topbar-menu-button layout-topbar-action"
-        v-styleclass="{ selector: '@next', enterFromClass: 'hidden', enterActiveClass: 'animate-scalein', leaveToClass: 'hidden', leaveActiveClass: 'animate-fadeout', hideOnOutsideClick: true }"
-      >
+      <button class="layout-topbar-menu-button layout-topbar-action" @click="showAccountMenu">
         <i class="pi pi-ellipsis-v"></i>
       </button>
 
       <div class="layout-topbar-menu hidden lg:block">
         <div class="layout-topbar-menu-content">
-          <button type="button" class="layout-topbar-action py-5">
+          <button type="button" class="layout-topbar-action" @click="showAccountMenu">
             <i class="pi pi-user"></i>
             <span>{{ t('menu.profile') }}</span>
           </button>
-          <button type="button" class="layout-topbar-action" @click="$router.push('/sekolah')">
-            <i class="pi pi-building"></i>
-            <span>{{ t('menu.schoolData') }}</span>
-          </button>
-          <button type="button" class="layout-topbar-action" @click="store.logout()">
-            <i class="pi pi-sign-out"></i>
-            <span>Log Out</span>
-          </button>
-          <Menu ref="menu" class="account-menu" :model="accountMenu" :popup="true" />
           <!-- <Popover ref="op" id="overlay_panel" style="width: 150px"></Popover> -->
         </div>
       </div>
+      <Menu ref="menu" class="account-menu" :model="accountMenu" :popup="true" />
     </div>
   </div>
 </template>
