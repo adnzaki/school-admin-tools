@@ -30,7 +30,7 @@ export const useLoginStore = defineStore('login', {
       axios('auth/logout').then(({ data }) => {
         if (data.status === 'success') {
           Cookies.remove(conf.cookieName)
-          Cookies.remove('sakola_session')
+          Cookies.remove('surpress_session')
           window.location.href = conf.loginUrl()
         }
       })
