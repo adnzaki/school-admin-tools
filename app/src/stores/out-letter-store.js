@@ -73,7 +73,7 @@ export const useOutLetterStore = defineStore('out-letter', {
           berkas: data.lampiran === null ? '' : data.lampiran.nama_file,
           berkas_url: data.lampiran === null ? '' : data.lampiran.file_url
         }
-        this.formTitle = t('letterArchive.editInLetter')
+        this.formTitle = t('letterArchive.editOutLetter')
         this.formEvent = 'edit'
         this.showForm = true
         this.disableForm = data.editable === 1 ? false : true

@@ -56,8 +56,15 @@ trait SuratTrait
             'prefix'  => 'surat_' . date('Ymd') . '_',
         ];
 
+        $file = \Config\Services::request()->getFile('surat');
+
         $uploader = new \Uploader;
-        $response = $uploader->uploadPdf($config);
+        if($file->getClientMimeType() === 'application/pdf') {
+            $response = $uploader->uploadPdf($config);
+        } else {
+            $response = $uploader->uploadImage($config);
+        }
+
 
         if ($response['msg'] !== 'OK') {
             return $this->response->setJSON([
