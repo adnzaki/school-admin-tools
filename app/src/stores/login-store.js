@@ -25,8 +25,6 @@ export const useLoginStore = defineStore('login', {
     },
     logout() {
       // do a logout request with axios: auth/logout
-      Cookies.remove(conf.cookieName)
-      window.location.href = conf.loginUrl()
       axios('auth/logout').then(({ data }) => {
         if (data.status === 'success') {
           Cookies.remove(conf.cookieName)
