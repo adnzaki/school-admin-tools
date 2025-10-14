@@ -42,3 +42,9 @@
 .sp-select-options li:hover {
   background-color: #d5d5d5;
 }
+
+@media (max-width: 768px) {
+  .layout-topbar .layout-topbar-menu .layout-topbar-action {
+    padding: 0.8rem 1rem;
+  }
+}

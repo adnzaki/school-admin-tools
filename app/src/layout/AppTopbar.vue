@@ -77,9 +77,17 @@ function showAccountMenu(event) {
 
       <div class="layout-topbar-menu hidden lg:block">
         <div class="layout-topbar-menu-content">
-          <button type="button" class="layout-topbar-action" @click="showAccountMenu">
+          <button type="button" class="layout-topbar-action py-5">
             <i class="pi pi-user"></i>
-            <span>Profile</span>
+            <span>{{ t('menu.profile') }}</span>
+          </button>
+          <button type="button" class="layout-topbar-action" @click="$router.push('/sekolah')">
+            <i class="pi pi-building"></i>
+            <span>{{ t('menu.schoolData') }}</span>
+          </button>
+          <button type="button" class="layout-topbar-action" @click="store.logout()">
+            <i class="pi pi-sign-out"></i>
+            <span>Log Out</span>
           </button>
           <Menu ref="menu" class="account-menu" :model="accountMenu" :popup="true" />
           <!-- <Popover ref="op" id="overlay_panel" style="width: 150px"></Popover> -->
