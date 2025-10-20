@@ -10,6 +10,7 @@ use App\Models\DataInstitusiModel;
 class PindahSekolah extends BaseController
 {
     use Traits\SuratTrait;
+    use Traits\CommonTrait;
 
     private $model;
 
@@ -18,26 +19,6 @@ class PindahSekolah extends BaseController
     private $siswaModel;
 
     private $dataInstitusiModel;
-
-    private $kelas = [
-        1  => 'I (Satu)',
-        2  => 'II (Dua)',
-        3  => 'III (Tiga)',
-        4  => 'IV (Empat)',
-        5  => 'V (Lima)',
-        6  => 'VI (Enam)',
-        7  => 'VII (Tujuh)',
-        8  => 'VIII (Delapan)',
-        9  => 'IX (Sembilan)',
-        10 => 'X (Sepuluh)',
-        11 => 'XI (Sebelas)',
-        12 => 'XII (Dua Belas)'
-    ];
-
-    private $jenisKelamin = [
-        'L' => 'Laki-laki',
-        'P' => 'Perempuan'
-    ];
 
     private $mutationId;
 
