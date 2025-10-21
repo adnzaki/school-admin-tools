@@ -187,15 +187,14 @@ class SekolahDisini extends BaseController
         ];
 
         // simpan data surat keluar dulu
-        $institusiDetail = $this->dataInstitusiModel->where('institusi_id', get_institusi())->first();
         $siswaModel = new SiswaModel();
         $siswaDetail = $siswaModel->find($siswaId);
 
         $suratKeluarValues = [
             'institusi_id'  => get_institusi(),
             'nomor_surat'   => $data['nomor_surat'],
-            'tujuan_surat'  => 'Dinas Pendidikan <br/>' . $institusiDetail['kab_kota'],
-            'perihal'       => 'Surat Ket. Siswa Di Sekolah Ini',
+            'tujuan_surat'  => $siswaDetail['nama'],
+            'perihal'       => 'Surat Keterangan Siswa Aktif',
             'tgl_surat'     => $data['tgl_surat'],
             'keterangan'    => $siswaDetail['nama'] . ' (' . $siswaDetail['nisn'] . ')',
             'relasi_tabel'  => 'tb_sekolah_disini',
