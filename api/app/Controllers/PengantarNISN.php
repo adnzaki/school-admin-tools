@@ -83,7 +83,7 @@ class PengantarNISN extends BaseController
         ]);
 
         $institusi = $this->dataInstitusiModel->getWithInstitusi($this->institusiId);
-        $title = 'Surat Pengantar NISN';
+        $title = 'Surat Keterangan';
         $data = $this->model->withSiswaAndSurat()
             ->where('tb_pengantar_nisn.id', $this->letterId)
             ->first();
