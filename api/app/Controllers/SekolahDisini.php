@@ -1,15 +1,14 @@
-<?php
+<?php namespace App\Controllers;
 
-namespace App\Controllers;
-
-use App\Models\PengantarNisnModel;
+use App\Models\SekolahDisiniModel;
 use App\Models\SuratKeluarModel;
 use App\Models\DataInstitusiModel;
 use App\Models\SiswaModel;
 
-class PengantarNISN extends BaseController
+class SekolahDisini extends BaseController
 {
     use Traits\SuratTrait;
+    use Traits\CommonTrait;
 
     private $model;
 
@@ -21,7 +20,7 @@ class PengantarNISN extends BaseController
 
     public function __construct()
     {
-        $this->model = new PengantarNisnModel();
+        $this->model = new SekolahDisiniModel();
         $this->suratKeluarModel = new SuratKeluarModel();
         $this->dataInstitusiModel = new DataInstitusiModel();
 
@@ -50,31 +49,24 @@ class PengantarNISN extends BaseController
         $container = $builder->findAll($limit, $offset);
 
         foreach ($container as $key => $value) {
+            $container[$key]['kelas'] = $this->kelas[$value['kelas']];
             $container[$key]['tgl_surat'] = osdate()->create($value['tgl_surat'], 'd-M-y');
             $container[$key]['id'] = encrypt($value['id'], env('encryption_key'));
         }
 
+        $institusi = $this->dataInstitusiModel->getWithInstitusi(get_institusi());
+
         return $this->response->setJSON([
-            'totalRows' => $totalRows,
-            'container' => $container,
+            'totalRows'     => $totalRows,
+            'container'     => $container,
+            'schoolLevel'   => $institusi['tingkat'],
         ]);
     }
 
-    public function getDetail(string $id)
-    {
-        $id = decrypt($id, env('encryption_key'));
-
-        $data = $this->model->withSiswaAndSurat()
-            ->where('tb_pengantar_nisn.id', $id)
-            ->first();
-
-        return $this->response->setJSON($data);
-    }
-
-    public function createSuratPengantarNISN()
+    public function createSuratKeteranganSekolah()
     {
         if ($this->institusiId === null || !$this->letterId) {
-            $message = 'Surat Pengantar NISN tidak ditemukan. <br/>' . $this->notfoundReason;
+            $message = 'Surat Keterangan Siswa di Sekolah ini tidak ditemukan. <br/>' . $this->notfoundReason;
             return view('surat_notfound', ['message' => $message]);
         }
 
@@ -85,7 +77,7 @@ class PengantarNISN extends BaseController
         $institusi = $this->dataInstitusiModel->getWithInstitusi($this->institusiId);
         $title = 'Surat Keterangan';
         $data = $this->model->withSiswaAndSurat()
-            ->where('tb_pengantar_nisn.id', $this->letterId)
+            ->where('tb_sekolah_disini.id', $this->letterId)
             ->first();
 
         $contentData = [
@@ -96,17 +88,18 @@ class PengantarNISN extends BaseController
             'city'          => $institusi['kab_kota'],
             'province'      => $institusi['provinsi'],
             'letter'        => $data,
+            'kelas'         => $this->kelas[$data['kelas']],
             'date'          => osdate()->create($data['tgl_surat']),
         ];
 
         $data = [
             'pageTitle' => $title,
-            'content'   => view('surat-siswa/pengantar_nisn', $contentData),
+            'content'   => view('surat-siswa/keterangan_sekolah', $contentData),
             'institusi' => $institusi
         ];
 
         $html = view('layout/main', $data);
-        $pdf->loadHTML($html)->render()->stream('Surat-Pengantar-NISN.pdf');
+        $pdf->loadHTML($html)->render()->stream('Surat-Keterangan-Sekolah.pdf');
     }
 
     public function delete()
@@ -137,18 +130,29 @@ class PengantarNISN extends BaseController
         // ambil data surat keluar terkait
         $suratIds = array_map(fn($item) => $item['surat_id'], $existing);
 
-        // hapus data pengantar nisn
+        // hapus data keterangan siswa di sekolah ini
         $this->model->whereIn('id', $ids)->delete($ids, true);
 
         // hapus data surat keluar terkait
         $this->deleteSurat($suratIds, true);
 
-        add_log('menghapus data pengantar nisn sebanyak ' . count($ids) . ' baris dengan ID [ ' . implode(', ', $ids) . ' ]');
+        add_log('menghapus data keterangan siswa di sekolah ini sebanyak ' . count($ids) . ' baris dengan ID [ ' . implode(', ', $ids) . ' ]');
 
         return $this->response->setJSON([
             'status'  => 'success',
             'message' => lang('General.dataDeleted')
         ]);
+    }
+
+    public function getDetail(string $id)
+    {
+        $id = decrypt($id, env('encryption_key'));
+
+        $data = $this->model->withSiswaAndSurat()
+            ->where('tb_sekolah_disini.id', $id)
+            ->first();
+
+        return $this->response->setJSON($data);
     }
 
     public function save()
@@ -158,6 +162,7 @@ class PengantarNISN extends BaseController
             'siswa_id'      => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.nama')],
             'nomor_surat'   => ['rules' => 'required', 'label' => lang('FieldLabels.suratKeluar.nomor_surat')],
             'tgl_surat'     => ['rules' => 'required|valid_date', 'label' => lang('FieldLabels.suratKeluar.tgl_surat')],
+            'kelas'         => ['rules' => 'required|in_list[1,2,3,4,5,6,7,8,9,10,11,12]', 'label' => lang('FieldLabels.mutasi.kelas')],
         ];
 
         if (! $this->validate($rules)) {
@@ -178,6 +183,7 @@ class PengantarNISN extends BaseController
             'siswa_id'      => $siswaId,
             'nomor_surat'   => $this->request->getPost('nomor_surat'),
             'tgl_surat'     => $this->request->getPost('tgl_surat'),
+            'kelas'         => $this->request->getPost('kelas'),
         ];
 
         // simpan data surat keluar dulu
@@ -189,10 +195,10 @@ class PengantarNISN extends BaseController
             'institusi_id'  => get_institusi(),
             'nomor_surat'   => $data['nomor_surat'],
             'tujuan_surat'  => 'Dinas Pendidikan <br/>' . $institusiDetail['kab_kota'],
-            'perihal'       => 'Permohonan Pengantar NISN',
+            'perihal'       => 'Surat Ket. Siswa Di Sekolah Ini',
             'tgl_surat'     => $data['tgl_surat'],
             'keterangan'    => $siswaDetail['nama'] . ' (' . $siswaDetail['nisn'] . ')',
-            'relasi_tabel'  => 'tb_pengantar_nisn',
+            'relasi_tabel'  => 'tb_sekolah_disini',
         ];
 
         if ($suratId) {
@@ -201,19 +207,23 @@ class PengantarNISN extends BaseController
 
         $this->suratKeluarModel->save($suratKeluarValues);
 
-        $suratNisnValues = [
-            'siswa_id'  => $data['siswa_id'],
-            'surat_id'  => $suratId ?? $this->suratKeluarModel->getInsertID(),
+        $currentYear = getdate()['year'];
+        $academicYear = $currentYear . '/' . ($currentYear + 1);
+        $suratKeteranganValues = [
+            'siswa_id'      => $data['siswa_id'],
+            'surat_id'      => $suratId ?? $this->suratKeluarModel->getInsertID(),
+            'kelas'         => $data['kelas'],
+            'tahun_ajaran'  => $academicYear,
         ];
 
-        $logMessage = 'membuat surat pengantar NISN atas nama ' . $siswaDetail['nama'] . ' (' . $siswaDetail['nisn'] . ')';
+        $logMessage = 'membuat surat keterangan siswa di sekolah ini atas nama ' . $siswaDetail['nama'] . ' (' . $siswaDetail['nisn'] . ')';
 
         if ($id) {
-            $suratNisnValues['id'] = $id;
+            $suratKeteranganValues['id'] = $id;
             $logMessage = str_replace('membuat', 'memperbarui', $logMessage);
         }
 
-        $this->model->save($suratNisnValues);
+        $this->model->save($suratKeteranganValues);
         add_log($logMessage);
 
         return $this->response->setJSON([

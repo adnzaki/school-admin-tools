@@ -93,5 +93,14 @@ $routes->group('pengantar-nisn', function (RouteCollection $routes) {
     $routes->get('cetak-surat-pengantar-nisn', 'PengantarNISN::createSuratPengantarNISN');
 });
 
+$routes->group('sekolah-disini', function (RouteCollection $routes) {
+    $routes->post('get-data', 'SekolahDisini::getData');
+    $routes->post('save', 'SekolahDisini::save');
+    $routes->delete('delete', 'SekolahDisini::delete');
+    $routes->get('detail/(:any)', 'SekolahDisini::getDetail/$1');
+
+    // route for letters
+    $routes->get('cetak-surat-keterangan-sekolah', 'SekolahDisini::createSuratKeteranganSekolah');
+});
 
 service('auth')->routes($routes);

@@ -85,5 +85,5 @@ return [
         'tgl_pindah'        => 'Mutation Date',
         'pindah_rayon'      => 'Transfer to Region',
         'no_surat_rayon'    => 'Region Letter Number',
-    ]
+    ],
 ];

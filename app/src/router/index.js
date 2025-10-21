@@ -50,12 +50,12 @@ const router = createRouter({
           path: '/pengantar-nisn',
           name: 'PengantarNisn',
           component: () => import('@/views/nisn/IndexPage.vue')
+        },
+        {
+          path: '/suket-siswa',
+          name: 'SuketSiswa',
+          component: () => import('@/views/student-enroll/IndexPage.vue')
         }
-        // {
-        //   path: '/suket-siswa',
-        //   name: 'SuketSiswa',
-        //   component: () => import('@/views/pages/UnderDevelopment.vue')
-        // }
       ]
     },
     {
