@@ -29,7 +29,7 @@ const confirmDelete = () => {
 
 <template>
   <div class="card">
-    <div class="font-semibold text-xl mb-4">{{ $t('menu.letterOfStudent') }}</div>
+    <div class="font-semibold text-xl mb-4">{{ $t('menu.letterOfStudentFull') }}</div>
     <ButtonMenu />
     <DataList />
     <FormDialog />

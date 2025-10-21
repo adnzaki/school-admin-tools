@@ -8,6 +8,7 @@ export default {
   moveSchool: 'Pindah Sekolah',
   printNISN: 'Pengantar NISN',
   letterOfStudent: 'Surat Ket. Siswa',
+  letterOfStudentFull: 'Surat Keterangan Siswa',
   letterOfAchievement: 'Surat Ket. Prestasi',
   letterOfEmployee: 'Surat Ket. Pegawai',
   taskLetter: 'Surat Tugas',
