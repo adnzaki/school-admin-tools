@@ -26,7 +26,7 @@ function getEndpoint(path = '') {
   return endpoint
 }
 
-const basePath = '/'
+const basePath = '/surpress-app/'
 
 export default {
   // API Url for admin section
