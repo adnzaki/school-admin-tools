@@ -7,6 +7,7 @@ import mutation from './mutation'
 import nisn from './nisn'
 import school from './school'
 import student from './student'
+import studentEnroll from './student-enroll'
 
 export default {
   common,
@@ -17,5 +18,6 @@ export default {
   letterArchive,
   school,
   mutation,
-  nisn
+  nisn,
+  studentEnroll
 }
