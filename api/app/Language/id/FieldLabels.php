@@ -84,5 +84,8 @@ return [
         'alasan'            => 'Alasan Pindah',
         'tgl_pindah'        => 'Tanggal Pindah',
         'no_surat_rayon'    => 'Nomor Surat Pindah Rayon',
-    ]
+    ],
+    'sekolahDisini' => [
+        'tahun_ajaran'  => 'Academic Year',
+    ],
 ];
