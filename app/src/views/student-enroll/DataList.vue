@@ -34,7 +34,7 @@ const contextMenu = ref([
     label: t('studentEnroll.print'),
     icon: 'pi pi-file-pdf',
     command: () => {
-      window.open(`${conf.apiPublicPath}pengantar-nisn/cetak-surat-pengantar-nisn?id=${store.selectedSingle.id}&user=${userId.value}`, '_blank')
+      window.open(`${conf.apiPublicPath}sekolah-disini/cetak-surat-keterangan-sekolah?id=${store.selectedSingle.id}&user=${userId.value}`, '_blank')
     }
   },
   {

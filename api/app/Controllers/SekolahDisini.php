@@ -63,6 +63,45 @@ class SekolahDisini extends BaseController
         ]);
     }
 
+    public function createSuratKeteranganSekolah()
+    {
+        if ($this->institusiId === null || !$this->letterId) {
+            $message = 'Surat Keterangan Siswa di Sekolah ini tidak ditemukan. <br/>' . $this->notfoundReason;
+            return view('surat_notfound', ['message' => $message]);
+        }
+
+        $pdf = new \PDFCreator([
+            'paperSize' => 'F4',
+        ]);
+
+        $institusi = $this->dataInstitusiModel->getWithInstitusi($this->institusiId);
+        $title = 'Surat Keterangan';
+        $data = $this->model->withSiswaAndSurat()
+            ->where('tb_sekolah_disini.id', $this->letterId)
+            ->first();
+
+        $contentData = [
+            'title'         => $title,
+            'letterNumber'  => $data['no_surat'],
+            'schoolName'    => $institusi['nama_sekolah'],
+            'district'      => $institusi['kecamatan'],
+            'city'          => $institusi['kab_kota'],
+            'province'      => $institusi['provinsi'],
+            'letter'        => $data,
+            'kelas'         => $this->kelas[$data['kelas']],
+            'date'          => osdate()->create($data['tgl_surat']),
+        ];
+
+        $data = [
+            'pageTitle' => $title,
+            'content'   => view('surat-siswa/keterangan_sekolah', $contentData),
+            'institusi' => $institusi
+        ];
+
+        $html = view('layout/main', $data);
+        $pdf->loadHTML($html)->render()->stream('Surat-Keterangan-Sekolah.pdf');
+    }
+
     public function delete()
     {
         $ids = $this->request->getJSON(true);
