@@ -4,6 +4,7 @@ import { useLoginStore } from '@/stores/login-store'
 import { useToast } from 'primevue/usetoast'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import conf from '../../../../admins.config'
 
 const store = useLoginStore()
 const toast = useToast()
@@ -35,7 +36,7 @@ const validate = () =>
       <div style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)">
         <div class="w-full bg-surface-0 dark:bg-surface-900 py-20 px-8 sm:px-20" style="border-radius: 53px">
           <div class="flex flex-col items-center justify-center mb-8">
-            <Image src="/main-logo.png" alt="Image" width="70" class="mb-2" />
+            <Image :src="conf.basePath + 'main-logo.png'" alt="Image" width="70" class="mb-2" />
             <!-- <svg viewBox="0 0 54 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="mb-8 w-16 shrink-0 mx-auto">
               <path
                 fill-rule="evenodd"

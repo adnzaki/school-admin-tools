@@ -1,9 +1,10 @@
 import { validatePage } from '@/composables/utils'
 import AppLayout from '@/layout/AppLayout.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import conf from '../../admins.config'
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(conf.basePath),
   routes: [
     {
       path: '/',

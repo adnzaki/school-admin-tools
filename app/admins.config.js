@@ -26,6 +26,8 @@ function getEndpoint(path = '') {
   return endpoint
 }
 
+const basePath = '/'
+
 export default {
   // API Url for admin section
   // adminAPI: `${baseUrl()}admin/`,
@@ -37,15 +39,16 @@ export default {
   // SisaUang authentication page into main
   // application page
   homeUrl: () => {
-    return `${uiPath()}${getEndpoint()}`
+    return `${uiPath()}${getEndpoint(basePath)}`
   },
   loginUrl: () => {
-    return `${uiPath()}${getEndpoint('auth/login')}`
+    return `${uiPath()}${getEndpoint(`${basePath}auth/login`)}`
   },
 
   host,
   uiPath,
   mode,
+  basePath,
 
   // Cookie key name
   cookieName: 'sakola_token',
