@@ -86,7 +86,4 @@ return [
         'pindah_rayon'      => 'Transfer to Region',
         'no_surat_rayon'    => 'Region Letter Number',
     ],
-    'sekolahDisini' => [
-        'tahun_ajaran'  => 'Academic Year',
-    ],
 ];

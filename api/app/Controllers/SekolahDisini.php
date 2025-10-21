@@ -54,9 +54,12 @@ class SekolahDisini extends BaseController
             $container[$key]['id'] = encrypt($value['id'], env('encryption_key'));
         }
 
+        $institusi = $this->dataInstitusiModel->getWithInstitusi(get_institusi());
+
         return $this->response->setJSON([
-            'totalRows' => $totalRows,
-            'container' => $container,
+            'totalRows'     => $totalRows,
+            'container'     => $container,
+            'schoolLevel'   => $institusi['tingkat'],
         ]);
     }
 
@@ -121,7 +124,6 @@ class SekolahDisini extends BaseController
             'nomor_surat'   => ['rules' => 'required', 'label' => lang('FieldLabels.suratKeluar.nomor_surat')],
             'tgl_surat'     => ['rules' => 'required|valid_date', 'label' => lang('FieldLabels.suratKeluar.tgl_surat')],
             'kelas'         => ['rules' => 'required|in_list[1,2,3,4,5,6,7,8,9,10,11,12]', 'label' => lang('FieldLabels.mutasi.kelas')],
-            'tahun_ajaran'  => ['rules' => 'required', 'label' => lang('FieldLabels.sekolahDisini.tahun_ajaran')],
         ];
 
         if (! $this->validate($rules)) {
@@ -143,7 +145,6 @@ class SekolahDisini extends BaseController
             'nomor_surat'   => $this->request->getPost('nomor_surat'),
             'tgl_surat'     => $this->request->getPost('tgl_surat'),
             'kelas'         => $this->request->getPost('kelas'),
-            'tahun_ajaran'  => $this->request->getPost('tahun_ajaran'),
         ];
 
         // simpan data surat keluar dulu
@@ -167,11 +168,13 @@ class SekolahDisini extends BaseController
 
         $this->suratKeluarModel->save($suratKeluarValues);
 
+        $currentYear = getdate()['year'];
+        $academicYear = $currentYear . '/' . ($currentYear + 1);
         $suratKeteranganValues = [
             'siswa_id'      => $data['siswa_id'],
             'surat_id'      => $suratId ?? $this->suratKeluarModel->getInsertID(),
             'kelas'         => $data['kelas'],
-            'tahun_ajaran'  => $data['tahun_ajaran'],
+            'tahun_ajaran'  => $academicYear,
         ];
 
         $logMessage = 'membuat surat keterangan siswa di sekolah ini atas nama ' . $siswaDetail['nama'] . ' (' . $siswaDetail['nisn'] . ')';
