@@ -163,6 +163,7 @@ class SekolahDisini extends BaseController
             'nomor_surat'   => ['rules' => 'required', 'label' => lang('FieldLabels.suratKeluar.nomor_surat')],
             'tgl_surat'     => ['rules' => 'required|valid_date', 'label' => lang('FieldLabels.suratKeluar.tgl_surat')],
             'kelas'         => ['rules' => 'required|in_list[1,2,3,4,5,6,7,8,9,10,11,12]', 'label' => lang('FieldLabels.mutasi.kelas')],
+            'keperluan'     => ['rules' => 'required|in_list[biasa,pip,peringkat]', 'label' => lang('FieldLabels.sekolahDisini.keperluan')],
         ];
 
         if (! $this->validate($rules)) {
@@ -184,6 +185,8 @@ class SekolahDisini extends BaseController
             'nomor_surat'   => $this->request->getPost('nomor_surat'),
             'tgl_surat'     => $this->request->getPost('tgl_surat'),
             'kelas'         => $this->request->getPost('kelas'),
+            'keperluan'     => $this->request->getPost('keperluan'),
+            'deskripsi'     => $this->request->getPost('deskripsi'),
         ];
 
         // simpan data surat keluar dulu
@@ -213,6 +216,8 @@ class SekolahDisini extends BaseController
             'surat_id'      => $suratId ?? $this->suratKeluarModel->getInsertID(),
             'kelas'         => $data['kelas'],
             'tahun_ajaran'  => $academicYear,
+            'keperluan'     => $data['keperluan'],
+            'deskripsi'     => $data['deskripsi'],
         ];
 
         $logMessage = 'membuat surat keterangan siswa di sekolah ini atas nama ' . $siswaDetail['nama'] . ' (' . $siswaDetail['nisn'] . ')';

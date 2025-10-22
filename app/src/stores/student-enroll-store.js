@@ -22,7 +22,9 @@ export const useStudentEnrollStore = defineStore('student-enroll', {
       siswa_id: '',
       nomor_surat: '',
       tgl_surat: '',
-      kelas: ''
+      kelas: '',
+      keperluan: '',
+      deskripsi: ''
       // id and surat_id for detail data required when editing
       // id: '',
       // surat_id: ''
@@ -72,6 +74,8 @@ export const useStudentEnrollStore = defineStore('student-enroll', {
           siswa_nama: detail.siswa_nama,
           nomor_surat: detail.no_surat,
           kelas: detail.kelas,
+          keperluan: detail.keperluan,
+          deskripsi: detail.deskripsi,
           tgl_surat: new Date(detail.tgl_surat)
         }
         this.formTitle = t('letterArchive.editInLetter')

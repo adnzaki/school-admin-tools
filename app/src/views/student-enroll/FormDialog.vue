@@ -15,6 +15,20 @@
         <p class="text-red-500">{{ store.errors.kelas }}</p>
       </div>
 
+      <!-- (Select Keperluan) -->
+      <div class="flex flex-col gap-2">
+        <label>{{ $t('studentEnroll.letterPurpose') }}</label>
+        <Select v-model="selectedPurpose" @change="onPurposeChange" :options="purposes" optionLabel="name" :placeholder="$t('studentEnroll.selectPurpose')" class="w-full" />
+        <p class="text-red-500">{{ store.errors.keperluan }}</p>
+      </div>
+
+      <!-- Deskripsi untuk peringkat -->
+      <div class="flex flex-col gap-2" v-if="store.formData.keperluan === 'peringkat'">
+        <label>{{ $t('common.description') }}</label>
+        <InputText type="text" v-model="store.formData.deskripsi" :placeholder="$t('studentEnroll.purpose.ranking')" />
+        <p class="text-red-500">{{ store.errors.deskripsi }}</p>
+      </div>
+
       <!-- Nomor Surat -->
       <div class="flex flex-col gap-2">
         <label>{{ $t('letterArchive.number') }}</label>
@@ -48,6 +62,17 @@ const toast = useToast()
 const { t } = useI18n()
 const selectedGrade = ref()
 const selectedStudent = ref()
+const selectedPurpose = ref({ name: t('studentEnroll.purpose.normal'), code: 'biasa' })
+
+const purposes = ref([
+  { name: t('studentEnroll.purpose.normal'), code: 'biasa' },
+  { name: t('studentEnroll.purpose.pip'), code: 'pip' },
+  { name: t('studentEnroll.purpose.achievement'), code: 'peringkat' }
+])
+
+const onPurposeChange = (event) => {
+  store.formData.keperluan = event.value.code
+}
 
 const onGradeChange = (event) => {
   store.formData.kelas = event.value.code
@@ -94,6 +119,9 @@ const onDialogShow = () => {
 
     const grade = mutationStore.classLevels[store.schoolLevel].find((g) => g.code === parseInt(store.formData.kelas))
     selectedGrade.value = { name: grade.name, code: grade.code }
+
+    const purpose = purposes.value.find((p) => p.code === store.formData.keperluan)
+    selectedPurpose.value = { name: purpose.name, code: purpose.code }
   }
 }
 
@@ -102,6 +130,7 @@ const onDialogHide = () => {
     store.resetForm()
     store.studentOptions = []
     selectedGrade.value = null
+    selectedPurpose.value = { name: t('studentEnroll.purpose.normal'), code: 'biasa' }
 
     if (store.formData.siswa_nama) store.formData.siswa_nama = ''
   }

@@ -30,8 +30,7 @@ const model = ref([
     items: [
       { label: t('menu.moveSchool'), icon: 'pi pi-fw pi-directions', to: '/pindah-sekolah' },
       { label: t('menu.printNISN'), icon: 'pi pi-fw pi-id-card', to: '/pengantar-nisn' },
-      { label: t('menu.letterOfStudent'), icon: 'pi pi-fw pi-clipboard', to: '/suket-siswa' },
-      { label: t('menu.letterOfAchievement'), icon: 'pi pi-fw pi-trophy', to: '/suket-berprestasi' }
+      { label: t('menu.letterOfStudent'), icon: 'pi pi-fw pi-clipboard', to: '/suket-siswa' }
     ]
   },
   {

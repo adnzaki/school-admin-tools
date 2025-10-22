@@ -29,6 +29,7 @@ export default {
     filterDate: 'Filter Tanggal'
   },
   grade: 'Kelas',
+  description: 'Deskripsi',
   incorrectForm: 'Silakan isi form dengan benar',
   importing: 'Mengimpor data...',
   uploading: 'Mengunggah berkas...',
