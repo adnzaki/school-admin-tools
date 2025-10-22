@@ -7,7 +7,7 @@ export default {
     normal: 'Biasa',
     pip: 'Keterangan Tidak Mampu',
     achievement: 'Keterangan Prestasi',
-    ranking: 'Deskripsi tambahan untuk peringkat (kosongkan jika tidak perlu)'
+    ranking: 'mendapat peringkat ke ... dari ... siswa (kosongkan jika tidak perlu)'
   },
   letterPurpose: 'Keperluan',
   selectPurpose: 'Silakan pilih maksud pembuatan surat'
