@@ -75,7 +75,7 @@ class PindahSekolah extends BaseController
         $builder = $this->model
             ->withSiswa()
             ->applyFilters($search, $kelas, $tglStart, $tglEnd)
-            ->orderBy($orderBy, $sort);
+            ->orderBy($orderBy, $sort)->orderBy('id', 'desc');
 
         $totalRows = $builder->countAllResults(false);
         $container = $builder->findAll($limit, $offset);

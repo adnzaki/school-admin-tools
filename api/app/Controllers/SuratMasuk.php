@@ -36,7 +36,7 @@ class SuratMasuk extends BaseController
         }
 
         $totalRows = $builder->countAllResults(false);
-        $data = $builder->orderBy($orderBy, $sort)->findAll($limit, $offset);
+        $data = $builder->orderBy($orderBy, $sort)->orderBy('id', 'desc')->findAll($limit, $offset);
 
         return $this->response->setJSON([
             'container' => $data,
