@@ -44,7 +44,8 @@ class PengantarNISN extends BaseController
 
         $builder = $this->model->withSiswaAndSurat()
             ->search($keyword)
-            ->orderBy($orderBy, $sort);
+            ->orderBy($orderBy, $sort)
+            ->orderBy('id', 'desc');
 
         $totalRows = $builder->countAllResults(false);
         $container = $builder->findAll($limit, $offset);

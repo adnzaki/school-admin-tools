@@ -33,7 +33,7 @@ class SuratKeluar extends BaseController
         }
 
         $totalRows = $builder->countAllResults(false);
-        $data = $builder->orderBy($orderBy, $sort)->findAll($limit, $offset);
+        $data = $builder->orderBy($orderBy, $sort)->orderBy('id', 'desc')->findAll($limit, $offset);
 
         foreach ($data as $key => $value) {
             $data[$key]['tujuan_surat'] = strip_tags($value['tujuan_surat']);
