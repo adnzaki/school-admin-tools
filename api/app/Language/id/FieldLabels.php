@@ -85,4 +85,7 @@ return [
         'tgl_pindah'        => 'Tanggal Pindah',
         'no_surat_rayon'    => 'Nomor Surat Pindah Rayon',
     ],
+    'sekolahDisini' => [
+        'keperluan' => 'Keperluan',
+    ]
 ];

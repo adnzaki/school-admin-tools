@@ -6,7 +6,7 @@ class SekolahDisiniModel extends \CodeIgniter\Model
     protected $primaryKey = 'id';
     protected $returnType = 'array';
     protected $useSoftDeletes = true;
-    protected $allowedFields = ['id', 'siswa_id', 'surat_id', 'kelas', 'tahun_ajaran', 'created_at', 'updated_at', 'deleted_at'];
+    protected $allowedFields = ['id', 'siswa_id', 'surat_id', 'kelas', 'tahun_ajaran', 'keperluan', 'deskripsi', 'created_at', 'updated_at', 'deleted_at'];
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';

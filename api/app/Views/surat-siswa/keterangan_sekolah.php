@@ -32,9 +32,21 @@
         </tr>
 
     </table>
+    <?php 
+    $mainContent = "Nama tersebut benar merupakan siswa pada $schoolName Kecamatan $district $city
+        Tahun Ajaran {$letter['tahun_ajaran']} yang saat ini duduk di bangku kelas $kelas";
+    if($letter['keperluan'] == 'pip') {
+        $mainContent .= " dan merupakan siswa kurang mampu serta layak diusulkan dalam Program Indonesia Pintar (PIP).";
+    } elseif($letter['keperluan'] == 'peringkat') {
+        if($letter['deskripsi'] !== '' && $letter['deskripsi'] !== null && $letter['deskripsi'] !== 'null') {
+            $mainContent .= " dan berprestasi dengan " . $letter['deskripsi'] . ".";
+        } else {
+            $mainContent .= " dan berprestasi dengan mendapatkan peringkat akademik terbaik di kelasnya.";
+        }
+    }
+    ?>
     <p class="line-2 mt-10 pt-10">
-        Nama tersebut benar merupakan siswa pada <?= $schoolName ?> Kecamatan <?= $district ?> <?= $city ?>
-        Tahun Ajaran <?= $letter['tahun_ajaran'] ?> yang saat ini duduk di bangku kelas <?= $kelas ?>.
+        <?= $mainContent ?>
     </p>
     <p class="line-2 mt-10 pt-10">
         Demikian surat keterangan ini dibuat untuk dapat digunakan sebagaimana mestinya.
