@@ -34,7 +34,7 @@
     </table>
     <?php 
     $mainContent = "Nama tersebut benar merupakan siswa pada $schoolName Kecamatan $district $city
-        Tahun Ajaran {$letter['tahun_ajaran']} yang saat ini duduk di bangku kelas $kelas";
+        Tahun Ajaran {$letter['tahun_ajaran']} yang saat ini duduk di bangku kelas $kelas.";
     if($letter['keperluan'] == 'pip') {
         $mainContent .= " dan merupakan siswa kurang mampu serta layak diusulkan dalam Program Indonesia Pintar (PIP).";
     } elseif($letter['keperluan'] == 'peringkat') {
