@@ -103,4 +103,11 @@ $routes->group('sekolah-disini', function (RouteCollection $routes) {
     $routes->get('cetak-surat-keterangan-sekolah', 'SekolahDisini::createSuratKeteranganSekolah');
 });
 
+$routes->group('sppd', function (RouteCollection $routes) {
+    $routes->post('get-data', 'Sppd::getData');
+    $routes->post('save', 'Sppd::save');
+    $routes->delete('delete', 'Sppd::delete');
+    $routes->get('detail/(:any)', 'Sppd::getDetail/$1');
+});
+
 service('auth')->routes($routes);

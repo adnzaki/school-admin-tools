@@ -87,5 +87,16 @@ return [
     ],
     'sekolahDisini' => [
         'keperluan' => 'Keperluan',
+    ],
+    'sppd' => [
+        'tingkat_biaya'   => 'tingkat biaya',
+        'tujuan'          => 'maksud perjalanan dinas',
+        'transportasi'    => 'kendaraan',
+        'lokasi'          => 'tempat tujuan',
+        'durasi'          => 'lama perjalanan',
+        'tgl_berangkat'   => 'tanggal berangkat',
+        'tgl_kembali'     => 'tanggal kembali',
+        'kepala_skpd'     => 'kepala SKPD',
+        'nip_kepala_skpd' => 'NIP kepala SKPD',
     ]
 ];
