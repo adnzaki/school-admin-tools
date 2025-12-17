@@ -49,4 +49,19 @@ class SiswaModel extends Model
     {
         return $this->where(['institusi_id' => get_institusi(), 'cpd' => 0, 'mutasi' => 0]);
     }
+
+    public function search(?string $keyword): self
+    {
+        if ($keyword) {
+            $this->groupStart()
+                ->like('nama', $keyword)
+                ->orLike('no_induk', $keyword)
+                ->orLike('nisn', $keyword)
+                ->orLike('nama_ayah', $keyword)
+                ->orLike('nama_ibu', $keyword)
+                ->groupEnd();
+        }
+
+        return $this;
+    }
 }
