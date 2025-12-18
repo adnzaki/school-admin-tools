@@ -104,4 +104,22 @@ const findStudent = (search, callback) => {
     })
 }
 
-export { api, createFormData, findStudent, localeForPaging, t, validatePage }
+const findEmployee = (search, callback) => {
+  api
+    .post(
+      `sppd/find-employee`,
+      { search },
+      {
+        transformRequest: [
+          (data) => {
+            return createFormData(data)
+          }
+        ]
+      }
+    )
+    .then(({ data }) => {
+      callback(data.result)
+    })
+}
+
+export { api, createFormData, findStudent, findEmployee, localeForPaging, t, validatePage }

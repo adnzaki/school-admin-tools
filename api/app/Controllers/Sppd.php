@@ -131,7 +131,7 @@ class Sppd extends BaseController
             'institusi_id'  => get_institusi(),
             'nomor_surat'   => $data['nomor_surat'],
             'tujuan_surat'  => $pegawaiDetail['nama'],
-            'perihal'       => 'Surat Perjalanan Dinas',
+            'perihal'       => 'Surat Perintah Tugas',
             'tgl_surat'     => $data['tgl_surat'],
             'keterangan'    => $data['tujuan'],
             'relasi_tabel'  => 'tb_sppd',
@@ -143,34 +143,43 @@ class Sppd extends BaseController
 
         $this->suratKeluarModel->save($suratKeluarValues);
 
-        $sppdValues = [
-            'pegawai_id'        => $data['pegawai_id'],
-            'surat_id'          => $suratId ?? $this->suratKeluarModel->getInsertID(),
-            'tingkat_biaya'     => $data['tingkat_biaya'],
-            'tujuan'            => $data['tujuan'],
-            'transportasi'      => $data['transportasi'],
-            'lokasi'            => $data['lokasi'],
-            'durasi'            => $data['durasi'],
-            'tgl_berangkat'     => $data['tgl_berangkat'],
-            'tgl_kembali'       => $data['tgl_kembali'],
-            'kepala_skpd'       => $data['kepala_skpd'],
-            'nip_kepala_skpd'   => $data['nip_kepala_skpd'],
-        ];
+        try {
+            $sppdValues = [
+                'pegawai_id'        => $data['pegawai_id'],
+                'surat_id'          => $suratId ?? $this->suratKeluarModel->getInsertID(),
+                'tingkat_biaya'     => $data['tingkat_biaya'],
+                'tujuan'            => $data['tujuan'],
+                'transportasi'      => $data['transportasi'],
+                'lokasi'            => $data['lokasi'],
+                'durasi'            => $data['durasi'],
+                'tgl_berangkat'     => $data['tgl_berangkat'],
+                'tgl_kembali'       => $data['tgl_kembali'],
+                'kepala_skpd'       => $data['kepala_skpd'],
+                'nip_kepala_skpd'   => $data['nip_kepala_skpd'],
+            ];
 
-        $logMessage = 'membuat SPPD untuk pegawai ' . $pegawaiDetail['nama'];
+            $logMessage = 'membuat surat tugas untuk pegawai ' . $pegawaiDetail['nama'];
 
-        if ($id) {
-            $sppdValues['id'] = $id;
-            $logMessage = str_replace('membuat', 'memperbarui', $logMessage);
+            if ($id) {
+                $sppdValues['id'] = $id;
+                $logMessage = str_replace('membuat', 'memperbarui', $logMessage);
+            }
+
+            $this->model->save($sppdValues);
+            add_log($logMessage);
+
+            return $this->response->setJSON([
+                'status'  => 'success',
+                'message' => lang('General.dataSaved'),
+                'data'    => $sppdValues
+            ]);
+        } catch (\Exception $e) {
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => $e->getMessage(),
+                'data'    => $sppdValues
+            ]);
         }
-
-        $this->model->save($sppdValues);
-        add_log($logMessage);
-
-        return $this->response->setJSON([
-            'status'  => 'success',
-            'message' => lang('General.dataSaved')
-        ]);
     }
 
     public function delete()
@@ -211,6 +220,31 @@ class Sppd extends BaseController
         return $this->response->setJSON([
             'status'  => 'success',
             'message' => lang('General.dataDeleted')
+        ]);
+    }
+    public function findEmployee()
+    {
+        $search = $this->request->getPost('search');
+        $rows = 0;
+
+        $data = [];
+        if (strlen($search) > 2) {
+            $builder = $this->pegawaiModel
+                ->where('institusi_id', get_institusi())
+                ->groupStart()
+                ->like('nama', $search)
+                ->orLike('nip', $search)
+                ->groupEnd();
+
+            $rows = $builder->countAllResults(false);
+            $data = $builder->findAll();
+        }
+
+        return $this->response->setJSON([
+            'status'        => 'OK',
+            'message'       => lang('General.dataFetched'),
+            'totalRows'     => $rows,
+            'result'        => $data
         ]);
     }
 }

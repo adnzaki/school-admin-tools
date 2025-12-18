@@ -108,6 +108,7 @@ $routes->group('sppd', function (RouteCollection $routes) {
     $routes->post('save', 'Sppd::save');
     $routes->delete('delete', 'Sppd::delete');
     $routes->get('detail/(:any)', 'Sppd::getDetail/$1');
+    $routes->post('find-employee', 'Sppd::findEmployee');
 });
 
 service('auth')->routes($routes);
