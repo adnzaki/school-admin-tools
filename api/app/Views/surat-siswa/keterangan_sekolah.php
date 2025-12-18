@@ -1,16 +1,16 @@
-<div class="pt-5 pl-20 pr-20 font-11">
+<div class="pt-5 pl-50 pr-50 font-11">
     <div class="line-1">
         <h3 class="text-center text-underline font-12"><?= strtoupper($title) ?></h3>
         <p class="text-center mt--10">No. <?= $letterNumber ?></p>
     </div>
 
-    <p class="line-2 mt-10 pt-10">
+    <p class="line-2 mt-10 pt-10 text-justify">
         Yang bertanda tangan di bawah ini Kepala <?= $schoolName ?>
         Kecamatan <?= $district ?>
         <?= $city ?>
         Provinsi <?= $province ?> menerangkan bahwa:
     </p>
-    <table class="ml-20 mt-10 pl-10 line-2">
+    <table class="ml-20 mt-20 pl-10 line-2">
         <tr>
             <td>Nama</td>
             <td>: <?= $letter['siswa_nama'] ?></td>
@@ -32,23 +32,23 @@
         </tr>
 
     </table>
-    <?php 
+    <?php
     $mainContent = "Nama tersebut benar merupakan siswa pada $schoolName Kecamatan $district $city
         Tahun Ajaran {$letter['tahun_ajaran']} yang saat ini duduk di bangku kelas $kelas.";
-    if($letter['keperluan'] == 'pip') {
+    if ($letter['keperluan'] == 'pip') {
         $mainContent .= " dan merupakan siswa kurang mampu serta layak diusulkan dalam Program Indonesia Pintar (PIP).";
-    } elseif($letter['keperluan'] == 'peringkat') {
-        if($letter['deskripsi'] !== '' && $letter['deskripsi'] !== null && $letter['deskripsi'] !== 'null') {
+    } elseif ($letter['keperluan'] == 'peringkat') {
+        if ($letter['deskripsi'] !== '' && $letter['deskripsi'] !== null && $letter['deskripsi'] !== 'null') {
             $mainContent .= " dan berprestasi dengan " . $letter['deskripsi'] . ".";
         } else {
             $mainContent .= " dan berprestasi dengan mendapatkan peringkat akademik terbaik di kelasnya.";
         }
     }
     ?>
-    <p class="line-2 mt-10 pt-10">
+    <p class="line-2 mt-20 pt-10 text-justify">
         <?= $mainContent ?>
     </p>
-    <p class="line-2 mt-10 pt-10">
+    <p class="line-2 mt-10 pt-10 mb-40">
         Demikian surat keterangan ini dibuat untuk dapat digunakan sebagaimana mestinya.
     </p>
 </div>
