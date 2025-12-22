@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\SppdModel;
+use App\Models\SuratTugasModel;
 use App\Models\SuratKeluarModel;
 use App\Models\DataInstitusiModel;
 use App\Models\PegawaiModel;
@@ -23,7 +23,7 @@ class Sppd extends BaseController
 
     public function __construct()
     {
-        $this->model = new SppdModel();
+        $this->model = new SuratTugasModel();
         $this->suratKeluarModel = new SuratKeluarModel();
         $this->dataInstitusiModel = new DataInstitusiModel();
         $this->pegawaiModel = new PegawaiModel();
@@ -71,10 +71,62 @@ class Sppd extends BaseController
         $id = decrypt($id, env('encryption_key'));
 
         $data = $this->model->withPegawaiAndSurat()
-            ->where('tb_sppd.id', $id)
+            ->where('tb_surat_tugas.id', $id)
             ->first();
 
         return $this->response->setJSON($data);
+    }
+
+    public function createSuratTugas()
+    {
+        if ($this->institusiId === null || !$this->letterId) {
+            $message = 'Surat Tugas ini tidak ditemukan. <br/>' . $this->notfoundReason;
+            return view('surat_notfound', ['message' => $message]);
+        }
+
+        $pdf = new \PDFCreator([
+            'paperSize' => 'A4',
+        ]);
+
+        $institusi = $this->dataInstitusiModel->getWithInstitusi($this->institusiId);
+        $title = 'Surat Tugas';
+        $data = $this->model->withPegawaiAndSurat()
+            ->where('tb_surat_tugas.id', $this->letterId)
+            ->first();
+
+        $startDate = $data['tgl_berangkat'];
+        $endDate = $data['tgl_kembali'];
+
+        if ($startDate === $endDate) {
+            $taskPeriod = osdate()->create($startDate);
+        } else {
+            $taskPeriod = osdate()->create($startDate) . ' sd. ' . osdate()->create($endDate);
+        }
+
+        $contentData = [
+            'title'         => $title,
+            'letterNumber'  => $data['surat_nomor_surat'],
+            'schoolName'    => $institusi['nama_sekolah'],
+            'headmaster'    => $institusi['kepala_sekolah'],
+            'headmasterId'  => $institusi['nip_kepala_sekolah'],
+            'employee'      => $data['pegawai_nama'],
+            'employeeId'    => $data['pegawai_nip'],
+            'position'      => $data['pegawai_jabatan'] . ' ' . $institusi['nama_sekolah'],
+            'task'          => $data['tujuan'],
+            'location'      => $data['lokasi'],
+            'taskPeriod'    => $taskPeriod,
+            'date'          => osdate()->create($data['surat_tgl_surat']),
+            'marginLeft'    => '50%',
+        ];
+
+        $data = [
+            'pageTitle' => $title,
+            'content'   => view('surat-pegawai/surat_tugas', $contentData),
+            'institusi' => $institusi
+        ];
+
+        $html = view('layout/main', $data);
+        $pdf->loadHTML($html)->render()->stream('Surat-Tugas.pdf');
     }
 
     public function save()
@@ -134,7 +186,7 @@ class Sppd extends BaseController
             'perihal'       => 'Surat Perintah Tugas',
             'tgl_surat'     => $data['tgl_surat'],
             'keterangan'    => $data['tujuan'],
-            'relasi_tabel'  => 'tb_sppd',
+            'relasi_tabel'  => 'tb_surat_tugas',
         ];
 
         if ($suratId) {

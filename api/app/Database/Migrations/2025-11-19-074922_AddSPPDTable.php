@@ -81,9 +81,7 @@ class AddSPPDTable extends Migration
         $this->forge->addKey('id', true, true);
         $this->forge->addForeignKey('pegawai_id', 'tb_pegawai', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('surat_id', 'tb_surat_keluar', 'id', 'CASCADE', 'CASCADE');
-        $this->forge->createTable('tb_sppd');
-
-
+        $this->forge->createTable('tb_surat_tugas');
     }
 
     public function down()

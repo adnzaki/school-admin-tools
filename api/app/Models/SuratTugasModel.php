@@ -4,9 +4,9 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class SppdModel extends Model
+class SuratTugasModel extends Model
 {
-    protected $table            = 'tb_sppd';
+    protected $table            = 'tb_surat_tugas';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
 
@@ -37,7 +37,7 @@ class SppdModel extends Model
     public function withPegawaiAndSurat(): self
     {
         $select = [
-            'tb_sppd.*',
+            'tb_surat_tugas.*',
 
             // Kolom pegawai dengan alias
             'p.id             AS pegawai_id',
@@ -68,15 +68,15 @@ class SppdModel extends Model
 
         return $this
             ->select($select)
-            ->join('tb_pegawai p', 'p.id = tb_sppd.pegawai_id', 'inner')
-            ->join('tb_surat_keluar s', 's.id = tb_sppd.surat_id', 'inner');
+            ->join('tb_pegawai p', 'p.id = tb_surat_tugas.pegawai_id', 'inner')
+            ->join('tb_surat_keluar s', 's.id = tb_surat_tugas.surat_id', 'inner');
     }
 
     public function search(?string $keyword): self
     {
         if ($keyword) {
             $this->groupStart()
-                ->like('tb_sppd.tujuan', $keyword)
+                ->like('tb_surat_tugas.tujuan', $keyword)
                 ->orLike('p.nama', $keyword)
                 ->orLike('s.nomor_surat', $keyword)
                 ->groupEnd();
