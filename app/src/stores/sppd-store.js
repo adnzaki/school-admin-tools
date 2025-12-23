@@ -6,7 +6,7 @@ import conf from '../../admins.config'
 
 export const useSppdStore = defineStore('sppd', {
   state: () => ({
-    endpoint: 'sppd/',
+    endpoint: 'surat-tugas/',
     current: 1,
     selected: [],
     selectedSingle: null,
@@ -19,6 +19,8 @@ export const useSppdStore = defineStore('sppd', {
       //   id: '',
       pegawai_id: '',
       nomor_surat: '',
+      sppd: 0,
+      no_sppd: '',
       tgl_surat: '',
       tingkat_biaya: '',
       tujuan: '',
@@ -68,8 +70,10 @@ export const useSppdStore = defineStore('sppd', {
           surat_id: detail.surat_id,
           pegawai_id: detail.pegawai_id,
           pegawai_nama: detail.pegawai_nama,
-          nomor_surat: detail.surat_nomor_surat,
-          tgl_surat: new Date(detail.surat_tgl_surat),
+          nomor_surat: detail.no_surat,
+          sppd: detail.sppd,
+          no_sppd: detail.no_sppd,
+          tgl_surat: new Date(detail.tgl_surat),
           tingkat_biaya: detail.tingkat_biaya,
           tujuan: detail.tujuan,
           transportasi: detail.transportasi,

@@ -99,5 +99,6 @@ return [
         'tgl_kembali'     => 'return date',
         'kepala_skpd'     => 'head of SKPD',
         'nip_kepala_skpd' => 'NIP of head of SKPD',
+        'no_sppd'         => 'work trip letter number',
     ]
 ];

@@ -1,7 +1,7 @@
 export default {
-  title: 'Data SPPD',
-  add: 'Tambah SPPD Baru',
-  edit: 'Ubah Data SPPD',
+  title: 'Surat Tugas',
+  add: 'Tambah Surat Tugas Baru',
+  edit: 'Ubah Surat Tugas',
   search: 'Cari tugas atau nama pegawai',
   form: {
     employee: 'Pegawai',
@@ -9,6 +9,8 @@ export default {
     letterNumber: 'Nomor Surat',
     letterDate: 'Tanggal Surat',
     costLevel: 'Tingkat Biaya',
+    workTrip: 'Sertakan Surat Perjalanan Dinas',
+    workTripNumber: 'Nomor Surat Perjalanan Dinas',
     purpose: 'Perihal Tugas',
     transport: 'Transportasi',
     location: 'Lokasi Tugas',
@@ -18,7 +20,10 @@ export default {
     headOfSkpd: 'Kepala SKPD',
     nipHeadOfSkpd: 'NIP Kepala SKPD'
   },
-  print: 'Cetak SPPD',
+  print: {
+    task: 'Cetak Surat Tugas',
+    travel: 'Cetak Surat Perjalanan Dinas'
+  },
   transportType: {
     pribadi: 'Kendaraan Pribadi',
     umum: 'Transportasi Umum',

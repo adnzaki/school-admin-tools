@@ -36,8 +36,8 @@ const model = ref([
   {
     label: t('menu.employeeAdm'),
     items: [
-      { label: t('menu.letterOfEmployee'), icon: 'pi pi-fw pi-file-check', to: '/suket-pegawai' },
       { label: t('menu.taskLetter'), icon: 'pi pi-fw pi-hourglass', to: '/surat-tugas' },
+      { label: t('menu.letterOfEmployee'), icon: 'pi pi-fw pi-file-check', to: '/suket-pegawai' },
       // { label: t('menu.travelLetter'), icon: 'pi pi-fw pi-truck', to: '/perjalanan-dinas' },
       { label: t('menu.permitRequest'), icon: 'pi pi-fw pi-folder-plus', to: '/surat-izin' }
     ]

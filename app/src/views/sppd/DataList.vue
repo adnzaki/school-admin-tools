@@ -12,7 +12,7 @@ const paging = usePagingStore()
 const toast = useToast()
 
 const tableColumns = ref([
-  { key: 'surat_nomor_surat', label: t('sppd.form.letterNumber'), sortable: true },
+  { key: 'no_surat', label: t('sppd.form.letterNumber'), sortable: true },
   { key: 'pegawai_nama', label: t('sppd.form.employee'), sortable: true },
   { key: 'tujuan', label: t('sppd.form.purpose'), sortable: true },
   { key: 'tgl_berangkat', label: t('sppd.form.departureDate'), sortable: true }
@@ -30,10 +30,10 @@ const contextMenu = ref([
     }
   },
   {
-    label: t('sppd.print'),
+    label: t('sppd.print.task'),
     icon: 'pi pi-file-pdf',
     command: () => {
-      window.open(`${conf.apiPublicPath}sppd/cetak?id=${store.selectedSingle.id}&user=${userId.value}`, '_blank')
+      window.open(`${conf.apiPublicPath}surat-tugas/cetak-surat-tugas?id=${store.selectedSingle.id}&user=${userId.value}`, '_blank')
     }
   },
   {

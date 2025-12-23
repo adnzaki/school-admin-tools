@@ -22,7 +22,6 @@ class SuratTugasModel extends Model
     // Field yang boleh diisi
     protected $allowedFields    = [
         'pegawai_id',
-        'surat_id',
         'tingkat_biaya',
         'tujuan',
         'transportasi',
@@ -32,9 +31,10 @@ class SuratTugasModel extends Model
         'tgl_kembali',
         'kepala_skpd',
         'nip_kepala_skpd',
+        'sppd',
     ];
 
-    public function withPegawaiAndSurat(): self
+    public function withPegawai(): self
     {
         $select = [
             'tb_surat_tugas.*',
@@ -51,25 +51,24 @@ class SuratTugasModel extends Model
             'p.created_at     AS pegawai_created_at',
             'p.updated_at     AS pegawai_updated_at',
             'p.deleted_at     AS pegawai_deleted_at',
-
-            // Kolom surat keluar dengan alias
-            's.id             AS surat_id',
-            's.institusi_id   AS surat_institusi_id',
-            's.nomor_surat    AS surat_nomor_surat',
-            's.tujuan_surat   AS surat_tujuan_surat',
-            's.perihal        AS surat_perihal',
-            's.tgl_surat      AS surat_tgl_surat',
-            's.keterangan     AS surat_keterangan',
-            's.relasi_tabel   AS surat_relasi_tabel',
-            's.created_at     AS surat_created_at',
-            's.updated_at     AS surat_updated_at',
-            's.deleted_at     AS surat_deleted_at',
         ];
 
         return $this
             ->select($select)
-            ->join('tb_pegawai p', 'p.id = tb_surat_tugas.pegawai_id', 'inner')
-            ->join('tb_surat_keluar s', 's.id = tb_surat_tugas.surat_id', 'inner');
+            ->join('tb_pegawai p', 'p.id = tb_surat_tugas.pegawai_id', 'inner');
+    }
+
+    /**
+     * Ambil satu record berdasarkan id (dengan data pegawai dan surat).
+     *
+     * @param int $id ID surat tugas
+     * @return array|null Record surat tugas
+     */
+    public function findByIdWithPegawai(int $id): ?array
+    {
+        return $this->withPegawai()
+            ->where('tb_surat_tugas.id', $id)
+            ->first();
     }
 
     public function search(?string $keyword): self
@@ -78,7 +77,6 @@ class SuratTugasModel extends Model
             $this->groupStart()
                 ->like('tb_surat_tugas.tujuan', $keyword)
                 ->orLike('p.nama', $keyword)
-                ->orLike('s.nomor_surat', $keyword)
                 ->groupEnd();
         }
 

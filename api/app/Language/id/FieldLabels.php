@@ -98,5 +98,6 @@ return [
         'tgl_kembali'     => 'tanggal kembali',
         'kepala_skpd'     => 'kepala SKPD',
         'nip_kepala_skpd' => 'NIP kepala SKPD',
+        'no_sppd'         => 'nomor surat derjalanan dinas',
     ]
 ];

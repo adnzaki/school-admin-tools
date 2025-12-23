@@ -15,6 +15,20 @@
         <p class="text-red-500">{{ store.errors.nomor_surat }}</p>
       </div>
 
+      <!-- Perjalanan Dinas -->
+      <div class="flex flex-col gap-2">
+        <label>{{ $t('sppd.form.workTrip') }}</label>
+        <ToggleSwitch v-model="checked" @update:model-value="onSppdChange" />
+        <p class="text-red-500">{{ store.errors.sppd }}</p>
+      </div>
+
+      <!-- Nomor Surat Perjalanan Dinas -->
+      <div class="flex flex-col gap-2" v-if="parseInt(store.formData.sppd) === 1">
+        <label>{{ $t('sppd.form.workTripNumber') }}</label>
+        <InputText type="text" v-model="store.formData.no_sppd" />
+        <p class="text-red-500">{{ store.errors.no_sppd }}</p>
+      </div>
+
       <!-- Tanggal Surat -->
       <div class="flex flex-col gap-2">
         <label>{{ $t('sppd.form.letterDate') }}</label>
@@ -100,6 +114,7 @@ import { useI18n } from 'vue-i18n'
 const store = useSppdStore()
 const toast = useToast()
 const { t } = useI18n()
+const checked = ref(false)
 const selectedEmployee = ref()
 const selectedTransport = ref()
 
@@ -118,6 +133,10 @@ watch([() => store.formData.tgl_berangkat, () => store.formData.durasi], ([newDa
     store.formData.tgl_kembali = endDate
   }
 })
+
+const onSppdChange = (value) => {
+  store.formData.sppd = value ? 1 : 0
+}
 
 const onSave = (status, message) => {
   toast.removeAllGroups()
@@ -159,6 +178,7 @@ const onTransportChange = (value) => {
 const onDialogShow = () => {
   if (store.formEvent === 'edit') {
     store.pegawaiOptions = []
+    checked.value = parseInt(store.formData.sppd) === 1
     store.pegawaiOptions.push({ nama: store.formData.pegawai_nama, id: store.formData.pegawai_id })
     selectedEmployee.value = store.formData.pegawai_id
     selectedTransport.value = store.formData.transportasi
