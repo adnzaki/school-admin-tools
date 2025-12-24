@@ -226,4 +226,45 @@
     table tr td.bordered {
         border: 1px solid black;
     }
+
+    table tr td.bordered-bottom {
+        border-bottom: 1px solid black !important;
+    }
+
+    table tr td.bordered-top {
+        border-top: 1px solid black !important;
+    }
+
+    table tr td.bordered-left {
+        border-left: 1px solid black !important;
+    }
+
+    table tr td.bordered-right {
+        border-right: 1px solid black !important;
+    }
+
+    table tr td.bordered-dotted {
+        border: 1px dotted black;
+    }
+
+    table tr td.bordered-dotted-bottom {
+        border-bottom: 1px dotted black !important;
+    }
+
+    table tr td.bordered-dotted-top {
+        border-top: 1px dotted black !important;
+    }
+
+    table tr td.bordered-dotted-left {
+        border-left: 1px dotted black !important;
+    }
+
+    table tr td.bordered-dotted-right {
+        border-right: 1px dotted black !important;
+    }
+
+    .page-break {
+        page-break-before: always;
+        /* atau page-break-after: always */
+    }
 </style>

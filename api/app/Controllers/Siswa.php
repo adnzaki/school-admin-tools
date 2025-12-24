@@ -19,18 +19,15 @@ class Siswa extends BaseController
         $limit     = (int)$this->request->getPost('limit');
         $offset    = (int)$this->request->getPost('offset');
         $orderBy   = $this->request->getPost('orderBy');
-        $searchBy  = $this->request->getPost('searchBy');
         $sort      = $this->request->getPost('sort');
-        $search    = $this->request->getPost('search');
+        $keyword   = $this->request->getPost('search');
 
-        if (! empty($search)) {
-            $this->siswa->like($searchBy, $search);
-        }
+        $builder = $this->siswa->findActiveStudent()
+            ->search($keyword)
+            ->orderBy($orderBy, $sort);
 
-        $data  = $this->siswa->findActiveStudent()->orderBy($orderBy, $sort)->findAll($limit, $offset);
-        $total = empty($search)
-            ? $this->siswa->findActiveStudent()->countAllResults()
-            : $this->siswa->findActiveStudent()->like($searchBy, $search)->countAllResults();
+        $total = $builder->countAllResults(false);
+        $data  = $builder->findAll($limit, $offset);
 
         return $this->response->setJSON([
             'container' => $data,
@@ -89,7 +86,7 @@ class Siswa extends BaseController
             $this->siswa->insertBatch($rows);
         });
 
-        if($result['status'] === 'success') {
+        if ($result['status'] === 'success') {
             add_log('mengimport data siswa sebanyak ' . $result['count'] . ' baris');
         }
 

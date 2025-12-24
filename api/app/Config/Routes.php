@@ -103,4 +103,16 @@ $routes->group('sekolah-disini', function (RouteCollection $routes) {
     $routes->get('cetak-surat-keterangan-sekolah', 'SekolahDisini::createSuratKeteranganSekolah');
 });
 
+$routes->group('surat-tugas', function (RouteCollection $routes) {
+    $routes->post('get-data', 'SuratTugas::getData');
+    $routes->post('save', 'SuratTugas::save');
+    $routes->delete('delete', 'SuratTugas::delete');
+    $routes->get('detail/(:any)', 'SuratTugas::getDetail/$1');
+    $routes->post('find-employee', 'SuratTugas::findEmployee');
+
+    // route for letters
+    $routes->get('cetak-surat-tugas', 'SuratTugas::createSuratTugas');
+    $routes->get('cetak-sppd', 'SuratTugas::createSppd');
+});
+
 service('auth')->routes($routes);

@@ -82,7 +82,8 @@ class Filters extends BaseFilters
                     'user/*',
                     'pindah-sekolah/cetak-*',
                     'pengantar-nisn/cetak-*',
-                    'sekolah-disini/cetak-*'
+                    'sekolah-disini/cetak-*',
+                    'surat-tugas/cetak-*'
                 ],
             ],
             'institusi' => [
@@ -92,7 +93,8 @@ class Filters extends BaseFilters
                     'user/*',
                     'pindah-sekolah/cetak-*',
                     'pengantar-nisn/cetak-*',
-                    'sekolah-disini/cetak-*'
+                    'sekolah-disini/cetak-*',
+                    'surat-tugas/cetak-*'
                 ],
             ],
             // 'honeypot',

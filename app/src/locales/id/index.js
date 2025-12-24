@@ -8,6 +8,7 @@ import nisn from './nisn'
 import school from './school'
 import student from './student'
 import studentEnroll from './student-enroll'
+import sppd from './sppd'
 
 export default {
   common,
@@ -19,5 +20,6 @@ export default {
   school,
   mutation,
   nisn,
-  studentEnroll
+  studentEnroll,
+  sppd
 }

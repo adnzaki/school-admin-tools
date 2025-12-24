@@ -56,6 +56,11 @@ const router = createRouter({
           path: '/suket-siswa',
           name: 'SuketSiswa',
           component: () => import('@/views/student-enroll/IndexPage.vue')
+        },
+        {
+          path: '/surat-tugas',
+          name: 'SuratTugas',
+          component: () => import('@/views/sppd/IndexPage.vue')
         }
       ]
     },
