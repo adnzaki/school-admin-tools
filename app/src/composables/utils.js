@@ -107,7 +107,7 @@ const findStudent = (search, callback) => {
 const findEmployee = (search, callback) => {
   api
     .post(
-      `sppd/find-employee`,
+      `surat-tugas/find-employee`,
       { search },
       {
         transformRequest: [

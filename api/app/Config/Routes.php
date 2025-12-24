@@ -112,6 +112,7 @@ $routes->group('surat-tugas', function (RouteCollection $routes) {
 
     // route for letters
     $routes->get('cetak-surat-tugas', 'SuratTugas::createSuratTugas');
+    $routes->get('cetak-sppd', 'SuratTugas::createSppd');
 });
 
 service('auth')->routes($routes);

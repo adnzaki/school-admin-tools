@@ -4,6 +4,7 @@ return [
     'required'              => 'The {field} field is required.',
     'required_fill'         => 'Please fill in the {field} field.',
     'required_select'       => 'Please select a value for {field}.',
+    'required_with'         => 'The {field} field is required.',
     'permit_empty'          => 'The {field} field may be left empty.',
     'is_natural'            => 'The {field} field must contain only numbers.',
     'is_natural_no_zero'    => 'The {field} field must be greater than zero.',

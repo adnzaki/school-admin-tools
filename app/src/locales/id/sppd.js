@@ -5,6 +5,7 @@ export default {
   search: 'Cari tugas atau nama pegawai',
   form: {
     employee: 'Pegawai',
+    search: 'Cari nama pegawai',
     letterId: 'ID Surat',
     letterNumber: 'Nomor Surat',
     letterDate: 'Tanggal Surat',
@@ -18,7 +19,8 @@ export default {
     departureDate: 'Tanggal Berangkat',
     returnDate: 'Tanggal Harus Kembali',
     headOfSkpd: 'Kepala SKPD',
-    nipHeadOfSkpd: 'NIP Kepala SKPD'
+    nipHeadOfSkpd: 'NIP Kepala SKPD',
+    headOfSkpdPosition: 'Jabatan Kepala SKPD'
   },
   print: {
     task: 'Cetak Surat Tugas',

@@ -30,6 +30,7 @@ class SuratTugasModel extends Model
         'tgl_berangkat',
         'tgl_kembali',
         'kepala_skpd',
+        'jabatan_kepala_skpd',
         'nip_kepala_skpd',
         'sppd',
     ];

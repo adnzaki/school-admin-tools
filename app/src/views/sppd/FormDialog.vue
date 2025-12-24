@@ -1,10 +1,10 @@
 <template>
   <Dialog :header="store.formTitle" v-model:visible="store.showForm" @show="onDialogShow" @hide="onDialogHide" :breakpoints="{ '960px': '75vw' }" :style="{ width: '40vw' }" :modal="true">
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-4" style="padding-bottom: 30px">
       <!-- Pegawai (Autocomplete Select) -->
       <div class="flex flex-col gap-2">
         <label>{{ $t('sppd.form.employee') }}</label>
-        <Select v-model="selectedEmployee" @filter="onEmployeeFilter" @update:model-value="onEmployeeChange" :options="store.pegawaiOptions" optionLabel="nama" optionValue="id" filter :placeholder="$t('sppd.search')" class="w-full" />
+        <Select v-model="selectedEmployee" @filter="onEmployeeFilter" @update:model-value="onEmployeeChange" :options="store.pegawaiOptions" optionLabel="nama" optionValue="id" filter :placeholder="$t('sppd.form.search')" class="w-full" />
         <p class="text-red-500">{{ store.errors.pegawai_id }}</p>
       </div>
 
@@ -15,20 +15,6 @@
         <p class="text-red-500">{{ store.errors.nomor_surat }}</p>
       </div>
 
-      <!-- Perjalanan Dinas -->
-      <div class="flex flex-col gap-2">
-        <label>{{ $t('sppd.form.workTrip') }}</label>
-        <ToggleSwitch v-model="checked" @update:model-value="onSppdChange" />
-        <p class="text-red-500">{{ store.errors.sppd }}</p>
-      </div>
-
-      <!-- Nomor Surat Perjalanan Dinas -->
-      <div class="flex flex-col gap-2" v-if="parseInt(store.formData.sppd) === 1">
-        <label>{{ $t('sppd.form.workTripNumber') }}</label>
-        <InputText type="text" v-model="store.formData.no_sppd" />
-        <p class="text-red-500">{{ store.errors.no_sppd }}</p>
-      </div>
-
       <!-- Tanggal Surat -->
       <div class="flex flex-col gap-2">
         <label>{{ $t('sppd.form.letterDate') }}</label>
@@ -36,25 +22,11 @@
         <p class="text-red-500">{{ store.errors.tgl_surat }}</p>
       </div>
 
-      <!-- Tingkat Biaya -->
-      <div class="flex flex-col gap-2">
-        <label>{{ $t('sppd.form.costLevel') }}</label>
-        <InputText type="text" v-model="store.formData.tingkat_biaya" />
-        <p class="text-red-500">{{ store.errors.tingkat_biaya }}</p>
-      </div>
-
       <!-- Maksud Perjalanan Dinas -->
       <div class="flex flex-col gap-2">
         <label>{{ $t('sppd.form.purpose') }}</label>
         <Textarea v-model="store.formData.tujuan" rows="3" />
         <p class="text-red-500">{{ store.errors.tujuan }}</p>
-      </div>
-
-      <!-- Transportasi -->
-      <div class="flex flex-col gap-2">
-        <label>{{ $t('sppd.form.transport') }}</label>
-        <Select v-model="selectedTransport" @update:model-value="onTransportChange" :options="transportOptions" optionLabel="label" optionValue="value" :placeholder="$t('sppd.form.transport')" class="w-full" />
-        <p class="text-red-500">{{ store.errors.transportasi }}</p>
       </div>
 
       <!-- Tempat Berangkat (Lokasi) -->
@@ -85,19 +57,56 @@
         <p class="text-red-500">{{ store.errors.tgl_kembali }}</p>
       </div>
 
-      <!-- Kepala SKPD -->
+      <!-- Perjalanan Dinas -->
       <div class="flex flex-col gap-2">
+        <label>{{ $t('sppd.form.workTrip') }}</label>
+        <ToggleSwitch v-model="checked" @update:model-value="onSppdChange" />
+        <p class="text-red-500">{{ store.errors.sppd }}</p>
+      </div>
+
+      <!-- Nomor Surat Perjalanan Dinas -->
+      <div class="flex flex-col gap-2" v-if="parseInt(store.formData.sppd) === 1">
+        <label>{{ $t('sppd.form.workTripNumber') }}</label>
+        <InputText type="text" v-model="store.formData.no_sppd" />
+        <p class="text-red-500">{{ store.errors.no_sppd }}</p>
+      </div>
+
+      <!-- Kepala SKPD -->
+      <div class="flex flex-col gap-2" v-if="parseInt(store.formData.sppd) === 1">
         <label>{{ $t('sppd.form.headOfSkpd') }}</label>
         <InputText type="text" v-model="store.formData.kepala_skpd" />
         <p class="text-red-500">{{ store.errors.kepala_skpd }}</p>
       </div>
 
+      <!-- Jabatan Kepala SKPD -->
+      <div class="flex flex-col gap-2" v-if="parseInt(store.formData.sppd) === 1">
+        <label>{{ $t('sppd.form.headOfSkpdPosition') }}</label>
+        <InputText type="text" v-model="store.formData.jabatan_kepala_skpd" />
+        <p class="text-red-500">{{ store.errors.jabatan_kepala_skpd }}</p>
+      </div>
+
       <!-- NIP Kepala SKPD -->
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-2" v-if="parseInt(store.formData.sppd) === 1">
         <label>{{ $t('sppd.form.nipHeadOfSkpd') }}</label>
         <InputText type="text" v-model="store.formData.nip_kepala_skpd" />
         <p class="text-red-500">{{ store.errors.nip_kepala_skpd }}</p>
       </div>
+
+      <!-- Tingkat Biaya -->
+      <div class="flex flex-col gap-2" v-if="parseInt(store.formData.sppd) === 1">
+        <label>{{ $t('sppd.form.costLevel') }}</label>
+        <InputText type="text" v-model="store.formData.tingkat_biaya" />
+        <p class="text-red-500">{{ store.errors.tingkat_biaya }}</p>
+      </div>
+
+      <!-- Transportasi -->
+      <div class="flex flex-col gap-2" v-if="parseInt(store.formData.sppd) === 1">
+        <label>{{ $t('sppd.form.transport') }}</label>
+        <Select v-model="selectedTransport" @update:model-value="onTransportChange" :options="transportOptions" optionLabel="label" optionValue="value" :placeholder="$t('sppd.form.transport')" class="w-full" />
+        <p class="text-red-500">{{ store.errors.transportasi }}</p>
+      </div>
+
+      <!-- <Divider v-if="parseInt(store.formData.sppd) === 1" /> -->
     </div>
     <template #footer>
       <Button :label="$t('common.buttons.save')" :disabled="store.disableButton" @click="save" />
@@ -178,6 +187,7 @@ const onTransportChange = (value) => {
 const onDialogShow = () => {
   if (store.formEvent === 'edit') {
     store.pegawaiOptions = []
+    store.errors = {}
     checked.value = parseInt(store.formData.sppd) === 1
     store.pegawaiOptions.push({ nama: store.formData.pegawai_nama, id: store.formData.pegawai_id })
     selectedEmployee.value = store.formData.pegawai_id
@@ -196,6 +206,7 @@ const onDialogHide = () => {
     store.pegawaiOptions = []
     selectedEmployee.value = null
     selectedTransport.value = 'pribadi'
+    checked.value = false
   }
 
   if (store.submitted) store.submitted = false

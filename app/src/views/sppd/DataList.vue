@@ -37,6 +37,13 @@ const contextMenu = ref([
     }
   },
   {
+    label: t('sppd.print.travel'),
+    icon: 'pi pi-file-pdf',
+    command: () => {
+      window.open(`${conf.apiPublicPath}surat-tugas/cetak-sppd?id=${store.selectedSingle.id}&user=${userId.value}`, '_blank')
+    }
+  },
+  {
     label: t('common.buttons.delete'),
     icon: 'pi pi-trash',
     command: () => {

@@ -4,6 +4,7 @@ return [
     'required'              => 'Kolom {field} wajib diisi',
     'required_fill'         => 'Silakan isi {field} terlebih dahulu',
     'required_select'       => 'Silakan pilih {field} terlebih dahulu',
+    'required_with'         => 'Kolom {field} wajib diisi',
     'permit_empty'          => 'Kolom {field} boleh dikosongkan',
     'is_natural'            => 'Kolom {field} hanya boleh diisi angka',
     'is_natural_no_zero'    => 'Kolom {field} hanya boleh diisi angka dan lebih dari nol',

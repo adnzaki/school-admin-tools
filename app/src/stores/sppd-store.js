@@ -30,6 +30,7 @@ export const useSppdStore = defineStore('sppd', {
       tgl_berangkat: '',
       tgl_kembali: '',
       kepala_skpd: '',
+      jabatan_kepala_skpd: '',
       nip_kepala_skpd: ''
     },
     disableForm: false,
@@ -82,6 +83,7 @@ export const useSppdStore = defineStore('sppd', {
           tgl_berangkat: new Date(detail.tgl_berangkat),
           tgl_kembali: new Date(detail.tgl_kembali),
           kepala_skpd: detail.kepala_skpd,
+          jabatan_kepala_skpd: detail.jabatan_kepala_skpd,
           nip_kepala_skpd: detail.nip_kepala_skpd
         }
         this.formTitle = t('sppd.edit')
@@ -145,6 +147,7 @@ export const useSppdStore = defineStore('sppd', {
         tgl_berangkat: '',
         tgl_kembali: '',
         kepala_skpd: '',
+        jabatan_kepala_skpd: '',
         nip_kepala_skpd: ''
       }
     },
@@ -156,8 +159,8 @@ export const useSppdStore = defineStore('sppd', {
         lang: localeForPaging,
         limit,
         offset: this.current - 1,
-        orderBy: 'id',
-        searchBy: ['tujuan', 'nomor_surat'],
+        orderBy: 'tgl_berangkat',
+        searchBy: ['tujuan', 'pegawai_nama'],
         sort: 'DESC',
         search: '',
         usePost: true,
