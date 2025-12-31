@@ -245,7 +245,7 @@ class SuratTugas extends BaseController
                     'rules' => $requiredWithSPPD,
                     'label' => lang('FieldLabels.sppd.jabatan_kepala_skpd')
                 ],
-                'nip_kepala_skpd'   => ['rules' => $requiredWithSPPD . '|numeric|exact_length[18]', 'label' => lang('FieldLabels.sppd.nip_kepala_skpd')],
+                'nip_kepala_skpd'   => ['rules' => '|permit_empty|numeric|exact_length[18]', 'label' => lang('FieldLabels.sppd.nip_kepala_skpd')],
                 'tingkat_biaya'     => ['rules' => $requiredWithSPPD, 'label' => lang('FieldLabels.sppd.tingkat_biaya')],
                 'transportasi'      => ['rules' => $requiredWithSPPD . '|in_list[pribadi,umum,kantor,lainnya]', 'label' => lang('FieldLabels.sppd.transportasi')],
             ];
