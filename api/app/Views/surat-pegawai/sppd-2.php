@@ -169,7 +169,7 @@
                     <tr>
                         <td></td>
                         <td colspan="2"><br><br>
-                            <span style="margin-top: px; display: block;">
+                            <span style="margin-top: 10px; display: block;">
                                 Pejabat yang memberi perintah
                             </span><br><br><br><br>
                             <strong><?= $headmaster ?></strong><br>
@@ -178,7 +178,7 @@
                     </tr>
                 </table>
             </td>
-            <td class="bordered pb-5 pl-5" style="width: 50%;">
+            <td class="bordered pb-5 pt-5 pl-10 pr-10" style="width: 50%;">
                 Telah diperiksa dengan keterangan bahwa perjalanan
                 tersebut atas perintah dan semata-mata untuk
                 kepentingan jabatan dalam waktu yang sesingkat -
