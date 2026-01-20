@@ -10,6 +10,7 @@ class PengantarNisnModel extends Model
     protected $primaryKey = 'id';
     protected $useTimestamps = true;
     protected $allowedFields = ['siswa_id', 'surat_id'];
+    protected $useSoftDeletes = true;
 
     public function withSiswaAndSurat(): self
     {
