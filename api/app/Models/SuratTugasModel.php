@@ -56,7 +56,8 @@ class SuratTugasModel extends Model
 
         return $this
             ->select($select)
-            ->join('tb_pegawai p', 'p.id = tb_surat_tugas.pegawai_id', 'inner');
+            ->join('tb_pegawai p', 'p.id = tb_surat_tugas.pegawai_id', 'inner')
+            ->where('p.institusi_id', get_institusi());
     }
 
     /**

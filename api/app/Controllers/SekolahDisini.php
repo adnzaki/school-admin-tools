@@ -1,4 +1,6 @@
-<?php namespace App\Controllers;
+<?php
+
+namespace App\Controllers;
 
 use App\Models\SekolahDisiniModel;
 use App\Models\SuratKeluarModel;
@@ -132,10 +134,10 @@ class SekolahDisini extends BaseController
         $suratIds = array_map(fn($item) => $item['surat_id'], $existing);
 
         // hapus data keterangan siswa di sekolah ini
-        $this->model->whereIn('id', $ids)->delete($ids, true);
+        $this->model->whereIn('id', $ids)->delete($ids);
 
         // hapus data surat keluar terkait
-        $this->deleteSurat($suratIds, true);
+        $this->deleteSurat($suratIds);
 
         add_log('menghapus data keterangan siswa di sekolah ini sebanyak ' . count($ids) . ' baris dengan ID [ ' . implode(', ', $ids) . ' ]');
 

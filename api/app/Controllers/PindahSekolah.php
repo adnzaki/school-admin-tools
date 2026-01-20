@@ -275,13 +275,13 @@ class PindahSekolah extends BaseController
         $suratPindah = $this->getSuratPindahByRelation($id)->findAll();
 
         // delete archived letter
-        $this->deleteSurat(array_map(fn($item) => $item['id'], $suratPindah), true);
+        $this->deleteSurat(array_map(fn($item) => $item['id'], $suratPindah));
 
         // get mutation with student data
         $detail = $this->model->findByIdWithSiswa($id);
 
         // delete mutation data
-        $this->model->delete($id, true);
+        $this->model->delete($id);
         add_log('menghapus data pindah sekolah atas nama ' . $detail['siswa_nama']);
 
         // return student mutation status back to 0

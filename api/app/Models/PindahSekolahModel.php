@@ -78,7 +78,8 @@ class PindahSekolahModel extends Model
 
         return $this
             ->select($select)
-            ->join('tb_siswa s', 's.id = tb_pindah_sekolah.siswa_id', 'inner');
+            ->join('tb_siswa s', 's.id = tb_pindah_sekolah.siswa_id', 'inner')
+            ->where('s.institusi_id', get_institusi());
     }
 
     /**
