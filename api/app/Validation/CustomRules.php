@@ -19,6 +19,11 @@ class CustomRules
             ->where('deleted_at', null)
             ->limit(1);
 
+        // Tambahkan filter institusi_id jika tersedia di $data
+        if (isset($data['institusi_id'])) {
+            $builder->where('institusi_id', $data['institusi_id']);
+        }
+
         return [$builder, $ignoreField, $ignoreValue];
     }
 
