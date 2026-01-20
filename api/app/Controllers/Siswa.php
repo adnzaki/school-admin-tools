@@ -78,8 +78,8 @@ class Siswa extends BaseController
             'rw'              => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.rw')],
             'kelurahan'       => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.kelurahan')],
             'kecamatan'       => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.kecamatan')],
-            'kab_kota'        => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.kab_kota')],
-            'provinsi'        => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.provinsi')],
+            'kab_kota'        => ['rules' => 'permit_empty', 'label' => lang('FieldLabels.siswa.kab_kota')],
+            'provinsi'        => ['rules' => 'permit_empty', 'label' => lang('FieldLabels.siswa.provinsi')],
         ];
 
         $result = import_spreadsheet($default, $rules, function ($rows) {
@@ -113,8 +113,8 @@ class Siswa extends BaseController
             'rw'              => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.rw')],
             'kelurahan'       => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.kelurahan')],
             'kecamatan'       => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.kecamatan')],
-            'kab_kota'        => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.kab_kota')],
-            'provinsi'        => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.provinsi')],
+            'kab_kota'        => ['rules' => 'permit_empty', 'label' => lang('FieldLabels.siswa.kab_kota')],
+            'provinsi'        => ['rules' => 'permit_empty', 'label' => lang('FieldLabels.siswa.provinsi')],
         ];
 
 
