@@ -55,7 +55,7 @@ class SuratTugas extends BaseController
 
         foreach ($container as $key => $value) {
             $suratTugas = $this->getSuratTugasByRelation($container[$key]['id'])->first();
-            $container[$key]['no_surat'] = $suratTugas['nomor_surat'];
+            $container[$key]['no_surat'] = $suratTugas['nomor_surat'] ?? '';
             $container[$key]['tgl_berangkat'] = osdate()->create($value['tgl_berangkat'], 'd-M-y');
             $container[$key]['tgl_kembali'] = osdate()->create($value['tgl_kembali'], 'd-M-y');
             $container[$key]['id'] = encrypt($value['id'], env('encryption_key'));

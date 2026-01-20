@@ -59,7 +59,7 @@ trait SuratTrait
         $file = \Config\Services::request()->getFile('surat');
 
         $uploader = new \Uploader;
-        if($file->getClientMimeType() === 'application/pdf') {
+        if ($file->getClientMimeType() === 'application/pdf') {
             $response = $uploader->uploadPdf($config);
         } else {
             $response = $uploader->uploadImage($config);
@@ -85,7 +85,7 @@ trait SuratTrait
         ]);
     }
 
-    public function deleteSurat($letterIds = [], $purge = false)
+    public function deleteSurat($letterIds = [])
     {
         $ids = $letterIds ?: $this->request->getJSON(true)['id'] ?? [];
 
@@ -114,11 +114,11 @@ trait SuratTrait
 
         // Hapus data lampiran di DB
         foreach ($lampiran as $data) {
-            $this->lampiranModel->where('id', $data['id'])->delete($data['id'], $purge);
+            $this->lampiranModel->where('id', $data['id'])->delete($data['id']);
         }
 
         // Hapus data surat masuk/keluar
-        $this->suratModel->whereIn('id', $ids)->delete($ids, $purge);
+        $this->suratModel->whereIn('id', $ids)->delete($ids);
 
         add_log('menghapus sebanyak ' . count($ids) . ' surat ' . $this->jenisSurat . ' dengan ID [ ' . implode(', ', $ids) . ' ]');
 
