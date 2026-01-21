@@ -79,7 +79,7 @@ class SekolahDisini extends BaseController
 
         $institusi = $this->dataInstitusiModel->getWithInstitusi($this->institusiId);
         $title = 'Surat Keterangan';
-        $data = $this->model->withSiswaAndSurat()
+        $data = $this->model->withSiswaAndSurat($this->institusiId)
             ->where('tb_sekolah_disini.id', $this->letterId)
             ->first();
 
