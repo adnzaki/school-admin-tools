@@ -148,7 +148,7 @@ class PindahSekolah extends BaseController
         $institusi = $this->dataInstitusiModel->getWithInstitusi($this->institusiId);
         $title = 'Surat Keterangan Pindah Sekolah';
         $letterDetail = $this->model->find($this->mutationId);
-        $mutationData = $this->model->findByIdWithSiswa($this->mutationId);
+        $mutationData = $this->model->findByIdWithSiswa($this->mutationId, $this->institusiId);
         $parentName = $mutationData['siswa_nama_ayah'] === null || $mutationData['siswa_nama_ayah'] === '' ? $mutationData['siswa_nama_ibu'] : $mutationData['siswa_nama_ayah'];
         $parentJob = $mutationData['siswa_pekerjaan_ayah'] === null || $mutationData['siswa_pekerjaan_ayah'] === '' ? $mutationData['siswa_pekerjaan_ibu'] : $mutationData['siswa_pekerjaan_ayah'];
 
@@ -184,7 +184,7 @@ class PindahSekolah extends BaseController
             return view('surat_notfound', ['message' => $message]);
         }
 
-        $mutationData = $this->model->findByIdWithSiswa($this->mutationId);
+        $mutationData = $this->model->findByIdWithSiswa($this->mutationId, $this->institusiId);
 
         if ((int)$mutationData['pindah_rayon'] !== 1) {
             $data = [
@@ -234,7 +234,7 @@ class PindahSekolah extends BaseController
             return view('surat_notfound', ['message' => $message]);
         }
 
-        $mutationData = $this->model->findByIdWithSiswa($this->mutationId);
+        $mutationData = $this->model->findByIdWithSiswa($this->mutationId, $this->institusiId);
         $pdf = new \PDFCreator([
             'paperSize' => 'A4',
         ]);

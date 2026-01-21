@@ -44,9 +44,10 @@ class PindahSekolahModel extends Model
      *
      * Catatan: gunakan method ini di awal chain sebelum where/filter lain.
      *
+     * @param int|null $institusiId ID institusi
      * @return self
      */
-    public function withSiswa(): self
+    public function withSiswa($institusiId = null): self
     {
         $select = [
             'tb_pindah_sekolah.*',
@@ -79,18 +80,19 @@ class PindahSekolahModel extends Model
         return $this
             ->select($select)
             ->join('tb_siswa s', 's.id = tb_pindah_sekolah.siswa_id', 'inner')
-            ->where('s.institusi_id', get_institusi());
+            ->where('s.institusi_id', $institusiId ?? get_institusi());
     }
 
     /**
      * Ambil satu record berdasarkan id (dengan data siswa).
      *
      * @param int $id ID pindah sekolah
+     * @param int|null $institusiId ID institusi
      * @return array|null Record pindah sekolah
      */
-    public function findByIdWithSiswa(int $id): ?array
+    public function findByIdWithSiswa(int $id, $institusiId = null): ?array
     {
-        return $this->withSiswa()
+        return $this->withSiswa($institusiId)
             ->where('tb_pindah_sekolah.id', $id)
             ->first();
     }

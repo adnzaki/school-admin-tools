@@ -98,7 +98,7 @@ class SuratTugas extends BaseController
 
         $institusi = $this->dataInstitusiModel->getWithInstitusi($this->institusiId);
         $title = 'Surat Tugas';
-        $data = $this->model->findByIdWithPegawai($this->letterId);
+        $data = $this->model->findByIdWithPegawai($this->letterId, $this->institusiId);
 
         $startDate = $data['tgl_berangkat'];
         $endDate = $data['tgl_kembali'];
@@ -146,7 +146,7 @@ class SuratTugas extends BaseController
 
         // Tidak terdapat Surat Perjalanan Dinas untuk surat tugas ini
 
-        $data = $this->model->findByIdWithPegawai($this->letterId);
+        $data = $this->model->findByIdWithPegawai($this->letterId, $this->institusiId);
         if ((int)$data['sppd'] === 0) {
             $message = [
                 'message' => '<p>Tidak terdapat Surat Perjalanan Dinas untuk surat tugas  <span class="highlight">' . $data['tujuan'] . '</span>.</p>'

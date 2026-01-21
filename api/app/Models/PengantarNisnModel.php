@@ -12,12 +12,18 @@ class PengantarNisnModel extends Model
     protected $allowedFields = ['siswa_id', 'surat_id'];
     protected $useSoftDeletes = true;
 
-    public function withSiswaAndSurat(): self
+    /**
+     * Join dengan tabel tb_siswa dan tb_surat_keluar
+     *
+     * @param int|null $institusiId ID institusi
+     * @return self
+     */
+    public function withSiswaAndSurat($institusiId = null): self
     {
         $this->select('tb_pengantar_nisn.*, s.nama AS siswa_nama, s.tempat_lahir AS tempat_lahir, s.tgl_lahir AS tgl_lahir, s.nisn AS siswa_nisn, s.alamat AS siswa_alamat, s.rt AS siswa_rt, s.rw AS siswa_rw, s.kelurahan AS siswa_kelurahan, s.kecamatan AS siswa_kecamatan, s.kab_kota AS siswa_kab_kota, sk.nomor_surat AS no_surat, sk.tgl_surat AS tgl_surat');
         $this->join('tb_siswa s', 's.id = tb_pengantar_nisn.siswa_id');
         $this->join('tb_surat_keluar sk', 'sk.id = tb_pengantar_nisn.surat_id');
-        $this->where('s.institusi_id', get_institusi());
+        $this->where('s.institusi_id', $institusiId ?? get_institusi());
 
         return $this;
     }

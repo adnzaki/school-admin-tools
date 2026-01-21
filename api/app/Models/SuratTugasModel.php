@@ -35,7 +35,13 @@ class SuratTugasModel extends Model
         'sppd',
     ];
 
-    public function withPegawai(): self
+    /**
+     * Join dengan tabel tb_pegawai
+     *
+     * @param int|null $institusiId ID institusi
+     * @return self
+     */
+    public function withPegawai($institusiId = null): self
     {
         $select = [
             'tb_surat_tugas.*',
@@ -57,22 +63,29 @@ class SuratTugasModel extends Model
         return $this
             ->select($select)
             ->join('tb_pegawai p', 'p.id = tb_surat_tugas.pegawai_id', 'inner')
-            ->where('p.institusi_id', get_institusi());
+            ->where('p.institusi_id', $institusiId ?? get_institusi());
     }
 
     /**
      * Ambil satu record berdasarkan id (dengan data pegawai dan surat).
      *
      * @param int $id ID surat tugas
+     * @param int|null $institusiId ID institusi
      * @return array|null Record surat tugas
      */
-    public function findByIdWithPegawai(int $id): ?array
+    public function findByIdWithPegawai(int $id, $institusiId = null): ?array
     {
-        return $this->withPegawai()
+        return $this->withPegawai($institusiId)
             ->where('tb_surat_tugas.id', $id)
             ->first();
     }
 
+    /**
+     * Search dengan keyword
+     *
+     * @param string|null $keyword Keyword
+     * @return self
+     */
     public function search(?string $keyword): self
     {
         if ($keyword) {
