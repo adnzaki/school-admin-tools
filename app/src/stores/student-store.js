@@ -1,4 +1,4 @@
-import { api, createFormData, localeForPaging, t } from '@/composables/utils'
+import { api, createFormData, localeForPaging, t, isValidDate } from '@/composables/utils'
 import Cookies from 'js-cookie'
 import { defineStore } from 'pinia'
 import { usePagingStore as paging } from 'ss-paging-vue'
@@ -119,7 +119,7 @@ export const useStudentStore = defineStore('student', {
     },
     save(action, error) {
       // format the date into yyyy-mm-dd
-      if (this.formData.tgl_lahir !== '') {
+      if (this.formData.tgl_lahir !== '' && !isValidDate(this.formData.tgl_lahir)) {
         this.formData.tgl_lahir = this.formData.tgl_lahir.toLocaleDateString('en-CA')
       }
 

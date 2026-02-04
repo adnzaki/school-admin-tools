@@ -96,6 +96,27 @@ class Siswa extends BaseController
 
     public function save()
     {
+        $data = [
+            'institusi_id'    => get_institusi(),
+            'nama'            => $this->request->getPost('nama'),
+            'tempat_lahir'    => $this->request->getPost('tempat_lahir'),
+            'tgl_lahir'       => $this->request->getPost('tgl_lahir'),
+            'no_induk'        => $this->request->getPost('no_induk'),
+            'nisn'            => $this->request->getPost('nisn'),
+            'jenis_kelamin'   => $this->request->getPost('jenis_kelamin'),
+            'nama_ayah'       => $this->request->getPost('nama_ayah'),
+            'pekerjaan_ayah'  => $this->request->getPost('pekerjaan_ayah'),
+            'nama_ibu'        => $this->request->getPost('nama_ibu'),
+            'pekerjaan_ibu'   => $this->request->getPost('pekerjaan_ibu'),
+            'alamat'          => $this->request->getPost('alamat'),
+            'rt'              => $this->request->getPost('rt'),
+            'rw'              => $this->request->getPost('rw'),
+            'kelurahan'       => $this->request->getPost('kelurahan'),
+            'kecamatan'       => $this->request->getPost('kecamatan'),
+            'kab_kota'        => $this->request->getPost('kab_kota'),
+            'provinsi'        => $this->request->getPost('provinsi'),
+        ];
+
         $rules = [
             'id'              => ['rules' => 'permit_empty', 'label' => 'ID'],
             'nama'            => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.nama')],
@@ -118,7 +139,7 @@ class Siswa extends BaseController
         ];
 
 
-        if (! $this->validate($rules)) {
+        if (! $this->validateData($data, $rules)) {
             $errors = $this->validator->getErrors();
             $messages = validation_error($errors, $rules);
 
@@ -129,27 +150,6 @@ class Siswa extends BaseController
         }
 
         $id = $this->request->getPost('id');
-
-        $data = [
-            'institusi_id'    => get_institusi(),
-            'nama'            => $this->request->getPost('nama'),
-            'tempat_lahir'    => $this->request->getPost('tempat_lahir'),
-            'tgl_lahir'       => $this->request->getPost('tgl_lahir'),
-            'no_induk'        => $this->request->getPost('no_induk'),
-            'nisn'            => $this->request->getPost('nisn'),
-            'jenis_kelamin'   => $this->request->getPost('jenis_kelamin'),
-            'nama_ayah'       => $this->request->getPost('nama_ayah'),
-            'pekerjaan_ayah'  => $this->request->getPost('pekerjaan_ayah'),
-            'nama_ibu'        => $this->request->getPost('nama_ibu'),
-            'pekerjaan_ibu'   => $this->request->getPost('pekerjaan_ibu'),
-            'alamat'          => $this->request->getPost('alamat'),
-            'rt'              => $this->request->getPost('rt'),
-            'rw'              => $this->request->getPost('rw'),
-            'kelurahan'       => $this->request->getPost('kelurahan'),
-            'kecamatan'       => $this->request->getPost('kecamatan'),
-            'kab_kota'        => $this->request->getPost('kab_kota'),
-            'provinsi'        => $this->request->getPost('provinsi'),
-        ];
 
         $logMessage = 'menambahkan siswa atas nama ' . $data['nama'];
         if ($id) {
