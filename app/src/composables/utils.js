@@ -122,4 +122,27 @@ const findEmployee = (search, callback) => {
     })
 }
 
-export { api, createFormData, findStudent, findEmployee, localeForPaging, t, validatePage }
+function isValidDate(input) {
+  // Regex untuk format YYYY-MM-DD
+  const regex = /^\d{4}-\d{2}-\d{2}$/;
+  if (!regex.test(input)) {
+    return false; // format salah
+  }
+
+  // Pecah jadi komponen tahun, bulan, hari
+  const [year, month, day] = input.split('-').map(Number);
+
+  // Buat objek Date dari input
+  const date = new Date(input);
+
+  // Validasi: pastikan hasil Date cocok dengan input
+  return (
+    date.getFullYear() === year &&
+    date.getMonth() + 1 === month &&
+    date.getDate() === day
+  );
+}
+
+
+
+export { api, createFormData, findStudent, findEmployee, localeForPaging, t, validatePage, isValidDate }
