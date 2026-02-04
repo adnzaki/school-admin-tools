@@ -138,6 +138,11 @@ class Siswa extends BaseController
             'provinsi'        => ['rules' => 'permit_empty', 'label' => lang('FieldLabels.siswa.provinsi')],
         ];
 
+        $id = $this->request->getPost('id');
+
+        if ($id) {
+            $data['id'] = $id;
+        }
 
         if (! $this->validateData($data, $rules)) {
             $errors = $this->validator->getErrors();
@@ -149,11 +154,8 @@ class Siswa extends BaseController
             ]);
         }
 
-        $id = $this->request->getPost('id');
-
         $logMessage = 'menambahkan siswa atas nama ' . $data['nama'];
         if ($id) {
-            $data['id'] = $id;
             $logMessage = str_replace('menambahkan', 'memperbarui', $logMessage);
         }
 
