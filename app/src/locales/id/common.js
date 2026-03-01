@@ -5,6 +5,7 @@ export default {
     logout: 'Keluar',
     welcome: 'Selamat Datang di'
   },
+  action: 'Aksi',
   showErrorDetail: 'Tampilkan detail kesalahan',
   error: 'Terjadi kesalahan',
   success: 'Berhasil',
