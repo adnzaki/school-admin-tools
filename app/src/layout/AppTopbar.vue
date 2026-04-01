@@ -16,11 +16,7 @@ const menu = ref(null)
 const accountMenu = ref([
   {
     label: t('menu.profile'),
-    icon: 'pi pi-user'
-  },
-  {
-    label: t('menu.schoolData'),
-    icon: 'pi pi-building',
+    icon: 'pi pi-user',
     command: () => {
       router.push('/sekolah')
     }

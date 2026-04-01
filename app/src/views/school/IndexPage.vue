@@ -4,6 +4,7 @@ import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
 import FormDialog from './FormDialog.vue'
 import SchoolData from './SchoolData.vue'
+import UpdatePassword from './UpdatePassword.vue'
 
 const { t } = useI18n()
 
@@ -13,5 +14,8 @@ const store = useSchoolStore()
 
 <template>
   <SchoolData />
+  <div class="col-span-12 xl:col-span-12">
+    <UpdatePassword />
+  </div>
   <FormDialog />
 </template>

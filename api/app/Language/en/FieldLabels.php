@@ -101,5 +101,10 @@ return [
         'jabatan_kepala_skpd'   => 'head of SKPD position',
         'nip_kepala_skpd'       => 'NIP of head of SKPD',
         'no_sppd'               => 'work trip letter number',
+    ],
+    'profile' =>[
+        'password_lama' => 'current password',
+        'password_baru' => 'new password',
+        'konfirmasi_password' => 'confirm password',
     ]
 ];
