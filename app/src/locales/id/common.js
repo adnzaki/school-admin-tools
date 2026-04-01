@@ -3,7 +3,8 @@ export default {
     title: 'Sakola',
     description: 'Solusi ringkas untuk sekolah cerdas',
     logout: 'Keluar',
-    welcome: 'Selamat Datang di'
+    welcome: 'Selamat Datang di',
+    version: 'Versi Aplikasi',
   },
   action: 'Aksi',
   showErrorDetail: 'Tampilkan detail kesalahan',

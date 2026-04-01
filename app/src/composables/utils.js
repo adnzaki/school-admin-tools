@@ -7,6 +7,7 @@ const t = (key) => i18n.global.t(key)
 const api = axios.create({ baseURL: conf.apiPublicPath })
 const msgPrefix = '[Sakola] '
 const localeForPaging = i18n.global.locale.value === 'id' ? 'indonesia' : 'english'
+const appVersion = '1.0.0-alpha.1'
 
 api.interceptors.request.use(
   (config) => {
@@ -145,4 +146,4 @@ function isValidDate(input) {
 
 
 
-export { api, createFormData, findStudent, findEmployee, localeForPaging, t, validatePage, isValidDate }
+export { api, appVersion, createFormData, findStudent, findEmployee, localeForPaging, t, validatePage, isValidDate }
