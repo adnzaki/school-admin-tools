@@ -390,7 +390,7 @@ class SuratTugas extends BaseController
         }
 
         // hapus data SPPD
-        $this->model->whereIn('id', $ids)->delete($ids, true);
+        $this->model->whereIn('id', $ids)->delete($ids);
 
         add_log('menghapus data SPPD sebanyak ' . count($ids) . ' baris');
 

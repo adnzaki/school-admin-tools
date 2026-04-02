@@ -18,6 +18,7 @@ const tableColumns = ref([
 ])
 
 const cm = ref()
+const menu = ref()
 
 const contextMenu = ref([
   {
@@ -51,6 +52,11 @@ const onContextMenuClick = (event) => {
   cm.value.show(event.originalEvent)
 }
 
+const menuClick = (data, event) => {
+  menu.value.toggle(event)
+  store.selectedSingle = data
+}
+
 store.getData(() => {
   toast.add({ severity: 'error', summary: t('common.error'), detail: t('common.networkError'), life: 5000 })
 })
@@ -71,7 +77,15 @@ const data = computed(() => paging.state.data)
     scrollHeight="55vh"
     class="mt-6"
   >
+    <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
     <Column v-for="col of tableColumns" :key="col.key" :field="col.key" :header="col.label" :sortable="col.sortable"></Column>
+    <Column field="action">
+      <template #header>{{ t('common.action') }}</template>
+      <template #body="{ data }">
+        <Button type="button" icon="pi pi-ellipsis-v" @click="menuClick(data, $event)" variant="text" />
+        <Menu ref="menu" id="overlay_menu" :model="contextMenu" :popup="true" />
+      </template>
+    </Column>
   </DataTable>
   <ContextMenu ref="cm" :model="contextMenu" @hide="store.selectedSingle = null" />
   <Navigator v-model="store.current" />

@@ -28,14 +28,14 @@ class Auth extends BaseController
 
             if (! $this->validateData($data, $validation->rules, $validation->messages)) {
                 return $this->response->setJSON([
-                    'code'  => 500,
-                    'msg'   => $this->validator->getErrors(),
+                    'status'    => 'error',
+                    'msg'       => $this->validator->getErrors(),
                 ]);
             } else {
                 $credentials = [
                     'username' => auth()->user()->username,
                     'password' => $data['oldPassword']
-                ];
+                ];               
 
                 $loginAttempt = auth('session')->attempt($credentials);
                 if ($loginAttempt->isOK()) {
@@ -43,19 +43,21 @@ class Auth extends BaseController
                     $fillUser = [
                         'username' => auth()->user()->username,
                         'email' => auth()->user()->email,
-                        'password' => $data['newPassword']
+                        'password' => $data['newPassword'],
+                        'institusi_id' => get_institusi(),
                     ];
 
                     $userModel->update($fillUser);
 
                     return $this->response->setJSON([
-                        'code'  => 200,
-                        'msg'   => 'Password berhasil diubah',
+                        'status'    => 'success',
+                        'msg'   => lang('General.passwordChanged'),
                     ]);
                 } else {
                     return $this->response->setJSON([
-                        'code'  => 503,
-                        'msg'   => 'Password lama yang anda masukkan salah.',
+                        'status'    => 'wrong_old_password',
+                        'msg'       => lang('General.wrongOldPassword'),
+                        'credentials' => $credentials,
                     ]);
                 }
             }
@@ -65,15 +67,15 @@ class Auth extends BaseController
     public function formValidation()
     {
         $rules = [
-            'oldPassword'   => ['label' => 'password saat ini', 'rules' => 'required'],
-            'newPassword'   => ['label' => 'password baru', 'rules' => 'required'],
-            'confirmNewPassword'   => ['label' => 'konfirmasi password', 'rules' => 'required|matches[newPassword]']
+            'oldPassword'   => ['label' => lang('FieldLabels.profile.password_lama'), 'rules' => 'required'],
+            'newPassword'   => ['label' => lang('FieldLabels.profile.password_baru'), 'rules' => 'required'],
+            'confirmPassword'   => ['label' => lang('FieldLabels.profile.konfirmasi_password'), 'rules' => 'required|matches[newPassword]']
         ];
 
         $messages = [
             'oldPassword'   => ['required' => lang('Validation.required')],
             'newPassword'   => ['required' => lang('Validation.required')],
-            'confirmNewPassword'   => ['required' => lang('Validation.required'), 'matches' => lang('Validation.matches')]
+            'confirmPassword'   => ['required' => lang('Validation.required'), 'matches' => lang('Validation.matches')]
         ];
 
         return (object)['rules' => $rules, 'messages' => $messages];

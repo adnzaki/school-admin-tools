@@ -100,5 +100,10 @@ return [
         'jabatan_kepala_skpd'   => 'jabatan kepala SKPD',
         'nip_kepala_skpd'       => 'NIP kepala SKPD',
         'no_sppd'               => 'nomor surat derjalanan dinas',
+    ],
+    'profile' => [
+        'password_lama' => 'password saat ini',
+        'password_baru' => 'password baru',
+        'konfirmasi_password' => 'konfirmasi password',
     ]
 ];

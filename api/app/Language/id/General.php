@@ -15,4 +15,5 @@ return [
     'fileDeleted'       => 'File berhasil dihapus',
     'userNotFound'      => 'Pengguna tidak ditemukan',
     'excelImportError'  => 'Baris: {0}. Kesalahan: <span class="text-red-500">{1}</span>',
+    'wrongOldPassword'  => 'Password lama yang Anda masukkan salah.',
 ];

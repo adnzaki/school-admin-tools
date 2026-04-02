@@ -11,7 +11,7 @@
   background: #eaeaea;
 }
 
-.p-menu-item-content {
+.account-menu .p-menu-item-content {
   padding-top: 8px !important;
   padding-bottom: 8px !important;
 }
@@ -41,6 +41,14 @@
 
 .sp-select-options li:hover {
   background-color: #d5d5d5;
+}
+
+.sp-green-text {
+  color: #159e15;
+}
+
+.sp-blue-text {
+  color: #318fed;
 }
 
 @media (max-width: 768px) {

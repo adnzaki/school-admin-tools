@@ -19,7 +19,7 @@ $routes->group('user', function (RouteCollection $routes) {
 $routes->group('auth', function (RouteCollection $routes) {
     $routes->post('login', 'Auth::validateLogin');
     $routes->get('logout', 'Auth::logout');
-    $routes->post('updatePassword', 'Auth::updatePassword');
+    $routes->post('update-password', 'Auth::updatePassword');
     $routes->post('deleteDefaultCookie', 'Auth::deleteDefaultCookie');
     $routes->get('validate-page', 'Auth::validatePageRequest');
 });

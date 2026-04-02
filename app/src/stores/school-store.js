@@ -5,6 +5,7 @@ export const useSchoolStore = defineStore('school', {
   state: () => ({
     endpoint: 'institusi/',
     showForm: false,
+    showChangelog: false,
     errors: {},
     formTitle: '',
     formData: {
@@ -24,6 +25,11 @@ export const useSchoolStore = defineStore('school', {
       file_kop: '',
       file_kop_path: ''
     },
+    passwordForm: {
+      oldPassword: '',
+      newPassword: '',
+      confirmPassword: ''
+    },
     showInput: false,
     schoolName: '',
     submitted: false, // whether the form has been submitted and submitted to the database or not
@@ -31,6 +37,33 @@ export const useSchoolStore = defineStore('school', {
     hasNewUpload: false
   }),
   actions: {
+    updatePassword(action, onError) {
+      this.disableButton = true
+      api
+        .post(`auth/update-password`, this.passwordForm, {
+          transformRequest: [
+            (data) => {
+              return createFormData(data)
+            }
+          ]
+        })
+        .then(({ data }) => {
+          if (data.status === 'success') {
+            this.passwordForm.oldPassword = ''
+            this.passwordForm.newPassword = ''
+            this.passwordForm.confirmPassword = ''
+            this.errors = {}
+          } else {
+            this.errors = data.msg
+          }
+
+          this.disableButton = false
+          action(data)
+        })
+        .catch((error) => {
+          onError(error)
+        })
+    },
     getDetail() {
       api.get(`${this.endpoint}detail`).then(({ data }) => {
         const detail = data.data

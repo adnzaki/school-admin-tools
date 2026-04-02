@@ -17,5 +17,13 @@ export default {
   employeeId: 'Nomor Induk Pegawai',
   uploadSuccess: 'Berhasil mengunggah kop sekolah',
   uploadError: 'Gagal mengunggah kop sekolah',
-  recommendation: 'Untuk hasil terbaik, gunakan gambar dengan resolusi tinggi di kisaran 2400 x 460 pixel'
+  recommendation: 'Untuk hasil terbaik, gunakan gambar dengan resolusi tinggi di kisaran 2400 x 460 pixel',
+  updatePassword: 'Ubah Kata Sandi',
+  currentPassword: 'Kata Sandi Saat Ini',
+  newPassword: 'Kata Sandi Baru',
+  confirmNewPassword: 'Konfirmasi Kata Sandi Baru',
+  submitNewPassword: 'Perbarui Kata Sandi',
+  passwordUpdateSuccess: 'Kata sandi berhasil diperbarui',
+  passwordUpdateError: 'Gagal memperbarui kata sandi. Pastikan kata sandi saat ini benar dan coba lagi.',
+  passwordUpdateFailed: 'Kata sandi saat ini tidak sesuai'
 }
