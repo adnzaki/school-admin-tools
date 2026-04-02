@@ -1,3 +1,5 @@
+import { info } from "sass";
+
 export default {
   app: {
     title: 'Sakola',
@@ -5,6 +7,11 @@ export default {
     logout: 'Keluar',
     welcome: 'Selamat Datang di',
     version: 'Versi Aplikasi',
+    info: 'Informasi',
+    releaseDate: 'Tanggal Rilis',
+    copyright: 'Hak Cipta',
+    poweredBy: 'Didukung oleh',
+    changelog: 'Daftar Perubahan',
   },
   action: 'Aksi',
   showErrorDetail: 'Tampilkan detail kesalahan',

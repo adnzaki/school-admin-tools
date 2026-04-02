@@ -5,6 +5,7 @@ export const useSchoolStore = defineStore('school', {
   state: () => ({
     endpoint: 'institusi/',
     showForm: false,
+    showChangelog: false,
     errors: {},
     formTitle: '',
     formData: {
