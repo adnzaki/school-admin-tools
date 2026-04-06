@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-4 md:flex-col lg:flex-row">
-    <div class="w-full lg:w-2/4 flex flex-wrap gap-2">
+    <div class="w-full 2xl:w-2/4 xl:w-2/6 flex flex-wrap gap-2">
       <div class="flex flex-col gap-4">
         <div class="flex flex-wrap">
           <Button :label="$t('common.buttons.add')" @click="showForm" icon="pi pi-plus" class="mr-2 mb-2"></Button>
@@ -8,32 +8,29 @@
         </div>
       </div>
     </div>
-    <div class="w-full lg:w-2/4 flex flex-col md:flex-row gap-4">
+    <div class="w-full 2xl:w-2/4 xl:w-4/6 flex flex-col md:flex-row gap-4">
       <div class="md:w-2/6">
-        <div class="w-full flex flex-col md:flex-row">
-          <div class="md:w-1/4">
-            <div class="flex flex-wrap">
-              <Button icon="pi pi-filter" size="large" class="mr-2 mb-2" @click="toggleFilter"></Button>
-              <Popover ref="po">
-                <div class="flex flex-col gap-4 w-[25rem]">
-                  <div>
-                    <span class="font-medium block mb-2">{{ $t('mutation.selectGrade') }}</span>
-                    <Select v-model="store.classFilter" :options="store.classLevels[store.schoolLevel]" optionLabel="name" :placeholder="$t('mutation.selectGrade')" class="w-full mb-5" />
-                    <span class="font-medium block mb-2">{{ $t('common.buttons.filterDate') }}</span>
-                    <DatePicker v-model="dates" showIcon fluid iconDisplay="input" class="w-full" selectionMode="range" :manualInput="false" />
-                  </div>
-                  <div class="flex flex-wrap justify-end">
-                    <Button label="Reset" icon="pi pi-refresh" @click="resetDateFilter" severity="secondary" class="mr-2 mb-2"></Button>
-                    <Button :label="$t('common.buttons.apply')" @click="applyDateFilter" icon="pi pi-arrow-up-right" class="mr-2 mb-2"></Button>
-                  </div>
+        <div class="w-full flex flex-row items-center gap-4">
+          <div class="flex items-center">
+            <Button icon="pi pi-filter" size="large"@click="toggleFilter"></Button>
+            <Popover ref="po">
+              <div class="flex flex-col gap-4 w-[25rem]">
+                <div>
+                  <span class="font-medium block mb-2">{{ $t('mutation.selectGrade') }}</span>
+                  <Select v-model="store.classFilter" :options="store.classLevels[store.schoolLevel]" optionLabel="name" :placeholder="$t('mutation.selectGrade')" class="w-full mb-5" />
+                  <span class="font-medium block mb-2">{{ $t('common.buttons.filterDate') }}</span>
+                  <DatePicker v-model="dates" showIcon fluid iconDisplay="input" class="w-full" selectionMode="range" :manualInput="false" />
                 </div>
-              </Popover>
-            </div>
+                <div class="flex flex-wrap justify-end">
+                  <Button label="Reset" icon="pi pi-refresh" @click="resetDateFilter" severity="secondary" class="mr-2 mb-2"></Button>
+                  <Button :label="$t('common.buttons.apply')" @click="applyDateFilter" icon="pi pi-arrow-up-right" class="mr-2 mb-2"></Button>
+                </div>
+              </div>
+            </Popover>
           </div>
-          <div class="md:w-3/4">
-            <div class="flex flex-wrap">
-              <PagingRows :selected-row="25" />
-            </div>
+
+          <div class="flex items-center w-full">
+            <PagingRows :selected-row="25" />
           </div>
         </div>
       </div>
