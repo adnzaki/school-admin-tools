@@ -1,5 +1,5 @@
 <template>
-  <Dialog :header="store.formTitle" v-model:visible="store.showForm" @show="onDialogShow" @hide="onDialogHide" :breakpoints="{ '960px': '75vw' }" :style="{ width: '40vw' }" :modal="true">
+  <Dialog :header="store.formTitle" v-model:visible="store.showForm" @show="onDialogShow" @hide="onDialogHide" :breakpoints="dialogBreakpoints()" :style="defaultDialogBreakpoint()" :modal="true">
     <div class="flex flex-col gap-4" style="padding-bottom: 30px">
       <!-- Pegawai (Autocomplete Select) -->
       <div class="flex flex-col gap-2">
@@ -114,7 +114,7 @@
   </Dialog>
 </template>
 <script setup>
-import { findEmployee } from '@/composables/utils'
+import { findEmployee, dialogBreakpoints, defaultDialogBreakpoint } from '@/composables/utils'
 import { useSppdStore } from '@/stores/sppd-store'
 import { useToast } from 'primevue/usetoast'
 import { ref, watch } from 'vue'

@@ -1,5 +1,5 @@
 <template>
-  <Dialog :header="store.formTitle" v-model:visible="store.showForm" @show="onDialogShow" @hide="onDialogHide" :breakpoints="{ '960px': '75vw' }" :style="{ width: '30vw' }" :modal="true">
+  <Dialog :header="store.formTitle" v-model:visible="store.showForm" @show="onDialogShow" @hide="onDialogHide" :breakpoints="dialogBreakpoints()" :style="defaultDialogBreakpoint()" :modal="true">
     <div class="flex flex-col gap-4">
       <!-- Siswa (Autocomplete Select) -->
       <div class="flex flex-col gap-2">
@@ -28,7 +28,7 @@
   </Dialog>
 </template>
 <script setup>
-import { findStudent } from '@/composables/utils'
+import { findStudent, dialogBreakpoints, defaultDialogBreakpoint } from '@/composables/utils'
 import { useNisnStore } from '@/stores/nisn-store'
 import { useToast } from 'primevue/usetoast'
 import { ref } from 'vue'

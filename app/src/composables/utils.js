@@ -2,6 +2,7 @@ import i18n from '@/locales/i18n'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import conf from '../../admins.config'
+import { ref } from 'vue'
 
 const t = (key) => i18n.global.t(key)
 const api = axios.create({ baseURL: conf.apiPublicPath })
@@ -144,6 +145,13 @@ function isValidDate(input) {
   );
 }
 
+const dialogBreakpoints = () => {
+  return { '1280px': '45vw', '960px': '75vw', '575px': '95vw' }
+}
+const defaultDialogBreakpoint = () => {
+  return { width: '35vw' }
+}
 
 
-export { api, appVersion, createFormData, findStudent, findEmployee, localeForPaging, t, validatePage, isValidDate }
+
+export { api, appVersion, dialogBreakpoints, defaultDialogBreakpoint, createFormData, findStudent, findEmployee, localeForPaging, t, validatePage, isValidDate }
