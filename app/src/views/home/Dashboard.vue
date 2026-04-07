@@ -17,10 +17,10 @@ store.getSummary()
     <Summary :title="$t('menu.inLetter')" icon="file-import" icon-color="cyan" :number="store.totalIncomingLetter" :text-if-empty="$t('letterArchive.noIncomingLetter')" :text-if-exists="$t('letterArchive.archivedLetter')" />
     <Summary :title="$t('menu.outLetter')" icon="file-export" icon-color="purple" :number="store.totalOutgoingLetter" :text-if-empty="$t('letterArchive.noPrintedLetter')" :text-if-exists="$t('letterArchive.printedLetter')" />
 
-    <div class="col-span-12 xl:col-span-8">
+    <div class="col-span-12 xl:col-span-7 2xl:col-span-8">
       <SchoolData hide-edit-button hide-header />
     </div>
-    <div class="col-span-12 xl:col-span-4">
+    <div class="col-span-12 xl:col-span-5 2xl:col-span-4">
       <AppInfo />
       <Changelog />
     </div>

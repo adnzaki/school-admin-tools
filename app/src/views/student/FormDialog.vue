@@ -1,5 +1,5 @@
 <template>
-  <Dialog :header="store.formTitle" v-model:visible="store.showForm" @hide="onDialogHide" :breakpoints="{ '960px': '75vw' }" :style="{ width: '30vw' }" :modal="true">
+  <Dialog :header="store.formTitle" v-model:visible="store.showForm" @hide="onDialogHide" :breakpoints="dialogBreakpoints()" :style="defaultDialogBreakpoint()" :modal="true">
     <div class="flex flex-col gap-4">
       <div class="flex flex-col gap-2">
         <label for="nama">{{ t('student.name') }}</label>
@@ -110,6 +110,7 @@
 import { useStudentStore } from '@/stores/student-store'
 import { useToast } from 'primevue/usetoast'
 import { useI18n } from 'vue-i18n'
+import { dialogBreakpoints, defaultDialogBreakpoint } from '@/composables/utils'
 
 const store = useStudentStore()
 const toast = useToast()

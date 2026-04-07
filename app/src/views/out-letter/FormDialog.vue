@@ -1,5 +1,5 @@
 <template>
-  <Dialog :header="store.formTitle" v-model:visible="store.showForm" @show="onDialogShow" @hide="onDialogHide" :breakpoints="{ '960px': '75vw' }" :style="{ width: '30vw' }" :modal="true">
+  <Dialog :header="store.formTitle" v-model:visible="store.showForm" @show="onDialogShow" @hide="onDialogHide" :breakpoints="dialogBreakpoints()" :style="defaultDialogBreakpoint()" :modal="true">
     <div class="flex flex-col gap-4">
       <p v-if="store.disableForm" class="text-yellow-500">
         <i>{{ $t('letterArchive.formDisabledNote') }}</i>
@@ -50,6 +50,7 @@ import { useOutLetterStore } from '@/stores/out-letter-store'
 import { useToast } from 'primevue/usetoast'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { dialogBreakpoints, defaultDialogBreakpoint } from '@/composables/utils'
 
 const store = useOutLetterStore()
 const toast = useToast()

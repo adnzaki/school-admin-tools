@@ -1,5 +1,5 @@
 <template>
-  <Dialog :header="store.formTitle" v-model:visible="store.showForm" @show="onDialogShow" @hide="onDialogHide" :breakpoints="{ '960px': '75vw' }" :style="{ width: '30vw' }" :modal="true">
+  <Dialog :header="store.formTitle" v-model:visible="store.showForm" @show="onDialogShow" @hide="onDialogHide" :breakpoints="dialogBreakpoints()" :style="defaultDialogBreakpoint()" :modal="true">
     <div class="flex flex-col gap-4">
       <div class="flex flex-col gap-2">
         <label>{{ $t('school.kepala_sekolah') }}</label>
@@ -101,6 +101,7 @@ import { useToast } from 'primevue/usetoast'
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import conf from '../../../admins.config'
+import { dialogBreakpoints, defaultDialogBreakpoint } from '@/composables/utils'
 
 const store = useSchoolStore()
 const toast = useToast()

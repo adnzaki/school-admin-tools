@@ -1,5 +1,5 @@
 <template>
-  <Dialog :header="store.formTitle" v-model:visible="store.showForm" @show="onDialogShow" @hide="onDialogHide" :breakpoints="{ '960px': '75vw' }" :style="{ width: '30vw' }" :modal="true">
+  <Dialog :header="store.formTitle" v-model:visible="store.showForm" @show="onDialogShow" @hide="onDialogHide" :breakpoints="dialogBreakpoints()" :style="defaultDialogBreakpoint()" :modal="true">
     <div class="flex flex-col gap-4">
       <div class="flex flex-col gap-2">
         <label for="name1">{{ $t('employee.name') }}</label>
@@ -39,6 +39,7 @@
 </template>
 
 <script setup>
+import { dialogBreakpoints, defaultDialogBreakpoint } from '@/composables/utils'
 import { useEmployeeStore } from '@/stores/employee-store'
 import { useToast } from 'primevue/usetoast'
 import { ref } from 'vue'
