@@ -71,7 +71,7 @@ export const useNisnStore = defineStore('nisn', {
           nomor_surat: detail.no_surat,
           tgl_surat: new Date(detail.tgl_surat)
         }
-        this.formTitle = t('letterArchive.editInLetter')
+        this.formTitle = t('nisn.edit')
         this.formEvent = 'edit'
         this.showForm = true
         this.disableForm = data.editable === 1 ? false : true
