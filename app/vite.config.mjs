@@ -4,7 +4,6 @@ import { PrimeVueResolver } from '@primevue/auto-import-resolver'
 import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
-import markdown from 'vite-plugin-md'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,9 +12,8 @@ export default defineConfig({
   },
   plugins: [
     vue({
-      include: [/\.vue$/, /\.vue\?vue/, /\.md$/] // allow Vue to parse .md files
+      include: [/\.vue$/, /\.vue\?vue/]
     }),
-    markdown(),
     Components({
       resolvers: [PrimeVueResolver()]
     })
