@@ -261,7 +261,7 @@ if (!function_exists('import_spreadsheet')) {
 
         return [
             'status'  => 'success',
-            'message' => lang('General.dataSaved'),
+            'message' => lang('General.importSuccess'),
             'count'   => count($validRows),
         ];
     }

@@ -38,6 +38,9 @@ $routes->group('siswa', function (RouteCollection $routes) {
     $routes->delete('delete', 'Siswa::delete');
     $routes->get('detail/(:num)', 'Siswa::detail/$1');
     $routes->post('import-data', 'Siswa::importData');
+    // make route for graduation
+    $routes->post('import-graduation', 'Siswa::importGraduation');
+    $routes->post('graduate', 'Siswa::graduate');
 });
 
 $routes->group('surat-masuk', function (RouteCollection $routes) {

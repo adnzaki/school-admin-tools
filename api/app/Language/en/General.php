@@ -8,6 +8,7 @@ return [
     'dataFetched'       => 'Data fetched successfully',
     'loginSuccess'      => 'Logged in successfully',
     'logoutSuccess'     => 'Logged out successfully',
+    'importSuccess'     => 'Data has been imported successfully',
     'passwordChanged'   => 'Password has been changed successfully',
     'welcome'           => 'Welcome, {name}',
     'inactiveInstitute' => 'Institute is inactive or subscription has expired.',

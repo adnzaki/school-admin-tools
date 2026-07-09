@@ -70,32 +70,23 @@ store.getData(() => {
   toast.add({ severity: 'error', summary: t('common.error'), detail: t('common.networkError'), life: 5000 })
 })
 
-const data = computed(() => paging.state.data)
 </script>
 <template>
   <DataTable
-    contextMenu
-    @rowContextmenu="onContextMenuClick"
-    v-model:contextMenuSelection="store.selectedSingle"
-    v-model:selection="store.selected"
-    selectionMode="multiple"
-    metaKeySelection
     dataKey="id"
-    :value="data"
+    :value="store.graduatedStudents"
     scrollable
     scrollHeight="55vh"
     class="mt-6"
   >
-    <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
     <Column v-for="col of tableColumns" :key="col.key" :field="col.key" :header="col.label" :sortable="col.sortable"></Column>
-    <Column field="action">
+    <!-- <Column field="action">
       <template #header>{{ t('common.action') }}</template>
       <template #body="{ data }">
         <Button type="button" icon="pi pi-ellipsis-v" @click="menuClick(data, $event)" variant="text" />
         <Menu ref="menu" id="overlay_menu" :model="contextMenu" :popup="true" />
       </template>
-    </Column>
+    </Column> -->
   </DataTable>
   <ContextMenu ref="cm" :model="contextMenu" @hide="store.selectedSingle = null" />
-  <Navigator v-model="store.current" />
 </template>

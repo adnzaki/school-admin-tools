@@ -12,6 +12,7 @@ import ConfirmationService from 'primevue/confirmationservice'
 import ToastService from 'primevue/toastservice'
 import { SearchBox, Table as SsTable } from 'ss-paging-vue/components'
 import DeleteConfirmation from './components/DeleteConfirmation.vue'
+import ConfirmationDialog from './components/ConfirmationDialog.vue'
 
 import '@/assets/styles.scss'
 

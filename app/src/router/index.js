@@ -70,6 +70,12 @@ const router = createRouter({
           name: 'SuratTugas',
           component: () => import('@/views/sppd/IndexPage.vue'),
           beforeEnter: () => validatePage()
+        },
+        {
+          path: '/kelulusan',
+          name: 'Kelulusan',
+          component: () => import('@/views/graduation/IndexPage.vue'),
+          beforeEnter: () => validatePage()
         }
       ]
     },

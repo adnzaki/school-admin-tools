@@ -11,7 +11,7 @@ export default {
     releaseDate: 'Tanggal Rilis',
     copyright: 'Hak Cipta',
     poweredBy: 'Didukung oleh',
-    changelog: 'Daftar Perubahan',
+    changelog: 'Daftar Perubahan'
   },
   action: 'Aksi',
   showErrorDetail: 'Tampilkan detail kesalahan',
@@ -28,6 +28,7 @@ export default {
     cancel: 'Batal',
     close: 'Tutup',
     delete: 'Hapus',
+    clearAll: 'Hapus Semua',
     searchByName: 'Cari berdasarkan nama',
     selectRow: 'Pilih baris',
     row: 'Baris',
@@ -35,7 +36,13 @@ export default {
     download: 'Unduh',
     upload: 'Unggah',
     apply: 'Terapkan',
-    filterDate: 'Filter Tanggal'
+    filterDate: 'Filter Tanggal',
+    // luluskan
+    graduate: 'Luluskan',
+    // batalkan kelulusan
+    cancelGraduation: 'Batalkan Kelulusan',
+    downloadFormat: 'Unduh Format Impor',
+    cancelConfirm: 'Ya, batalkan'
   },
   grade: 'Kelas',
   description: 'Deskripsi',
@@ -48,6 +55,8 @@ export default {
   unableToDelete: 'Silakan pilih data yang ingin dihapus',
   deleteConfirm: 'Anda yakin ingin menghapus data ini?',
   deleteTitle: 'Konfirmasi Hapus Data',
+  dropFile: 'Tarik dan letakkan berkas di sini',
+  browseFile: 'atau klik untuk memilih berkas',
   spelledNumbers: {
     one: 'Satu',
     two: 'Dua',

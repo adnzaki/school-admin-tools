@@ -7,7 +7,7 @@ use App\Models\SiswaModel;
 
 class Siswa extends BaseController
 {
-    protected $siswa;
+    protected SiswaModel $siswa;
 
     public function __construct()
     {
@@ -36,6 +36,66 @@ class Siswa extends BaseController
                 'status'  => 'OK',
                 'message' => lang('General.dataFetched')
             ]
+        ]);
+    }
+
+    public function graduate()
+    {
+        $id = $this->request->getJson(true);
+        //$this->siswa->update($id, ['lulus' => 1]);
+        // return $this->response->setJSON(['status' => 'success', 'message' => lang('General.success')]);
+        return $this->response->setJSON([
+            'data' => $id,
+        ]);
+    }
+
+    public function importGraduation()
+    {
+        $default = [
+            'nisn' => '',
+            'nama' => '',
+        ];
+
+        $rules = [
+            'nisn' => ['rules' => 'required|numeric|exact_length[10]', 'label' => lang('FieldLabels.siswa.nisn')],
+            'nama' => ['rules' => 'required', 'label' => lang('FieldLabels.siswa.nama')],
+        ];
+
+        $tempStudent = [];
+
+        $result = import_spreadsheet($default, $rules, function ($rows) use (&$tempStudent) {
+            foreach ($rows as $row) {
+                // 1. Trim untuk menghapus spasi tak terlihat di awal/akhir NISN
+                $nisnInput = isset($row['nisn']) ? trim($row['nisn']) : '';
+
+                if (empty($nisnInput)) {
+                    continue; // Lewati jika NISN di baris ini kosong
+                }
+
+                // 2. Ambil data dengan asArray() untuk memastikan hasilnya berupa array
+                $findStudentByNisn = $this->siswa->where(['nisn' => $nisnInput, 'deleted_at' => null])->first();
+                if ($findStudentByNisn) {
+                    $tempStudent[] = [
+                        'id'            => $findStudentByNisn['id'],
+                        'nama'          => $findStudentByNisn['nama'],
+                        'jenis_kelamin' => $findStudentByNisn['jenis_kelamin'],
+                        'tempat_lahir'  => $findStudentByNisn['tempat_lahir'],
+                        'tgl_lahir'     => $findStudentByNisn['tgl_lahir'],
+                        'nisn'          => $findStudentByNisn['nisn'],
+                        'no_induk'      => $findStudentByNisn['no_induk'],
+                    ];
+                }
+            }
+        });
+
+        if ($result['status'] === 'success') {
+            add_log('mengimport data siswa tingkat akhir sebanyak ' . $result['count'] . ' baris');
+        }
+
+        return $this->response->setJSON([
+            'result'    => $result,
+            'message'   => $result['count'] . ' ' . $result['message'],
+            'student'   => $tempStudent,
         ]);
     }
 
