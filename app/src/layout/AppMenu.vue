@@ -15,7 +15,8 @@ const model = ref([
     label: 'Data',
     items: [
       { label: t('menu.employee'), icon: 'pi pi-fw pi-address-book', to: '/pegawai' },
-      { label: t('menu.student'), icon: 'pi pi-fw pi-users', to: '/siswa' }
+      { label: t('menu.student'), icon: 'pi pi-fw pi-users', to: '/siswa' },
+      { label: t('menu.graduation'), icon: 'pi pi-fw pi-graduation-cap', to: '/kelulusan' }
     ]
   },
   {

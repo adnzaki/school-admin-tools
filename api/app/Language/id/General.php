@@ -8,6 +8,7 @@ return [
     'dataFetched'       => 'Data berhasil diambil',
     'loginSuccess'      => 'Berhasil masuk',
     'logoutSuccess'     => 'Berhasil keluar',
+    'importSuccess'     => 'Data berhasil diimpor',
     'passwordChanged'   => 'Kata sandi berhasil diubah',
     'welcome'           => 'Selamat datang, {name}',
     'inactiveInstitute' => 'Institusi tidak aktif atau masa aktif telah berakhir.',

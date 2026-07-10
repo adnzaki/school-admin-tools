@@ -5,6 +5,7 @@ export default {
   finance: 'Keuangan',
   employee: 'Pegawai',
   student: 'Siswa',
+  graduation: 'Kelulusan',
   moveSchool: 'Pindah Sekolah',
   printNISN: 'Pengantar NISN',
   letterOfStudent: 'Surat Ket. Siswa',

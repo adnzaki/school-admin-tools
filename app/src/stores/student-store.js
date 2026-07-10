@@ -9,10 +9,13 @@ export const useStudentStore = defineStore('student', {
     endpoint: 'siswa/',
     current: 1,
     selected: [],
+    graduatedStudents: [],
     selectedSingle: null,
     showForm: false,
     showImportDialog: false,
     showDeleteDialog: false,
+    showCancelGraduationDialog: false,
+    showGraduateDialog: false,
     errorImport: '',
     errors: {},
     uploadErrors: null,
@@ -92,6 +95,43 @@ export const useStudentStore = defineStore('student', {
         this.formEvent = 'edit'
         this.showForm = true
       })
+    },
+    graduate(action) {
+      api
+        .post(`${this.endpoint}graduate`, {
+          id: this.graduatedStudents.map((item) => item.id)
+        })
+        .then(({ data }) => {
+          if (data.status === 'success') {
+            this.graduatedStudents = []
+            this.showGraduateDialog = false
+          }
+
+          action(data.status, data.message)
+        })
+    },
+    importGraduation(file, action) {
+      try {
+        api
+          .post(`${this.endpoint}import-graduation`, file, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          })
+          .then(({ data }) => {
+            if (data.status === 'success') {
+              this.uploadErrors = null
+            }
+
+            action(data.result.status, data.message)
+            if (data.result.status === 'error') {
+              this.uploadErrors = data.result.errors
+            }
+            this.graduatedStudents = data.student
+          })
+      } catch {
+        action('failed', '')
+      }
     },
     import(file, action) {
       try {

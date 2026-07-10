@@ -2,6 +2,20 @@
 @use 'primeicons/primeicons.css';
 @use '@/assets/tailwind.css';
 @use '@/assets/layout/layout.scss';
+@import "tailwindcss";
+@import "tailwindcss-primeui";
+
+@theme {
+  /* Memindahkan custom breakpoints (screens) Anda */
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-2xl: 1920px;
+}
+
+/* 4. Memindahkan pengaturan Dark Mode selector */
+@variant dark (&:where(.app-dark, .app-dark *));
 
 .app-dark .layout-menu ul a.active-route {
   background: #222;

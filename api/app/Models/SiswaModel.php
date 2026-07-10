@@ -32,7 +32,7 @@ class SiswaModel extends Model
         'kecamatan',
         'kab_kota',
         'provinsi',
-        'cpd',
+        'lulus',
         'mutasi',
     ];
 
@@ -47,7 +47,7 @@ class SiswaModel extends Model
 
     public function findActiveStudent()
     {
-        return $this->where(['institusi_id' => get_institusi(), 'cpd' => 0, 'mutasi' => 0]);
+        return $this->where(['institusi_id' => get_institusi(), 'lulus' => 0, 'mutasi' => 0]);
     }
 
     public function search(?string $keyword): self
