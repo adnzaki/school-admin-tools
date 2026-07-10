@@ -28,8 +28,8 @@ export default {
   totalActiveStudents: 'Jumlah siswa terdaftar saat ini',
   cancelGraduationConfirm: 'Anda yakin ingin membatalkan kelulusan siswa ini?',
   cancelGraduationConfirmation: 'Konfirmasi Batalkan Kelulusan',
-  graduateConfirmMessage: 'Apakah yakin ingin meluluskan sebanyak {count} siswa tingkat akhir?',
+  graduateConfirmMessage: 'Apakah anda yakin ingin meluluskan sebanyak {count} siswa tingkat akhir?',
   graduateConfirmation: 'Konfirmasi Kelulusan',
   graduateConfirm: 'Ya, luluskan',
-  graduationSuccess: '{count} siswa tingkat akhir berhasil diluluskan',
+  graduationSuccess: 'Siswa tingkat akhir berhasil diluluskan',
 }

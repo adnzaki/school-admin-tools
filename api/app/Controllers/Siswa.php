@@ -41,12 +41,13 @@ class Siswa extends BaseController
 
     public function graduate()
     {
-        $id = $this->request->getJson(true);
-        //$this->siswa->update($id, ['lulus' => 1]);
-        // return $this->response->setJSON(['status' => 'success', 'message' => lang('General.success')]);
-        return $this->response->setJSON([
-            'data' => $id,
-        ]);
+        $ids = $this->request->getJson(true);
+
+        foreach ($ids as $id) {
+            $this->siswa->update($id, ['lulus' => 1]);
+        }
+
+        return $this->response->setJSON(['status' => 'success', 'message' => lang('General.success')]);
     }
 
     public function importGraduation()
@@ -89,12 +90,12 @@ class Siswa extends BaseController
         });
 
         if ($result['status'] === 'success') {
-            add_log('mengimport data siswa tingkat akhir sebanyak ' . $result['count'] . ' baris');
+            add_log('mengimport data siswa tingkat akhir sebanyak ' . ($result['count'] ?? 0) . ' baris');
         }
 
         return $this->response->setJSON([
             'result'    => $result,
-            'message'   => $result['count'] . ' ' . $result['message'],
+            'message'   => ($result['count'] ?? '') . ' ' . $result['message'],
             'student'   => $tempStudent,
         ]);
     }

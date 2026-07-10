@@ -99,7 +99,7 @@ export const useStudentStore = defineStore('student', {
     graduate(action) {
       api
         .post(`${this.endpoint}graduate`, {
-          id: this.selected.map((item) => item.id)
+          id: this.graduatedStudents.map((item) => item.id)
         })
         .then(({ data }) => {
           if (data.status === 'success') {

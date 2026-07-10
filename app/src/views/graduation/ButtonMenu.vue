@@ -62,7 +62,7 @@ const graduate = () => {
     if (status === 'error') {
       toast.add({ severity: 'error', summary: t('common.error'), detail: message, life: 5000 })
     } else if(status === 'success') {
-      toast.add({ severity: 'success', summary: t('common.success'), detail: t('student.graduationSuccess', { count: store.graduatedStudents.length }), life: 4000 })
+      toast.add({ severity: 'success', summary: t('common.success'), detail: t('student.graduationSuccess'), life: 4000 })
     } else if (status === 'failed') {
       toast.add({ severity: 'error', summary: t('common.error'), detail: t('common.networkError'), life: 5000 })
     }

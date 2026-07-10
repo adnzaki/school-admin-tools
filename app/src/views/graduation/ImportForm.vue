@@ -24,7 +24,7 @@
           <div class="flex items-center justify-between">
             <span class="text-sm text-muted-color">{{ files.length }} file(s) selected</span>
             <div class="flex items-center gap-2">
-              <Button variant="text" size="small" @click="onUpload(files)">{{ $t('common.buttons.upload') }}</Button>
+              <Button size="small" @click="onUpload(files)" style="font-weight: bold;">{{ $t('common.buttons.upload') }}</Button>
               <!-- <Button variant="text" size="small" severity="danger" @click="onClear">{{ $t('common.buttons.clearAll') }}</Button> -->
             </div>
           </div>
