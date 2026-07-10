@@ -8,7 +8,8 @@ const t = (key) => i18n.global.t(key)
 const api = axios.create({ baseURL: conf.apiPublicPath })
 const msgPrefix = '[Sakola] '
 const localeForPaging = i18n.global.locale.value === 'id' ? 'indonesia' : 'english'
-const appVersion = '1.0.0-alpha.2'
+const appVersion = '1.0.0-alpha.3'
+const releaseDate = '10-07-2026'
 
 api.interceptors.request.use(
   (config) => {
@@ -154,4 +155,4 @@ const defaultDialogBreakpoint = () => {
 
 
 
-export { api, appVersion, dialogBreakpoints, defaultDialogBreakpoint, createFormData, findStudent, findEmployee, localeForPaging, t, validatePage, isValidDate }
+export { api, appVersion, releaseDate, dialogBreakpoints, defaultDialogBreakpoint, createFormData, findStudent, findEmployee, localeForPaging, t, validatePage, isValidDate }

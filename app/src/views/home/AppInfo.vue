@@ -1,5 +1,5 @@
 <script setup>
-import { appVersion } from '@/composables/utils';
+import { appVersion, releaseDate } from '@/composables/utils';
 import { useSchoolStore } from '@/stores/school-store';
 
 const store = useSchoolStore()
@@ -24,7 +24,7 @@ const showChangelog = () => {
       <li class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
         <div>
           <div class="mt-1 mb-2 text-muted-color">{{ $t('common.app.releaseDate') }}</div>
-          <span class="text-surface-900 dark:text-surface-0 font-medium mr-2 mb-1 md:mb-0">07-04-2026</span>
+          <span class="text-surface-900 dark:text-surface-0 font-medium mr-2 mb-1 md:mb-0">{{ releaseDate }}</span>
         </div>
       </li>
       <li class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
