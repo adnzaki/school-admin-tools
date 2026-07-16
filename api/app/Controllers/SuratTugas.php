@@ -162,7 +162,7 @@ class SuratTugas extends BaseController
         $institusi = $this->dataInstitusiModel->getWithInstitusi($this->institusiId);
         $title = 'Surat Perjalanan Dinas';
 
-        $letterDetail = $this->getSuratTugasByRelation($this->letterId, true)->first();
+        $letterDetail = $this->getSuratTugasByRelation($this->letterId, true)->findAll();
 
         $startDate = $data['tgl_berangkat'];
         $endDate = $data['tgl_kembali'];
@@ -182,7 +182,7 @@ class SuratTugas extends BaseController
 
         $contentData = [
             'title'                 => $title,
-            'letterNumber'          => $letterDetail['nomor_surat'],
+            'letterNumber'          => $letterDetail[1]['nomor_surat'],
             'schoolName'            => $institusi['nama_sekolah'],
             'headmaster'            => $institusi['kepala_sekolah'],
             'headmasterId'          => $institusi['nip_kepala_sekolah'],
@@ -198,7 +198,7 @@ class SuratTugas extends BaseController
             'duration'              => $data['durasi'],
             'departureDate'         => osdate()->create($data['tgl_berangkat']),
             'returnDate'            => osdate()->create($data['tgl_kembali']),
-            'date'                  => osdate()->create($letterDetail['tgl_surat']),
+            'date'                  => osdate()->create($letterDetail[1]['tgl_surat']),
             'marginLeft'            => '50%',
             'headOfSKPD'            => $data['kepala_skpd'],
             'headOfSKPDPosition'    => $data['jabatan_kepala_skpd'],
