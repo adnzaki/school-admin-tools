@@ -81,6 +81,7 @@ $routes->group('pindah-sekolah', function (RouteCollection $routes) {
     $routes->post('find-student', 'PindahSekolah::findStudent');
 
     // route for letters
+    $routes->get('cetak-surat-permohonan-pindah', 'PindahSekolah::createSuratPermohonanPindah');
     $routes->get('cetak-surat-pindah', 'PindahSekolah::createSuratPindahSekolah');
     $routes->get('cetak-pindah-rayon', 'PindahSekolah::createSuratPindahRayon');
     $routes->get('cetak-lembar-mutasi-rapor', 'PindahSekolah::createLembarMutasiRapor');

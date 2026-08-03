@@ -14,5 +14,7 @@ export default {
   findStudent: 'Silakan ketik minimal 3 karakter untuk mencari siswa',
   printMutationLetter: 'Cetak Surat Pindah Sekolah',
   printRayonLetter: 'Cetak Surat Pindah Rayon',
-  printReportSheet: 'Cetak Lembar Mutasi Rapor'
+  printReportSheet: 'Cetak Lembar Mutasi Rapor',
+  printMutationRequest: 'Cetak Surat Permohonan Pindah',
+  homeroomTeacher: 'Wali Kelas',
 }

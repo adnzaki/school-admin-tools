@@ -9,6 +9,7 @@ export const useMutationStore = defineStore('mutation', {
     endpoint: 'pindah-sekolah/',
     current: 1,
     selected: null,
+    employees: [],
     // selectedSingle: null,
     showForm: false,
     showDeleteDialog: false,
@@ -18,6 +19,7 @@ export const useMutationStore = defineStore('mutation', {
       siswa_id: '', // ID siswa yang dimutasi
       no_surat: '', // Nomor surat pindah sekolah
       kelas: '', // Kelas terakhir siswa
+      wali_kelas: '', // ID pegawai (wali kelas)
       sd_tujuan: '', // Nama sekolah tujuan
       kelurahan: '', // Kelurahan tujuan
       kecamatan: '', // Kecamatan tujuan

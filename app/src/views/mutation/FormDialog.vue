@@ -22,6 +22,13 @@
         <p class="text-red-500">{{ store.errors.kelas }}</p>
       </div>
 
+      <!-- Pegawai (Autocomplete Select) -->
+      <div class="flex flex-col gap-2">
+        <label>{{ $t('mutation.homeroomTeacher') }}</label>
+        <Select v-model="selectedEmployee" @filter="onEmployeeFilter" @update:model-value="onEmployeeChange" :options="store.employees" optionLabel="nama" optionValue="id" filter :placeholder="$t('sppd.form.search')" class="w-full" />
+        <p class="text-red-500">{{ store.errors.wali_kelas }}</p>
+      </div>
+
       <!-- sekolah Tujuan -->
       <div class="flex flex-col gap-2">
         <label>{{ $t('mutation.destination') }}</label>
@@ -91,7 +98,7 @@
   </Dialog>
 </template>
 <script setup>
-import { findStudent, dialogBreakpoints, defaultDialogBreakpoint } from '@/composables/utils'
+import { findStudent, dialogBreakpoints, defaultDialogBreakpoint, findEmployee } from '@/composables/utils'
 import { useMutationStore } from '@/stores/mutation-store'
 import { useToast } from 'primevue/usetoast'
 import { ref } from 'vue'
@@ -103,6 +110,7 @@ const { t } = useI18n()
 const checked = ref(false)
 const selectedGrade = ref()
 const selectedStudent = ref()
+const selectedEmployee = ref()
 
 const onGradeChange = (event) => {
   store.formData.kelas = event.value.code
@@ -112,10 +120,22 @@ const onStudentChange = (value) => {
   store.formData.siswa_id = value
 }
 
+const onEmployeeChange = (value) => {
+  store.formData.wali_kelas = value
+}
+
 const onStudentFilter = (event) => {
   if (event.value.length > 2) {
     findStudent(event.value, (results) => {
       store.studentOptions = results
+    })
+  }
+}
+
+const onEmployeeFilter = (event) => {
+  if (event.value.length > 2) {
+    findEmployee(event.value, (results) => {
+      store.employees = results
     })
   }
 }
@@ -131,10 +151,13 @@ const onDialogHide = () => {
     checked.value = false
     store.formData.pindah_rayon = 0
     selectedGrade.value = null
+    selectedEmployee.value = null
+
 
     if (store.formData.siswa_nama) store.formData.siswa_nama = ''
   }
 
+  store.employees = []
   if (store.submitted) store.submitted = false
 }
 
@@ -144,6 +167,7 @@ const onDialogShow = () => {
     store.studentOptions = []
     store.studentOptions.push({ nama: store.formData.siswa_nama, id: store.formData.siswa_id })
     selectedStudent.value = store.formData.siswa_id
+    selectedEmployee.value = store.formData.wali_kelas
 
     const grade = store.classLevels[store.schoolLevel].find((g) => g.code === parseInt(store.formData.kelas))
     selectedGrade.value = { name: grade.name, code: grade.code }

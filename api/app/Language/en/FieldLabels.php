@@ -75,6 +75,7 @@ return [
     'mutasi' => [
         'siswa_id'          => 'Student',
         'kelas'             => 'Class',
+        'wali_kelas'        => 'Homeroom Teacher',
         'no_surat'          => 'Mutation Letter Number',
         'sd_tujuan'         => 'Destination School',
         'kelurahan'         => 'Subdistrict',

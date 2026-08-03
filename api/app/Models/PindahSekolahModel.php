@@ -17,6 +17,7 @@ class PindahSekolahModel extends Model
         'siswa_id',
         'no_surat',
         'kelas',
+        'wali_kelas',
         'sd_tujuan',
         'kelurahan',
         'kecamatan',

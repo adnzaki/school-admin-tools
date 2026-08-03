@@ -32,6 +32,13 @@ const contextMenu = ref([
     }
   },
   {
+    label: t('mutation.printMutationRequest'),
+    icon: 'pi pi-file-pdf',
+    command: () => {
+      window.open(`${conf.apiPublicPath}pindah-sekolah/cetak-surat-permohonan-pindah?id=${store.selected.id}&user=${userId.value}`, '_blank')
+    }
+  },
+  {
     label: t('mutation.printMutationLetter'),
     icon: 'pi pi-file-pdf',
     command: () => {
