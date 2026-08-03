@@ -76,6 +76,7 @@ return [
         'siswa_id'          => 'Siswa',
         'no_surat'          => 'Nomor Surat Pindah Sekolah',
         'kelas'             => 'Kelas',
+        'wali_kelas'        => 'Wali Kelas',
         'sd_tujuan'         => 'Sekolah Tujuan',
         'kelurahan'         => 'Kelurahan',
         'kecamatan'         => 'Kecamatan',

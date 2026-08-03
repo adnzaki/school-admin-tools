@@ -6,21 +6,22 @@ use App\Models\PindahSekolahModel;
 use App\Models\SiswaModel;
 use App\Models\SuratKeluarModel;
 use App\Models\DataInstitusiModel;
+use App\Models\PegawaiModel;
 
 class PindahSekolah extends BaseController
 {
     use Traits\SuratTrait;
     use Traits\CommonTrait;
 
-    private $model;
+    private PindahSekolahModel $model;
 
-    private $suratKeluarModel;
+    private SuratKeluarModel $suratKeluarModel;
 
-    private $siswaModel;
+    private SiswaModel $siswaModel;
 
-    private $dataInstitusiModel;
+    private DataInstitusiModel $dataInstitusiModel;
 
-    private $mutationId;
+    private ?int $mutationId;
 
     public function __construct()
     {
@@ -118,6 +119,7 @@ class PindahSekolah extends BaseController
     public function findStudent()
     {
         $search = $this->request->getPost('search');
+        $rows = 0;
 
         $data = [];
         if (strlen($search) > 2) {
@@ -134,6 +136,30 @@ class PindahSekolah extends BaseController
         ]);
     }
 
+    public function createSuratPermohonanPindah()
+    {
+        if ($this->institusiId === null || !$this->mutationId) {
+            $message = 'Surat permnohonan pindah sekolah tidak ditemukan. <br /> ' . $this->notfoundReason;
+            return view('surat_notfound', ['message' => $message]);
+        }
+
+        $pdf = new \PDFCreator([
+            'paperSize' => 'A4',
+        ]);
+
+        $contentData = $this->_suratPindahData(false, false);
+        $contentData['mutation']['title'] = 'Surat Permohonan Pindah Sekolah';
+
+        $data = [
+            'pageTitle' => 'Surat Permohonan Pindah Sekolah',
+            'content'   => view('mutasi/permohonan_pindah', $contentData['mutation']),
+            'institusi' => $contentData['institusi']
+        ];
+
+        $html = view('layout/main', $data);
+        $pdf->loadHTML($html)->render()->stream('Surat-Permohonan-Pindah.pdf');
+    }
+
     public function createSuratPindahSekolah()
     {
         if ($this->institusiId === null || !$this->mutationId) {
@@ -145,36 +171,59 @@ class PindahSekolah extends BaseController
             'paperSize' => 'F4',
         ]);
 
+        $contentData = $this->_suratPindahData();
+
+        $data = [
+            'pageTitle' => 'Surat Keterangan Pindah Sekolah',
+            'content'   => view('mutasi/pindah_sekolah', $contentData['mutation']),
+            'institusi' => $contentData['institusi']
+        ];
+
+        $html = view('layout/main', $data);
+        $pdf->loadHTML($html)->render()->stream('Surat-Pindah.pdf');
+    }
+
+    private function _suratPindahData($useHeader = true, $useSignature = true)
+    {       
         $institusi = $this->dataInstitusiModel->getWithInstitusi($this->institusiId);
         $title = 'Surat Keterangan Pindah Sekolah';
         $letterDetail = $this->model->find($this->mutationId);
         $mutationData = $this->model->findByIdWithSiswa($this->mutationId, $this->institusiId);
         $parentName = $mutationData['siswa_nama_ayah'] === null || $mutationData['siswa_nama_ayah'] === '' ? $mutationData['siswa_nama_ibu'] : $mutationData['siswa_nama_ayah'];
         $parentJob = $mutationData['siswa_pekerjaan_ayah'] === null || $mutationData['siswa_pekerjaan_ayah'] === '' ? $mutationData['siswa_pekerjaan_ibu'] : $mutationData['siswa_pekerjaan_ayah'];
+        $homeroomTeacherName = '.................................';
+        $homeroomTeacherNIP = '';
+
+        if($letterDetail['wali_kelas'] !== null) {
+            $employeeModel = new PegawaiModel();
+            $getEmployee = $employeeModel->find($letterDetail['wali_kelas']);
+            $homeroomTeacherName = $getEmployee['nama'];
+            $homeroomTeacherNIP = $getEmployee['nip'];
+        }
 
         $contentData = [
-            'title'         => $title,
-            'letterNumber'  => $letterDetail['no_surat'],
-            'schoolName'    => $institusi['nama_sekolah'],
-            'district'      => $institusi['kecamatan'],
-            'city'          => $institusi['kab_kota'],
-            'province'      => $institusi['provinsi'],
-            'mutation'      => $mutationData,
-            'grade'         => $this->kelas[$mutationData['kelas']],
-            'gender'        => $this->jenisKelamin[$mutationData['siswa_jenis_kelamin']],
-            'parentName'    => $parentName,
-            'parentJob'     => $parentJob,
-            'date'          => osdate()->create($mutationData['tgl_pindah']),
+            'useHeader'             => $useHeader,
+            'useSignature'          => $useSignature,
+            'title'                 => $title,
+            'letterNumber'          => $letterDetail['no_surat'],
+            'schoolName'            => $institusi['nama_sekolah'],
+            'district'              => $institusi['kecamatan'],
+            'city'                  => $institusi['kab_kota'],
+            'province'              => $institusi['provinsi'],
+            'mutation'              => $mutationData,
+            'grade'                 => $this->kelas[$mutationData['kelas']],
+            'gender'                => $this->jenisKelamin[$mutationData['siswa_jenis_kelamin']],
+            'parentName'            => $parentName,
+            'parentJob'             => $parentJob,
+            'homeroomTeacherName'   => $homeroomTeacherName,
+            'homeroomTeacherNIP'    => $homeroomTeacherNIP,
+            'date'                  => osdate()->create($mutationData['tgl_pindah']),
         ];
 
-        $data = [
-            'pageTitle' => 'Surat Keterangan Pindah Sekolah',
-            'content'   => view('mutasi/pindah_sekolah', $contentData),
-            'institusi' => $institusi
+        return [
+            'mutation'  => $contentData,
+            'institusi' => $institusi,
         ];
-
-        $html = view('layout/main', $data);
-        $pdf->loadHTML($html)->render()->stream('Surat-Pindah.pdf');
     }
 
     public function createSuratPindahRayon()
@@ -302,6 +351,7 @@ class PindahSekolah extends BaseController
             'siswa_id'          => ['rules' => 'required|numeric', 'label' => lang('FieldLabels.mutasi.siswa_id')],
             'no_surat'          => ['rules' => 'required', 'label' => lang('FieldLabels.mutasi.no_surat')],
             'kelas'             => ['rules' => 'required|in_list[1,2,3,4,5,6,7,8,9,10,11,12]', 'label' => lang('FieldLabels.mutasi.kelas')],
+            'wali_kelas'        => ['rules' => 'required|numeric', 'label' => lang('FieldLabels.mutasi.wali_kelas')],
             'sd_tujuan'         => ['rules' => 'required', 'label' => lang('FieldLabels.mutasi.sd_tujuan')],
             'kelurahan'         => ['rules' => 'required', 'label' => lang('FieldLabels.mutasi.kelurahan')],
             'kecamatan'         => ['rules' => 'required', 'label' => lang('FieldLabels.mutasi.kecamatan')],
@@ -333,6 +383,7 @@ class PindahSekolah extends BaseController
             'siswa_id'     => $siswaId,
             'no_surat'     => $this->request->getPost('no_surat'),
             'kelas'        => $this->request->getPost('kelas'),
+            'wali_kelas'   => $this->request->getPost('wali_kelas'),
             'sd_tujuan'    => $this->request->getPost('sd_tujuan'),
             'kelurahan'    => $this->request->getPost('kelurahan'),
             'kecamatan'    => $this->request->getPost('kecamatan'),
