@@ -109,6 +109,13 @@ class PindahSekolah extends BaseController
             $detail['no_surat_rayon'] = $getSuratPindah[1]['nomor_surat'];
         }
 
+        // ambil data pegawai untuk wali kelas
+        if ($detail['wali_kelas'] !== null) {
+            $employeeModel = new PegawaiModel();
+            $getEmployee = $employeeModel->find($detail['wali_kelas']);
+            $detail['wali_kelas_nama'] = $getEmployee['nama'];
+        }
+
         return $this->response->setJSON([
             'status'        => 'OK',
             'message'       => lang('General.dataFetched'),
@@ -136,6 +143,30 @@ class PindahSekolah extends BaseController
         ]);
     }
 
+    public function checkPermohonanPindah()
+    {
+        $id = decrypt($this->request->getPost('id'), env('encryption_key'));
+        $detail = $this->model->findByIdWithSiswa($id);
+
+        if (!$detail) {
+            return $this->response->setJSON([
+                'status'  => 'error',
+                'message' => lang('General.dataNotFound')
+            ]);
+        }
+
+        if ($detail['print_request'] === '0') {
+            return $this->response->setJSON([
+                'status'  => 'error',
+            ]);
+        }
+
+        return $this->response->setJSON([
+            'status'  => 'success',
+            'message' => lang('General.dataFetched')
+        ]);
+    }
+
     public function createSuratPermohonanPindah()
     {
         if ($this->institusiId === null || !$this->mutationId) {
@@ -155,6 +186,8 @@ class PindahSekolah extends BaseController
             'content'   => view('mutasi/permohonan_pindah', $contentData['mutation']),
             'institusi' => $contentData['institusi']
         ];
+
+        $this->model->update($this->mutationId, ['print_request' => 1]);
 
         $html = view('layout/main', $data);
         $pdf->loadHTML($html)->render()->stream('Surat-Permohonan-Pindah.pdf');
@@ -412,6 +445,11 @@ class PindahSekolah extends BaseController
         // Update status mutasi siswa
         $this->siswaModel->update($siswaId, ['mutasi' => 1]);
 
+        // ubah status print_request menjadi 0 setelah surat berhasil dibuat
+        // agar surat pindah sekolah, surat permohonan pindah rayon, dan lembar mutasi rapor dapat dicetak ulang
+        // jika surat permohonan pindah sekolah dari orang tua sudah dicetak
+        $this->model->update($id, ['print_request' => 0]);
+
         // Buat surat keluar
         $siswaDetail = $this->siswaModel->find($siswaId);
         $pindahSekolahId = $id ?? $this->model->getInsertID();
@@ -467,7 +505,7 @@ class PindahSekolah extends BaseController
         ]);
     }
 
-    private function getSuratPindahByRelation($id, $forPDF = false)
+    private function getSuratPindahByRelation(int $id, $forPDF = false)
     {
         return $this->suratKeluarModel->where([
             'institusi_id' => $forPDF ? $this->institusiId : get_institusi(),
