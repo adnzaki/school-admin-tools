@@ -3,7 +3,7 @@ $headmaster = $institusi['kepala_sekolah'];
 $headmasterNip = $institusi['nip_kepala_sekolah'];
 
 ?>
-<?php if (! isset($useSignature)) : ?>
+<?php if (! isset($useSignature) || $useSignature) : ?>
     <div style="margin-left: <?= $marginLeft ?? '60%' ?>;" class="<?= $signFontSize ?? 'font-11' ?>">
         <p>
             Bekasi, <?= $date ?><br />
