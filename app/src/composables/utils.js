@@ -9,7 +9,7 @@ const api = axios.create({ baseURL: conf.apiPublicPath })
 const msgPrefix = '[Sakola] '
 const localeForPaging = i18n.global.locale.value === 'id' ? 'indonesia' : 'english'
 const appVersion = '1.0.0-beta.1'
-const releaseDate = '04-08-2026'
+const releaseDate = '06-08-2026'
 
 api.interceptors.request.use(
   (config) => {
