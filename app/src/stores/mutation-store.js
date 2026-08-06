@@ -62,6 +62,17 @@ export const useMutationStore = defineStore('mutation', {
     disableButton: false
   }),
   actions: {
+    checkPrintRequest(next) {
+      api.post(`${this.endpoint}check-permohonan-pindah`, { id: this.selected.id }, {
+        transformRequest: [(data) => createFormData(data)]
+      }).then(({ data }) => {
+        if (data.status === 'success') {
+          this.selected.print_request = data.print_request
+        }
+
+        next(data.status)
+      })
+    },
     delete(action) {
       api
         .post(
@@ -95,6 +106,8 @@ export const useMutationStore = defineStore('mutation', {
           siswa_nama: detail.siswa_nama,
           no_surat: detail.no_surat,
           kelas: detail.kelas,
+          wali_kelas: detail.wali_kelas,
+          wali_kelas_nama: detail.wali_kelas_nama,
           sd_tujuan: detail.sd_tujuan,
           kelurahan: detail.kelurahan,
           kecamatan: detail.kecamatan,

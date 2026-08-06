@@ -26,6 +26,7 @@ class PindahSekolahModel extends Model
         'alasan',
         'pindah_rayon',
         'tgl_pindah',
+        'print_request',
         'created_at',
         'updated_at',
         'deleted_at',

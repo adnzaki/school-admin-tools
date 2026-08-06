@@ -79,6 +79,7 @@ $routes->group('pindah-sekolah', function (RouteCollection $routes) {
     $routes->post('delete', 'PindahSekolah::delete');
     $routes->get('detail/(:any)', 'PindahSekolah::getDetail/$1');
     $routes->post('find-student', 'PindahSekolah::findStudent');
+    $routes->post('check-permohonan-pindah', 'PindahSekolah::checkPermohonanPindah');
 
     // route for letters
     $routes->get('cetak-surat-permohonan-pindah', 'PindahSekolah::createSuratPermohonanPindah');

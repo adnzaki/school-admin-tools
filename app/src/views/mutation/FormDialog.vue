@@ -166,6 +166,7 @@ const onDialogShow = () => {
     checked.value = parseInt(store.formData.pindah_rayon) === 1
     store.studentOptions = []
     store.studentOptions.push({ nama: store.formData.siswa_nama, id: store.formData.siswa_id })
+    store.employees.push({ nama: store.formData.wali_kelas_nama, id: store.formData.wali_kelas })
     selectedStudent.value = store.formData.siswa_id
     selectedEmployee.value = store.formData.wali_kelas
 

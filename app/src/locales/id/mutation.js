@@ -17,4 +17,5 @@ export default {
   printReportSheet: 'Cetak Lembar Mutasi Rapor',
   printMutationRequest: 'Cetak Surat Permohonan Pindah',
   homeroomTeacher: 'Wali Kelas',
+  mutationRequestNotPrinted: 'Surat permohonan pindah sekolah dari orang tua belum dicetak. Silakan cetak surat permohonan pindah sekolah terlebih dahulu sebelum mencetak dokumen pindah sekolah lainnya.',
 }

@@ -42,21 +42,40 @@ const contextMenu = ref([
     label: t('mutation.printMutationLetter'),
     icon: 'pi pi-file-pdf',
     command: () => {
-      window.open(`${conf.apiPublicPath}pindah-sekolah/cetak-surat-pindah?id=${store.selected.id}&user=${userId.value}`, '_blank')
+      store.checkPrintRequest(status => {
+        if(status === 'error') {
+          toast.add({ severity: 'error', summary: t('common.error'), detail: t('mutation.mutationRequestNotPrinted'), life: 7000 })
+          return
+        }
+        window.open(`${conf.apiPublicPath}pindah-sekolah/cetak-surat-pindah?id=${store.selected.id}&user=${userId.value}`, '_blank')
+      })
     }
   },
   {
     label: t('mutation.printRayonLetter'),
     icon: 'pi pi-file-pdf',
+
     command: () => {
-      window.open(`${conf.apiPublicPath}pindah-sekolah/cetak-pindah-rayon?id=${store.selected.id}&user=${userId.value}`, '_blank')
+      store.checkPrintRequest(status => {
+        if(status === 'error') {
+          toast.add({ severity: 'error', summary: t('common.error'), detail: t('mutation.mutationRequestNotPrinted'), life: 7000 })
+          return
+        }
+        window.open(`${conf.apiPublicPath}pindah-sekolah/cetak-pindah-rayon?id=${store.selected.id}&user=${userId.value}`, '_blank')
+      })
     }
   },
   {
     label: t('mutation.printReportSheet'),
     icon: 'pi pi-file-pdf',
     command: () => {
-      window.open(`${conf.apiPublicPath}pindah-sekolah/cetak-lembar-mutasi-rapor?id=${store.selected.id}&user=${userId.value}`, '_blank')
+      store.checkPrintRequest(status => {
+        if(status === 'error') {
+          toast.add({ severity: 'error', summary: t('common.error'), detail: t('mutation.mutationRequestNotPrinted'), life: 7000 })
+          return
+        }
+        window.open(`${conf.apiPublicPath}pindah-sekolah/cetak-lembar-mutasi-rapor?id=${store.selected.id}&user=${userId.value}`, '_blank')
+      })
     }
   },
   {
