@@ -20,7 +20,7 @@
 defineProps({
   title: String,
   icon: String,
-  number: String,
+  number: Number,
   textIfEmpty: String,
   textIfExists: String,
   iconColor: String
