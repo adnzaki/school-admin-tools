@@ -11,15 +11,15 @@ class SuratTugas extends BaseController
 {
     use Traits\SuratTrait;
 
-    private $model;
+    private SuratTugasModel $model;
 
-    private $letterId;
+    private int $letterId;
 
-    private $suratKeluarModel;
+    private SuratKeluarModel $suratKeluarModel;
 
-    private $dataInstitusiModel;
+    private DataInstitusiModel $dataInstitusiModel;
 
-    private $pegawaiModel;
+    private PegawaiModel $pegawaiModel;
 
     public function __construct()
     {
@@ -156,7 +156,7 @@ class SuratTugas extends BaseController
         }
 
         $pdf = new \PDFCreator([
-            'paperSize' => 'F4',
+            'paperSize' => 'A4',
         ]);
 
         $institusi = $this->dataInstitusiModel->getWithInstitusi($this->institusiId);
