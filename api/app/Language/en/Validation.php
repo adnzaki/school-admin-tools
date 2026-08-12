@@ -2,6 +2,7 @@
 
 return [
     'required'              => 'The {field} field is required.',
+    'required_if'           => 'The {field} field is required when employee is {param}',
     'required_fill'         => 'Please fill in the {field} field.',
     'required_select'       => 'Please select a value for {field}.',
     'required_with'         => 'The {field} field is required.',

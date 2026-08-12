@@ -49,7 +49,7 @@
             </td>
             <td class="bordered" colspan="2">
                 <ul style="list-style: none; margin-left: -35px;">
-                    <li>&nbsp;</li>
+                    <li><?= $employeeRank ?? '<br/>' ?></li>
                     <li><?= $position ?></li>
                     <li><?= $costLevel ?></li>
                 </ul>

@@ -2,6 +2,7 @@
 
 return [
     'required'              => 'Kolom {field} wajib diisi',
+    'required_if'           => 'Kolom {field} wajib diisi karena pegawai {param}',
     'required_fill'         => 'Silakan isi {field} terlebih dahulu',
     'required_select'       => 'Silakan pilih {field} terlebih dahulu',
     'required_with'         => 'Kolom {field} wajib diisi',

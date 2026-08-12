@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "adnzaki/excel-creator",
-            "version": "2.0.0",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/adnzaki/ExcelCreator.git",
-                "reference": "fef34f439be208b86745f1088411afac921a89e0"
+                "reference": "077449fa5a0151053fcbfc467045095400e3c773"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/adnzaki/ExcelCreator/zipball/fef34f439be208b86745f1088411afac921a89e0",
-                "reference": "fef34f439be208b86745f1088411afac921a89e0",
+                "url": "https://api.github.com/repos/adnzaki/ExcelCreator/zipball/077449fa5a0151053fcbfc467045095400e3c773",
+                "reference": "077449fa5a0151053fcbfc467045095400e3c773",
                 "shasum": ""
             },
             "require": {
@@ -44,9 +44,9 @@
             "homepage": "https://github.com/adnzaki/ExcelCreator",
             "support": {
                 "issues": "https://github.com/adnzaki/ExcelCreator/issues",
-                "source": "https://github.com/adnzaki/ExcelCreator/tree/2.0.0"
+                "source": "https://github.com/adnzaki/ExcelCreator/tree/2.0.2"
             },
-            "time": "2025-07-15T08:22:29+00:00"
+            "time": "2026-08-12T01:07:55+00:00"
         },
         {
             "name": "aws/aws-crt-php",
@@ -3777,5 +3777,5 @@
         "php": "^8.1"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }

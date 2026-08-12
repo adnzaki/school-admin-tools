@@ -7,6 +7,38 @@ use Config\Database;
 
 class CustomRules
 {
+    /**
+     * Wajib diisi jika field lain memiliki nilai tertentu
+     * Format: required_if[field_target,val1,val2,...]
+     */
+    public function required_if(int|string|null $value, string $params, array $data): bool
+    {
+        $paramArray = explode(',', $params);
+        $targetField = array_shift($paramArray); // Ambil nama field target (misal: jenis_pegawai)
+
+        // Ambil nilai dari field target
+        $targetValue = $data[$targetField] ?? null;
+
+        // Jika nilai field target cocok dengan salah satu kriteria (PNS atau PPPK)
+        if (in_array($targetValue, $paramArray, true)) {
+            // Maka nilai field saat ini ($value) tidak boleh null atau string kosong
+            if ($value === null) {
+                return false;
+            }
+
+            if (is_string($value) && trim($value) === '') {
+                return false;
+            }
+
+            // Jika berbentuk array/objek kosong
+            if (empty($value) && $value !== 0 && $value !== '0') {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     private function prepareUniqueQuery(string $value, string $field, array $data): array
     {
         [$field, $ignoreField, $ignoreValue] = array_pad(explode(',', $field), 3, null);

@@ -20,15 +20,25 @@ export const useEmployeeStore = defineStore('employee', {
     formData: {
       nama: '',
       nip: '',
+      pangkat_golongan: '',
+      pangkat_golongan_id: '',
       jabatan: '',
       jenis_pegawai: '',
       email: '',
       telepon: ''
     },
+    pangkatGolongan: [],
     formEvent: 'add', // add | edit
     disableButton: false
   }),
   actions: {
+    getPangkatGolongan(id) {
+      api.get(`${this.endpoint}pangkat-golongan/${id}`).then(({ data }) => {
+        if(data.status === 'success') {
+          this.pangkatGolongan = data.data
+        }
+      })
+    },
     delete(action) {
       api
         .delete(`${this.endpoint}delete`, {
@@ -60,6 +70,8 @@ export const useEmployeeStore = defineStore('employee', {
           id: detail.id,
           nama: detail.nama,
           nip: detail.nip ?? '',
+          pangkat_golongan: detail.pangkat_golongan ?? '',
+          pangkat_golongan_id: detail.pangkat_golongan_id ?? '',
           jabatan: detail.jabatan ?? '',
           jenis_pegawai: detail.jenis_pegawai,
           email: detail.email ?? '',
@@ -125,11 +137,15 @@ export const useEmployeeStore = defineStore('employee', {
       this.formData = {
         nama: '',
         nip: '',
+        pangkat_golongan: '',
+        pangkat_golongan_id: '',
         jabatan: '',
         jenis_pegawai: '',
         email: '',
         telepon: ''
       }
+
+      this.errors = {}
     },
     getData(errorHandler) {
       const limit = 25

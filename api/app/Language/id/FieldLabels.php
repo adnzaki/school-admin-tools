@@ -3,12 +3,13 @@
 
 return [
     'pegawai' => [
-        'nama'          => 'nama pegawai',
-        'nip'           => 'NIP',
-        'jabatan'       => 'jabatan',
-        'jenis_pegawai' => 'jenis pegawai',
-        'email'         => 'alamat email',
-        'telepon'       => 'nomor telepon',
+        'nama'                  => 'nama pegawai',
+        'nip'                   => 'NIP',
+        'jabatan'               => 'jabatan',
+        'jenis_pegawai'         => 'jenis pegawai',
+        'email'                 => 'alamat email',
+        'telepon'               => 'nomor telepon',
+        'pangkat_golongan_id'   => 'pangkat dan golongan',
     ],
 
     'siswa' => [

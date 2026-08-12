@@ -189,6 +189,7 @@ class SuratTugas extends BaseController
             'schoolAddress'         => $institusi['alamat'],
             'employee'              => $data['pegawai_nama'],
             'employeeId'            => $data['pegawai_nip'],
+            'employeeRank'          => $data['pangkat_golongan_nama'],
             'position'              => $data['pegawai_jabatan'] . ' / ' . $institusi['nama_sekolah'],
             'task'                  => $data['tujuan'],
             'location'              => $data['lokasi'],
