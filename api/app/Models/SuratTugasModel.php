@@ -47,22 +47,28 @@ class SuratTugasModel extends Model
             'tb_surat_tugas.*',
 
             // Kolom pegawai dengan alias
-            'p.id             AS pegawai_id',
-            'p.institusi_id   AS pegawai_institusi_id',
-            'p.nama           AS pegawai_nama',
-            'p.nip            AS pegawai_nip',
-            'p.jabatan        AS pegawai_jabatan',
-            'p.jenis_pegawai  AS pegawai_jenis_pegawai',
-            'p.email          AS pegawai_email',
-            'p.telepon        AS pegawai_telepon',
-            'p.created_at     AS pegawai_created_at',
-            'p.updated_at     AS pegawai_updated_at',
-            'p.deleted_at     AS pegawai_deleted_at',
+            'p.id                   AS pegawai_id',
+            'p.institusi_id         AS pegawai_institusi_id',
+            'p.pangkat_golongan_id  AS pegawai_pangkat_golongan_id',
+            'p.nama                 AS pegawai_nama',
+            'p.nip                  AS pegawai_nip',
+            'p.jabatan              AS pegawai_jabatan',
+            'p.jenis_pegawai        AS pegawai_jenis_pegawai',
+            'p.email                AS pegawai_email',
+            'p.telepon              AS pegawai_telepon',
+            'p.created_at           AS pegawai_created_at',
+            'p.updated_at           AS pegawai_updated_at',
+            'p.deleted_at           AS pegawai_deleted_at',
+
+            // Kolom pangkat golongan dengan alias
+            'pg.id                  AS pangkat_golongan_id',
+            'pg.pangkat_golongan    AS pangkat_golongan_nama',
         ];
 
         return $this
             ->select($select)
             ->join('tb_pegawai p', 'p.id = tb_surat_tugas.pegawai_id', 'inner')
+            ->join('tb_pangkat_golongan pg', 'pg.id = p.pangkat_golongan_id', 'left')
             ->where('p.institusi_id', $institusiId ?? get_institusi());
     }
 

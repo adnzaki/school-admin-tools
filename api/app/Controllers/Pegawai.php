@@ -23,14 +23,16 @@ class Pegawai extends BaseController
         $sort      = $this->request->getPost('sort');
         $search    = $this->request->getPost('search');
 
+        $builder = $this->pegawai->withPangkatGolongan()->where('institusi_id', get_institusi());
+
         if (! empty($search)) {
-            $this->pegawai->like($searchBy, $search);
+            $builder->like($searchBy, $search);
         }
 
-        $data  = $this->pegawai->where('institusi_id', get_institusi())->orderBy($orderBy, $sort)->findAll($limit, $offset);
+        $data  = $builder->orderBy($orderBy, $sort)->findAll($limit, $offset);
         $total = empty($search)
-            ? $this->pegawai->where('institusi_id', get_institusi())->countAllResults()
-            : $this->pegawai->where('institusi_id', get_institusi())->like($searchBy, $search)->countAllResults();
+            ? $this->pegawai->withPangkatGolongan()->where('institusi_id', get_institusi())->countAllResults()
+            : $this->pegawai->withPangkatGolongan()->where('institusi_id', get_institusi())->like($searchBy, $search)->countAllResults();
 
         return $this->response->setJSON([
             'container' => $data,
@@ -45,13 +47,14 @@ class Pegawai extends BaseController
     public function importData()
     {
         $default = [
-            'institusi_id'  => get_institusi(),
-            'nama'          => '',
-            'nip'           => '',
-            'jabatan'       => '',
-            'jenis_pegawai' => '',
-            'email'         => '',
-            'telepon'       => '',
+            'institusi_id'          => get_institusi(),
+            'pangkat_golongan_id'   => '',
+            'nama'                  => '',
+            'nip'                   => '',
+            'jabatan'               => '',
+            'jenis_pegawai'         => '',
+            'email'                 => '',
+            'telepon'               => '',
         ];
 
         $rules = [
@@ -62,6 +65,10 @@ class Pegawai extends BaseController
             'nip' => [
                 'rules' => 'permit_empty|numeric|exact_length[18]|is_unique_nip[tb_pegawai.nip,id,{id}]',
                 'label' => lang('FieldLabels.pegawai.nip')
+            ],
+            'pangkat_golongan_id' => [
+                'rules' => 'permit_empty|numeric',
+                'label' => lang('FieldLabels.pegawai.pangkat_golongan_id')
             ],
             'jabatan' => [
                 'rules' => 'permit_empty|max_length[50]',
@@ -82,7 +89,11 @@ class Pegawai extends BaseController
         ];
 
         $result = import_spreadsheet($default, $rules, function ($rows) {
-            $this->pegawai->insertBatch($rows);
+            foreach ($rows as $row) {
+                if ($row['jenis_pegawai'] === 'Honorer' || (!empty($row['nip']) && !empty($row['pangkat_golongan_id']))) {
+                    $this->pegawai->insert($row);
+                }              
+            }            
         });
 
         if ($result['status'] === 'success') {
@@ -92,10 +103,24 @@ class Pegawai extends BaseController
         return $this->response->setJSON($result);
     }
 
+    public function getPangkatGolongan(string $employeeType)
+    {
+        $db = \Config\Database::connect();
+        $builder = $db->table('tb_pangkat_golongan');
+        $data = $builder->select('id, pangkat_golongan as name')->where('jenis_pegawai', $employeeType)->get()->getResultArray();
 
+        return $this->response->setJSON([
+            'status' => 'success',
+            'data'   => $data
+        ]);
+    }
 
     public function save()
     {
+        $jenisPegawai = $this->request->getPost('jenis_pegawai');
+        $pangkatGolonganRule = $jenisPegawai === 'Honorer' ? 'permit_empty|numeric' : 'required|numeric';
+        $isNipRequired = $jenisPegawai === 'Honorer' ? 'permit_empty' : 'required';
+
         $rules = [
             'id' => [
                 'rules' => 'permit_empty',
@@ -106,8 +131,12 @@ class Pegawai extends BaseController
                 'label' => lang('FieldLabels.pegawai.nama')
             ],
             'nip' => [
-                'rules' => 'permit_empty|numeric|exact_length[18]|is_unique_nip[tb_pegawai.nip,id,{id}]',
+                'rules' => $isNipRequired . '|numeric|exact_length[18]|is_unique_nip[tb_pegawai.nip,id,{id}]',
                 'label' => lang('FieldLabels.pegawai.nip')
+            ],
+            'pangkat_golongan_id' => [
+                'rules' => $pangkatGolonganRule,
+                'label' => lang('FieldLabels.pegawai.pangkat_golongan_id')
             ],
             'jabatan' => [
                 'rules' => 'permit_empty|max_length[50]',
@@ -140,13 +169,14 @@ class Pegawai extends BaseController
         $id = $this->request->getPost('id');
 
         $data = [
-            'institusi_id'  => get_institusi(),
-            'nama'          => $this->request->getPost('nama'),
-            'nip'           => $this->request->getPost('nip'),
-            'jabatan'       => $this->request->getPost('jabatan'),
-            'jenis_pegawai' => $this->request->getPost('jenis_pegawai'),
-            'email'         => $this->request->getPost('email'),
-            'telepon'       => $this->request->getPost('telepon'),
+            'institusi_id'          => get_institusi(),
+            'nama'                  => $this->request->getPost('nama'),
+            'nip'                   => $this->request->getPost('nip'),
+            'pangkat_golongan_id'   => $this->request->getPost('pangkat_golongan_id'),
+            'jabatan'               => $this->request->getPost('jabatan'),
+            'jenis_pegawai'         => $this->request->getPost('jenis_pegawai'),
+            'email'                 => $this->request->getPost('email'),
+            'telepon'               => $this->request->getPost('telepon'),
         ];
 
         $logMessage = 'menambahkan data pegawai atas nama ' . $data['nama'];
@@ -202,7 +232,7 @@ class Pegawai extends BaseController
 
     public function detail($id = null)
     {
-        $data = $this->pegawai->find($id);
+        $data = $this->pegawai->withPangkatGolongan()->find($id);
 
         if (! $data) {
             return $this->response->setJSON([

@@ -80,7 +80,7 @@ class PengantarNISN extends BaseController
         }
 
         $pdf = new \PDFCreator([
-            'paperSize' => 'F4',
+            'paperSize' => 'A4',
         ]);
 
         $institusi = $this->dataInstitusiModel->getWithInstitusi($this->institusiId);

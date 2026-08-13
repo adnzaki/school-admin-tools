@@ -62,7 +62,7 @@ class PDFCreator
      * @param string $html
      *   The HTML content to load into the PDF document.
      *
-     * @return static
+     * @return self
      *   The PDF creator object, for method chaining.
      */
     public function loadHTML(string $html): self
@@ -74,7 +74,7 @@ class PDFCreator
     /**
      * Renders the loaded HTML content into the PDF format.
      *
-     * @return static
+     * @return self
      *   The PDF creator object, for method chaining.
      */
 

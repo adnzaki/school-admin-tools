@@ -142,9 +142,10 @@ if (! function_exists('validation_error')) {
      *
      * @param array $errors
      * @param array $rules
+     * @param array $textReplacements
      * @return array
      */
-    function validation_error(array $errors, array $rules): array
+    function validation_error(array $errors, array $rules, array $textReplacements = []): array
     {
         $messages = [];
 
@@ -163,6 +164,12 @@ if (! function_exists('validation_error')) {
                 $message = str_replace(['{field}', '{param}'], [$label, ''], $customMessage);
             } else {
                 $message = str_replace($field, $label, $message);
+            }
+
+            if(! empty($textReplacements)) {
+                foreach ($textReplacements as $key => $value) {
+                    $message = str_replace($key, $value, $message);
+                }
             }
 
             // filter kata yg duplikat berurutan
@@ -234,25 +241,31 @@ if (!function_exists('import_spreadsheet')) {
             $validation->setRules($rules);
 
             if (! $validation->run($data)) {
-                $errors[$index + 2] = validation_error($validation->getErrors(), $rules);
+                $errors[$index + 2] = validation_error(
+                    $validation->getErrors(), 
+                    $rules, 
+                    ['jenis_pegawai,PNS,PPPK' => 'berstatus ASN']
+                );
             } else {
                 $validRows[] = $data;
             }
         }
 
         if (! empty($errors)) {
-            $formattedErrosDetails = [];
+            $formattedErrorsDetails = [];
 
             $num = 0;
             foreach ($errors as $index => $error) {
                 if($num++ > 0) break;
-                $formattedErrosDetails[] = lang('General.excelImportError', [$index, implode(', ', $error)]);
+                
+                $formattedErrorsDetails[] = lang('General.excelImportError', [$index - 1, implode(', ', $error)]);
             }
 
             return [
                 'status'  => 'error',
                 'message' => lang('Validation.invalid_rows'),
-                'errors'  => $formattedErrosDetails,
+                'errors'  => $formattedErrorsDetails,
+                'rawErrors' => $errors,
             ];
         }
 

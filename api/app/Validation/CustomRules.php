@@ -7,6 +7,29 @@ use Config\Database;
 
 class CustomRules
 {
+    /**
+     * Wajib diisi jika field lain memiliki nilai tertentu
+     * Format: required_if[field_target,val1,val2,...]
+     */
+    public function required_if(mixed $value, string $params, array $data): bool
+    {
+        $paramArray  = explode(',', $params);
+        $targetField = array_shift($paramArray); // Mengambil nama field target ('jenis_pegawai')
+        $targetValue = $data[$targetField] ?? null;
+
+        $isTargetMatched = in_array($targetValue, $paramArray, true);
+        $isEmpty = ($value === null || (is_string($value) && trim($value) === ''));
+
+        // Jika status pegawai cocok (PNS/PPPK) dan nilainya KOSONG -> GAGAL VALIDASI
+        if ($isTargetMatched && $isEmpty) {
+            return false;
+        }
+
+        // Jika status pegawai tidak cocok (Honorer) dan nilainya KOSONG -> LOLOS
+        // Catatan: Jika Honorer mengisikan angka/string, validasi akan lanjut ke rule 'numeric'
+        return true;
+    }
+
     private function prepareUniqueQuery(string $value, string $field, array $data): array
     {
         [$field, $ignoreField, $ignoreValue] = array_pad(explode(',', $field), 3, null);

@@ -30,6 +30,7 @@ $routes->group('pegawai', function (RouteCollection $routes) {
     $routes->delete('delete',        'Pegawai::delete');
     $routes->get('detail/(:num)',    'Pegawai::detail/$1');
     $routes->post('import-data',     'Pegawai::importData');
+    $routes->get('pangkat-golongan/(:any)', 'Pegawai::getPangkatGolongan/$1');
 });
 
 $routes->group('siswa', function (RouteCollection $routes) {

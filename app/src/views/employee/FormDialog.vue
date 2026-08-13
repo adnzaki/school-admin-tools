@@ -21,6 +21,11 @@
         <Select id="state" @update:model-value="onTypeSelected" v-model="employeeType" :options="employeeTypes" optionLabel="name" placeholder="" class="w-full"></Select>
         <p class="text-red-500">{{ store.errors.jenis_pegawai }}</p>
       </div>
+      <div class="flex flex-wrap gap-2 w-full" v-if="store.formData.jenis_pegawai !== 'Honorer' && store.formData.jenis_pegawai !== ''">
+        <label for="state">{{ $t('employee.grade') }}</label>
+        <Select id="state" @update:model-value="onGradeSelected" v-model="employeeGrade" :options="store.pangkatGolongan" optionLabel="name" placeholder="" class="w-full"></Select>
+        <p class="text-red-500">{{ store.errors.pangkat_golongan_id }}</p>
+      </div>
       <div class="flex flex-col gap-2">
         <label for="name1">Email</label>
         <InputText type="text" v-model="store.formData.email" />
@@ -56,20 +61,27 @@ const employeeTypes = ref([
 ])
 
 const employeeType = ref(null)
+const employeeGrade = ref(null)
 
 const onDialogHide = () => {
   if (store.formEvent === 'edit') store.resetForm()
-  employeeType.value = null
 }
 
 const onDialogShow = () => {
   if (store.formEvent === 'edit') {
     employeeType.value = { name: store.formData.jenis_pegawai, code: store.formData.jenis_pegawai }
+    employeeGrade.value = { name: store.formData.pangkat_golongan, id: store.formData.pangkat_golongan_id}
+    store.getPangkatGolongan(store.formData.jenis_pegawai)
   }
 }
 
 const onTypeSelected = (value) => {
   store.formData.jenis_pegawai = value.code
+  store.getPangkatGolongan(value.code)
+}
+
+const onGradeSelected = (value) => {
+  store.formData.pangkat_golongan_id = value.id
 }
 
 const onSave = (status, message) => {

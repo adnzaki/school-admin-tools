@@ -8,5 +8,6 @@ export default {
   import: 'Import Pegawai',
   importNote: 'Silakan unduh file template untuk import data pegawai berikut terlebih dahulu, kemudian unggah pada form yang telah disediakan.',
   totalActiveEmployees: 'Jumlah pegawai aktif saat ini',
-  noActiveEmployees: 'Belum ada pegawai aktif saat ini'
+  noActiveEmployees: 'Belum ada pegawai aktif saat ini',
+  grade: 'Pangkat / Golongan',
 }

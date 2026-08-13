@@ -55,8 +55,7 @@
                     Mengetahui,<br />
                     Wali Kelas
                 </p>
-                <p style="margin-top: 55px;" class="font-10"></p>
-                <p style="margin-top: 70px;">
+                <p style="margin-top: 110px;">
                     <strong><?= $homeroomTeacherName ?></strong><br />
                     NIP. <?= formatNIP($homeroomTeacherNIP) ?>
                     <?php
@@ -75,8 +74,7 @@
                     Bekasi, <?= $date ?><br />
                     Orang Tua / Wali Murid
                 </p>
-                <p style="margin-top: 55px;" class="font-10"><small>Materai 10.000</small></p>
-                <p style="margin-top: 53px;">
+                <p style="margin-top: 110px;">
                     <strong><?= $parentName ?></strong><br />
                 </p>
             </td>
