@@ -11,31 +11,22 @@ class CustomRules
      * Wajib diisi jika field lain memiliki nilai tertentu
      * Format: required_if[field_target,val1,val2,...]
      */
-    public function required_if(int|string|null $value, string $params, array $data): bool
+    public function required_if(mixed $value, string $params, array $data): bool
     {
-        $paramArray = explode(',', $params);
-        $targetField = array_shift($paramArray); // Ambil nama field target (misal: jenis_pegawai)
-
-        // Ambil nilai dari field target
+        $paramArray  = explode(',', $params);
+        $targetField = array_shift($paramArray); // Mengambil nama field target ('jenis_pegawai')
         $targetValue = $data[$targetField] ?? null;
 
-        // Jika nilai field target cocok dengan salah satu kriteria (PNS atau PPPK)
-        if (in_array($targetValue, $paramArray, true)) {
-            // Maka nilai field saat ini ($value) tidak boleh null atau string kosong
-            if ($value === null) {
-                return false;
-            }
+        $isTargetMatched = in_array($targetValue, $paramArray, true);
+        $isEmpty = ($value === null || (is_string($value) && trim($value) === ''));
 
-            if (is_string($value) && trim($value) === '') {
-                return false;
-            }
-
-            // Jika berbentuk array/objek kosong
-            if (empty($value) && $value !== 0 && $value !== '0') {
-                return false;
-            }
+        // Jika status pegawai cocok (PNS/PPPK) dan nilainya KOSONG -> GAGAL VALIDASI
+        if ($isTargetMatched && $isEmpty) {
+            return false;
         }
 
+        // Jika status pegawai tidak cocok (Honorer) dan nilainya KOSONG -> LOLOS
+        // Catatan: Jika Honorer mengisikan angka/string, validasi akan lanjut ke rule 'numeric'
         return true;
     }
 

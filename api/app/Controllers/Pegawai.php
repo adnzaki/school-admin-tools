@@ -63,11 +63,11 @@ class Pegawai extends BaseController
                 'label' => lang('FieldLabels.pegawai.nama')
             ],
             'nip' => [
-                'rules' => 'required_if[jenis_pegawai,PNS,PPPK]|permit_empty|numeric|exact_length[18]|is_unique_nip[tb_pegawai.nip,id,{id}]',
+                'rules' => 'permit_empty|numeric|exact_length[18]|is_unique_nip[tb_pegawai.nip,id,{id}]',
                 'label' => lang('FieldLabels.pegawai.nip')
             ],
             'pangkat_golongan_id' => [
-                'rules' => 'required_if[jenis_pegawai,PNS,PPPK]|permit_empty|numeric',
+                'rules' => 'permit_empty|numeric',
                 'label' => lang('FieldLabels.pegawai.pangkat_golongan_id')
             ],
             'jabatan' => [
@@ -89,7 +89,11 @@ class Pegawai extends BaseController
         ];
 
         $result = import_spreadsheet($default, $rules, function ($rows) {
-            $this->pegawai->insertBatch($rows);
+            foreach ($rows as $row) {
+                if ($row['jenis_pegawai'] === 'Honorer' || (!empty($row['nip']) && !empty($row['pangkat_golongan_id']))) {
+                    $this->pegawai->insert($row);
+                }              
+            }            
         });
 
         if ($result['status'] === 'success') {
